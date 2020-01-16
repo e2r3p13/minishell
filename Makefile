@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/12 15:34:08 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/16 16:32:49 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS_PATH = ./objs/
 LIBFT_A = ./libft/libft.a
 LIBFT_M = ./libft/
 
-SRCS =
+SRCS = main.c
 
 TMP = $(SRCS:.c=.o)
 OBJS = $(addprefix $(OBJS_PATH),$(TMP))
@@ -30,12 +30,12 @@ OFLAGS = -g3 -fsanitize=address
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	make -C $(LIBFT_M)
-	$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIBFT_A) -o $(NAME)
+	@make -C $(LIBFT_M)
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIBFT_A) -o $(NAME)
 
-$(OBJS_PATH)%.o: $(SRCS_PATH)%.s includes/libasm.h
-	mkdir -p $(OBJS_PATH)
-	$(CC) $(CFLAGS) -I $(INC_PATH) -c $< -o $@
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
+	@mkdir -p $(OBJS_PATH)
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
 
 bccyv: re clean
 
