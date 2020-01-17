@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/17 12:34:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/17 16:34:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,30 @@ static void	prompt_path(char **env)
 		write(0, pwd, ft_strlen(pwd));
 }
 
-static void	prompt_gits(char **env)
+static int	git_dir(char **env)
 {
-	int		git_dir;
-	char	*git_path;
+	int		fd;
+	int		git;
+	char	*path;
 
-	if (!(git_path = ft_strjoin(get_env_var("PWD=", env), "/.git")))
-		return ;
-	if ((git_dir = open(git_path, O_RDONLY)) != -1)
+	git = 0;
+	if (!(path = ft_strjoin(get_env_var("PWD=", env), "/.git")))
+		return (0);
+	if ((fd = open(path, O_RDONLY)) != -1)
 	{
-		write(0, PROMPT_GIT, ft_strlen(PROMPT_GIT));
-		close(git_dir);
+		close(fd);
+		git = 1;
 	}
-	free(git_path);
+	free(path);
+	return (git);
 }
 
 void		prompt(char **env)
 {
 	prompt_path(env);
-	prompt_gits(env);
+	if (git_dir(env))
+	{
+		write(0, PROMPT_GIT, ft_strlen(PROMPT_GIT));
+	}
 	write(0, PROMPT, ft_strlen(PROMPT));
 }
