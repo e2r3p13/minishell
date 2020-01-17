@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/17 16:34:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:25:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static int	git_dir(char **env)
 	char	*path;
 
 	git = 0;
-	if (!(path = ft_strjoin(get_env_var("PWD=", env), "/.git")))
-		return (0);
+	path = ft_strjoin(get_env_var("PWD=", env), "/.git");
 	if ((fd = open(path, O_RDONLY)) != -1)
 	{
 		close(fd);
