@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/17 12:37:18 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/01/17 12:00:44 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/01/17 12:03:03 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+char	*get_env_var(char *var_name, char **env)
 {
-	av[ac] = NULL;
-	return (minishell(env));
+	int i;
+	int len;
+
+	i = 0;
+	len = ft_strlen(var_name);
+	while (env[i])
+	{
+		if (ft_strncmp(var_name, env[i], len) == 0)
+			return (env[i] + len);
+		i++;
+	}
+	return (NULL);
 }

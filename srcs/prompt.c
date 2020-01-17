@@ -6,29 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/16 22:14:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/17 12:34:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_var(char *var_name, char **env)
-{
-	int i;
-	int len;
-
-	i = 0;
-	len = ft_strlen(var_name);
-	while (env[i])
-	{
-		if (ft_strncmp(var_name, env[i], len) == 0)
-			return (env[i] + len);
-		i++;
-	}
-	return (NULL);
-}
-
-void	prompt(char **env)
+static void	prompt_path(char **env)
 {
 	char	*pwd;
 	char	*hd;
@@ -45,13 +29,30 @@ void	prompt(char **env)
 			free(pwd);
 		}
 		else
-		{
 			write(0, pwd, ft_strlen(pwd));
-		}
 	}
 	if (pwd && !hd)
-	{
 		write(0, pwd, ft_strlen(pwd));
+}
+
+static void	prompt_gits(char **env)
+{
+	int		git_dir;
+	char	*git_path;
+
+	if (!(git_path = ft_strjoin(get_env_var("PWD=", env), "/.git")))
+		return ;
+	if ((git_dir = open(git_path, O_RDONLY)) != -1)
+	{
+		write(0, PROMPT_GIT, ft_strlen(PROMPT_GIT));
+		close(git_dir);
 	}
+	free(git_path);
+}
+
+void		prompt(char **env)
+{
+	prompt_path(env);
+	prompt_gits(env);
 	write(0, PROMPT, ft_strlen(PROMPT));
 }

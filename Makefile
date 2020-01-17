@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/17 11:55:29 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/17 12:02:45 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LIBFT_M = ./libft/
 
 SRCS =	main.c \
 		minishell.c \
-		prompt.c
+		prompt.c \
+		utils.c
 
 TMP = $(SRCS:.c=.o)
 OBJS = $(addprefix $(OBJS_PATH),$(TMP))
