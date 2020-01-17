@@ -6,36 +6,35 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/17 12:02:45 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/17 18:49:58 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS_PATH = ./includes/
 SRCS_PATH = ./srcs/
 OBJS_PATH = ./objs/
-LIBFT_A = ./libft/libft.a
-LIBFT_M = ./libft/
+LIB_PATH = ./libft/libft.a
 
 SRCS =	main.c \
 		minishell.c \
 		prompt.c \
 		utils.c
 
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+OFLAGS = -g3 -fsanitize=address
+
 TMP = $(SRCS:.c=.o)
 OBJS = $(addprefix $(OBJS_PATH),$(TMP))
 
 NAME = minishell
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-OFLAGS = -g3 -fsanitize=address
-
 all: aff_h $(NAME) aff_e
 
 $(NAME): $(OBJS)
-	@make -C $(LIBFT_M)
+	@make -C ./libft/
 	@make aff_b
-	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIBFT_A) -o $(NAME)
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIB_PATH) -o $(NAME)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
@@ -46,7 +45,7 @@ clean:
 	@make fclean -C ./libft/
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

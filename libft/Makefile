@@ -6,13 +6,13 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 11:56:25 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/17 11:06:40 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/17 18:53:08 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-INC_PATH = ./includes/
-OBJ_PATH = ./obj/
-SRC_PATH = ./src/
+INCS_PATH = ./includes/
+SRCS_PATH = ./srcs/
+OBJS_PATH = ./objs/
 
 SRCS =			ft_atoi.c \
 				ft_bzero.c \
@@ -76,25 +76,25 @@ SRCS =			ft_atoi.c \
 				ft_free_array.c \
 				ft_color_from_rgb.c \
 
-NAME = libft.a
-
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-OBJ = $(SRCS:.c=.o)
-OBJS = $(addprefix $(OBJ_PATH),$(OBJ))
+TMP = $(SRCS:.c=.o)
+OBJS = $(addprefix $(OBJS_PATH),$(TMP))
+
+NAME = libft.a
 
 all: aff_b $(NAME)
 
 $(NAME): $(OBJS) aff_e
 	@ar rc $@ $(OBJS)
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c includes/libft.h
-	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(CFLAGS) -I$(INC_PATH) -c $< -o $@
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/libft.h
+	@mkdir -p $(OBJS_PATH)
+	@$(CC) $(CFLAGS) -I$(INCS_PATH) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJ_PATH)
+	@rm -rf $(OBJS_PATH)
 
 fclean: clean
 	@rm -f $(NAME)
