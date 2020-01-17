@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/16 17:40:10 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/17 11:55:29 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,24 +29,36 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 OFLAGS = -g3 -fsanitize=address
 
-all: $(NAME)
+all: aff_h $(NAME) aff_e
 
 $(NAME): $(OBJS)
 	@make -C $(LIBFT_M)
+	@make aff_b
 	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIBFT_A) -o $(NAME)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
 	@$(CC) $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
 
-bccyv: re clean
-
 clean:
 	@rm -rf $(OBJS_PATH)
 	@make fclean -C ./libft/
-
 
 fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
+
+aff_h:
+	@printf "\n"
+	@printf " _____ _     _     _       _ _ \n"
+	@printf "|     |_|___|_|___| |_ ___| | |\n"
+	@printf "| | | | |   | |_ -|   | -_| | |\n"
+	@printf "|_|_|_|_|_|_|_|___|_|_|___|_|_|\n"
+	@printf "\n"
+
+aff_b:
+	@printf "● Minishell "
+
+aff_e:
+	@printf "\033[32m✓\033[0m\n"

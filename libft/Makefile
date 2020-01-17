@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 11:56:25 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/12 15:30:35 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/17 11:06:40 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,21 +84,14 @@ CFLAGS = -Wall -Wextra -Werror
 OBJ = $(SRCS:.c=.o)
 OBJS = $(addprefix $(OBJ_PATH),$(OBJ))
 
-all: $(NAME)
+all: aff_b $(NAME)
 
 $(NAME): $(OBJS) aff_e
 	@ar rc $@ $(OBJS)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c includes/libft.h
-	@printf "▬"
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAGS) -I$(INC_PATH) -c $< -o $@
-
-aff_e:
-	@printf "\033[32m"
-	@printf " [Done]"
-	@printf "\033[0m"
-	@printf "\n"
 
 clean:
 	@rm -rf $(OBJ_PATH)
@@ -107,3 +100,9 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+aff_b:
+	@printf "● Libft "
+
+aff_e:
+	@printf "\033[32m✓\033[0m\n"
