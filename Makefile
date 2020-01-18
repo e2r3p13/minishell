@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/17 18:49:58 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/18 16:45:20 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJS = $(addprefix $(OBJS_PATH),$(TMP))
 
 NAME = minishell
 
-all: aff_h $(NAME) aff_e
+all: aff_h $(NAME) aff_e move_script
 
 $(NAME): $(OBJS)
 	@make -C ./libft/
@@ -46,6 +46,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm /sgoinfre/goinfre/Perso/lfalkau/gdd.sh
 
 re: fclean all
 
@@ -62,3 +63,6 @@ aff_b:
 
 aff_e:
 	@printf "\033[32m✓\033[0m\n"
+
+move_script:
+	@cp srcs/gdd.sh /sgoinfre/goinfre/Perso/lfalkau/gdd.sh

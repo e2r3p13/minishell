@@ -6,20 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/18 14:58:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/18 16:40:37 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_script_full_path(char *efp)
-{
-	char	*sfp;
-
-	sfp = ft_strdup(efp);
-	ft_memcpy(sfp + ft_strlen(sfp) - 9, "srcs/.ggd", 9);
-	return (sfp);
-}
+char	*g_execve_av[2] = {GDD_PATH, NULL};
 
 static char	*get_exec_full_path(char *exec_path)
 {
@@ -38,16 +31,10 @@ static char	*get_exec_full_path(char *exec_path)
 static void	prompt_git(char **env, char *exec_path)
 {
 	char	*exec_full_path;
-	char	*script_path;
-	char	**script_args;
 
 	exec_full_path = get_exec_full_path(exec_path);
-	script_path = get_script_full_path(exec_full_path);
-	script_args = ft_split(script_path, ' ');
-	execve(script_path, script_args, env);
+	execve(g_execve_av[0], g_execve_av, env);
 	free(exec_full_path);
-	free(script_path);
-	ft_free_array(script_args);
 }
 
 static void	prompt_path(char **env)
