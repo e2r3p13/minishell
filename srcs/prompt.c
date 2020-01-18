@@ -6,11 +6,49 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/17 17:25:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/18 14:58:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*get_script_full_path(char *efp)
+{
+	char	*sfp;
+
+	sfp = ft_strdup(efp);
+	ft_memcpy(sfp + ft_strlen(sfp) - 9, "srcs/.ggd", 9);
+	return (sfp);
+}
+
+static char	*get_exec_full_path(char *exec_path)
+{
+	char	*cwd;
+	char	*path;
+	char	*tmp;
+
+	cwd = getcwd(NULL, 0);
+	tmp = ft_strjoin(cwd, "/");
+	path = ft_strjoin(tmp, exec_path);
+	free(tmp);
+	free(cwd);
+	return (path);
+}
+
+static void	prompt_git(char **env, char *exec_path)
+{
+	char	*exec_full_path;
+	char	*script_path;
+	char	**script_args;
+
+	exec_full_path = get_exec_full_path(exec_path);
+	script_path = get_script_full_path(exec_full_path);
+	script_args = ft_split(script_path, ' ');
+	execve(script_path, script_args, env);
+	free(exec_full_path);
+	free(script_path);
+	ft_free_array(script_args);
+}
 
 static void	prompt_path(char **env)
 {
@@ -35,29 +73,20 @@ static void	prompt_path(char **env)
 		write(0, pwd, ft_strlen(pwd));
 }
 
-static int	git_dir(char **env)
+void		prompt(char **env, char *exec_path)
 {
-	int		fd;
-	int		git;
-	char	*path;
+	pid_t pid;
 
-	git = 0;
-	path = ft_strjoin(get_env_var("PWD=", env), "/.git");
-	if ((fd = open(path, O_RDONLY)) != -1)
-	{
-		close(fd);
-		git = 1;
-	}
-	free(path);
-	return (git);
-}
-
-void		prompt(char **env)
-{
 	prompt_path(env);
-	if (git_dir(env))
+	pid = fork();
+	if (pid == 0)
 	{
-		write(0, PROMPT_GIT, ft_strlen(PROMPT_GIT));
+		prompt_git(env, exec_path);
+		exit(0);
+	}
+	else if (pid > 0)
+	{
+		wait(0);
 	}
 	write(0, PROMPT, ft_strlen(PROMPT));
 }

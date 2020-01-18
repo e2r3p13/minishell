@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/17 12:37:18 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/18 11:18:34 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	main(int ac, char **av, char **env)
 {
 	av[ac] = NULL;
-	return (minishell(env));
+	return (minishell(env, av[0]));
 }
