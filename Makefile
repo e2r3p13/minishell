@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/18 19:44:12 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/18 19:55:39 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,11 @@ all: aff_h $(NAME) aff_e move_script
 $(NAME): $(OBJS)
 	@make -C ./libft/
 	@make aff_b
-	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIB_PATH) -o $(NAME) -D GDD_PATH='"$(GDD_PATH)"'
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIB_PATH) -o $(NAME)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
-	@$(CC) -D GDD_PATH=$(GDD_PATH) $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
+	@$(CC) -D GDD_PATH=\"$(GDD_PATH)\" $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS_PATH)
@@ -47,7 +47,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm $(GDD_PATH)
+	@rm -f $(GDD_PATH)
 
 re: fclean all
 
