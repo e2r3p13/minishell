@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/18 16:37:23 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/18 19:23:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@
 
 # define PROMPT "\033[94m » \033[0m"
 # define PROMPT_GIT "\033[33m ●\033[0m"
-# define GDD_PATH "/sgoinfre/goinfre/Perso/lfalkau/gdd.sh"
+
+# ifndef GDD_PATH
+#  define GDD_PATH "/sgoifre/goinfre/Perso/lfalkau/gdd.sh"
+# endif
 
 int		minishell(char **env, char *exec_path);
 void	prompt(char **env, char *exec_path);

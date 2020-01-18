@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/18 16:45:20 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/18 19:44:12 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ INCS_PATH = ./includes/
 SRCS_PATH = ./srcs/
 OBJS_PATH = ./objs/
 LIB_PATH = ./libft/libft.a
+GDD_PATH = /tmp/gdd.sh
 
 SRCS =	main.c \
 		minishell.c \
@@ -34,11 +35,11 @@ all: aff_h $(NAME) aff_e move_script
 $(NAME): $(OBJS)
 	@make -C ./libft/
 	@make aff_b
-	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIB_PATH) -o $(NAME)
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIB_PATH) -o $(NAME) -D GDD_PATH='"$(GDD_PATH)"'
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
-	@$(CC) $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
+	@$(CC) -D GDD_PATH=$(GDD_PATH) $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS_PATH)
@@ -46,7 +47,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm /sgoinfre/goinfre/Perso/lfalkau/gdd.sh
+	@rm $(GDD_PATH)
 
 re: fclean all
 
@@ -65,4 +66,4 @@ aff_e:
 	@printf "\033[32m✓\033[0m\n"
 
 move_script:
-	@cp srcs/gdd.sh /sgoinfre/goinfre/Perso/lfalkau/gdd.sh
+	@cp srcs/gdd.sh $(GDD_PATH)
