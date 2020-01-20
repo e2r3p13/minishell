@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/20 19:15:57 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/01/20 23:13:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	prompt_path(char **env)
 
 	pwd = getcwd(NULL, 0);
 	hd = get_env_var("HOME=", env);
-	write(0, "\033[91m", ft_strlen("\033[91m"));
+	write(0, PATH_COLOR, ft_strlen(PATH_COLOR));
 	if (pwd && hd)
 	{
 		if (ft_strncmp(pwd, hd, ft_strlen(hd)) == 0)
@@ -75,5 +75,4 @@ void		prompt(char **env, char *exec_path)
 	{
 		wait(0);
 	}
-	write(0, PROMPT, ft_strlen(PROMPT));
 }

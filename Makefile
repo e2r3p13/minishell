@@ -6,19 +6,21 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/18 19:55:39 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/01/20 22:37:38 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS_PATH = ./includes/
 SRCS_PATH = ./srcs/
 OBJS_PATH = ./objs/
-LIB_PATH = ./libft/libft.a
-GDD_PATH = /tmp/gdd.sh
+LBFT_PATH = ./libft/libft.a
+RSCS_PATH = /tmp/
+GDDS_NAME = gdd.sh
 
 SRCS =	main.c \
 		minishell.c \
 		prompt.c \
+		history.c \
 		utils.c
 
 CC = gcc
@@ -35,11 +37,11 @@ all: aff_h $(NAME) aff_e move_script
 $(NAME): $(OBJS)
 	@make -C ./libft/
 	@make aff_b
-	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LIB_PATH) -o $(NAME)
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LBFT_PATH) -o $(NAME)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
-	@$(CC) -D GDD_PATH=\"$(GDD_PATH)\" $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
+	@$(CC) -D GDD_PATH=\"$(RSCS_PATH)$(GDDS_NAME)\" $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS_PATH)
@@ -47,7 +49,8 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@rm -f $(GDD_PATH)
+	@rm -f $(RSCS_PATH)$(GDDS_NAME)
+	@rm -f $(RSCS_PATH)/history
 
 re: fclean all
 
@@ -66,4 +69,5 @@ aff_e:
 	@printf "\033[32m✓\033[0m\n"
 
 move_script:
-	@cp srcs/gdd.sh $(GDD_PATH)
+	@cp $(SRCS_PATH)$(GDDS_NAME) $(RSCS_PATH)
+	@touch $(RSCS_PATH)/history

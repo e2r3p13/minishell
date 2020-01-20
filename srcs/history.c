@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/20 22:37:13 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/01/20 22:42:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	minishell(char **env, char *exec_path)
+void	save_command(char *line, char *path)
 {
-	char	*line;
+	int	fd;
 
-	prompt(env, exec_path);
-	while (get_next_line(0, &line))
+	if ((fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 77777)))
 	{
-		prompt(env, exec_path);
-		save_command(line, "/tmp/history");
-		free(line);
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		close(fd);
 	}
-	free(line);
-	return (0);
 }
