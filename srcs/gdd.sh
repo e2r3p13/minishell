@@ -13,33 +13,36 @@ while read line
 do
 	if [[ $line == *"not a git repository"* ]]
 	then
-		id=0
+		let "id = 0"
 	elif [[ $line == "Untracked files:" || $line == "Changes not staged for commit:" ]]
 	then
-		id=1
+		let "id = id + 1000"
 	elif [[ $line == "Changes to be committed:" ]]
 	then
-		id=2
+		let "id = id + 100"
 	elif [[ $line == *"nothing to commit, working tree clean"* ]]
 	then
-		id=3
+		let "id = id + 1"
 	elif [[ $line == *"Your branch is ahead of"* ]]
 	then
-		id=4
+		let "id = id + 10"
 	fi
 done < <(cat /tmp/.minishell_git_logs)
 
-case $id in
-	0)
-		printf "${C} » ${W}";;
-	1)
-		printf "${R} » ${W}";;
-	2)
-		printf "${G} » ${W}";;
-	3)
-		printf "${Y} » ${W}";;
-	4)
-		printf "${P} » ${W}";;
-esac
+if [ $id -eq 0 ]
+then
+	printf "${C} » ${W}"
+elif [ $id -lt 10 ]
+then
+	printf "${Y} » ${W}"
+elif [ $id -lt 100 ]
+then
+	printf "${P} » ${W}"
+elif [ $id -lt 1000 ]
+then
+	printf "${G} » ${W}"
+else
+	printf "${R} » ${W}"
+fi
 
 rm -f /tmp/.minishell_git_logs
