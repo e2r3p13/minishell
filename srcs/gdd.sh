@@ -20,10 +20,10 @@ do
 	elif [[ $line == "Changes to be committed:" ]]
 	then
 		id=2
-	elif [[ $line == *"Your branch is ahead of"* ]]
+	elif [[ $line == *"nothing to commit, working tree clean"* ]]
 	then
 		id=3
-	elif [[ $line == *"nothing to commit, working tree clean"* ]]
+	elif [[ $line == *"Your branch is ahead of"* ]]
 	then
 		id=4
 	fi
@@ -37,9 +37,9 @@ case $id in
 	2)
 		printf "${G} » ${W}";;
 	3)
-		printf "${P} » ${W}";;
-	4)
 		printf "${Y} » ${W}";;
+	4)
+		printf "${P} » ${W}";;
 esac
 
 rm -f /tmp/.minishell_git_logs
