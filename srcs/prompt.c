@@ -6,36 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/20 23:13:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/18 14:58:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "prompt.h"
 
 char	*g_execve_av[2] = {GDD_PATH, NULL};
-
-static char	*get_exec_full_path(char *exec_path)
-{
-	char	*cwd;
-	char	*path;
-	char	*tmp;
-
-	cwd = getcwd(NULL, 0);
-	tmp = ft_strjoin(cwd, "/");
-	path = ft_strjoin(tmp, exec_path);
-	free(tmp);
-	free(cwd);
-	return (path);
-}
-
-static void	prompt_git(char **env, char *exec_path)
-{
-	char	*exec_full_path;
-
-	exec_full_path = get_exec_full_path(exec_path);
-	execve(g_execve_av[0], g_execve_av, env);
-	free(exec_full_path);
-}
 
 static void	prompt_path(char **env)
 {
@@ -60,15 +38,20 @@ static void	prompt_path(char **env)
 		write(0, pwd, ft_strlen(pwd));
 }
 
-void		prompt(char **env, char *exec_path)
+static void	prompt_git(char **env)
 {
-	pid_t pid;
+	execve(g_execve_av[0], g_execve_av, env);
+}
+
+void		prompt(char **env)
+{
+	pid_t	pid;
 
 	prompt_path(env);
 	pid = fork();
 	if (pid == 0)
 	{
-		prompt_git(env, exec_path);
+		prompt_git(env);
 		exit(0);
 	}
 	else if (pid > 0)
