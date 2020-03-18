@@ -2,14 +2,30 @@
 #include "tokens.h"
 #include "minishell.h"
 
+static int	lex_operator(char *str, t_list *cur)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isinset("+-/*=%!", str[i]))
+		i++;
+	cur->token = OPERATOR;
+	cur->raw = ft_strndup(str, i + 1);
+	return (i);
+}
+
 int	lex_var(char *str, t_list **cur)
 {
 	int	i;
 
 	i = 1;
 	ft_putstr("in get_var\n");
-	while (str[i] && ft_isalnum(str[i]))
-		i++;
+	if (str[i] == '(')
+		while (str[i] && str[i] != ')')
+			i++;
+	else
+		while (str[i] && ft_isalnum(str[i]))
+			i++;
 	(*cur)->token = VAR;
 	(*cur)->raw = ft_strndup(str, i + 1);
 	return (i);
@@ -28,7 +44,7 @@ static int	get_word(char *str, t_list **cur)
 	return (i);
 }
 
-static int	get_comment(char *str, t_list *cur)
+static int	lex_comment(char *str, t_list *cur)
 {
 	int	len;
 
@@ -66,13 +82,13 @@ t_list		*lexer(char *str)
 		else if (str[i] == '\n' || str[i] == ';')
 			cur->token = NEWLINE;
 		else if (ft_isinset("+-*/%=!", str[i]) && cur->token != OPERATOR)
-			cur->token = OPERATOR;
+			i += lex_operator(str + i, cur);
 		else if (ft_isinset("\\\'\"", str[i]))
 			i += lex_quoted(str + i, &cur);
 		else if (str[i] == '$')
 			i += lex_var(str + i, &cur);
 		else if (str[i] == '#')
-			i += get_comment(str + i, cur);
+			i += lex_comment(str + i, cur);
 		else
 			i += get_word(str + i, &cur);
 	}
