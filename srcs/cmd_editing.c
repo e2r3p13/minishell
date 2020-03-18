@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/18 19:06:00 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/18 19:43:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,35 @@ void pop(t_cmd *cmd)
 	}
 }
 
-int insert(int index, t_cmd *cmd)
+int insert(char c, int index, t_cmd *cmd)
 {
+	int l;
+
 	if (cmd->len == cmd->capacity)
 	{
 		if (stretch(cmd) == -1)
 			return (-1);
 	}
-
+	l = cmd->len;
+	while (l > index)
+	{
+		cmd->raw[l] = cmd->raw[l - 1];
+		l--;
+	}
+	cmd->raw = c;
+	return (0);
 }
 
 int stretch(t_cmd *cmd)
 {
+	char	*new_raw;
 
+	cmd->capacity *= 2;
+	if (!(new_raw = malloc(sizeof(char) * cmd->capacity)))
+		return (-1);
+	ft_memset(new_raw, 0, cmd->capacity);
+	ft_memcpy(new_raw, cmd->raw, cmd->len);
+	free(cmd->raw);
+	cmd->raw = new_raw;
+	return (0);
 }
