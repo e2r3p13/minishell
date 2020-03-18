@@ -19,6 +19,14 @@ static int	get_comment(char *str, t_list *cur)
 	return (i);
 }
 
+static int	get_var(char *str, t_list *cur)
+{
+	int	i;
+
+	i = 0;
+	return (i);
+}
+
 t_list		*lexer(char *str)
 {
 	t_list	*head;
@@ -34,7 +42,7 @@ t_list		*lexer(char *str)
 		{
 			if (cur->token)
 			{
-				cur->next = ft_list_new("");
+				cur->next = ft_list_new(NULL);
 				cur = cur->next;
 			}
 		}
@@ -42,7 +50,7 @@ t_list		*lexer(char *str)
 		{
 			if (cur->token)
 			{
-				cur->next = ft_list_new("");
+				cur->next = ft_list_new(NULL);
 				cur = cur->next;
 			}
 			cur->token = EOI;
@@ -51,7 +59,7 @@ t_list		*lexer(char *str)
 		{
 			if (cur->token)
 			{
-				cur->next = ft_list_new("");
+				cur->next = ft_list_new(NULL);
 				cur = cur->next;
 			}
 			cur->token = NEWLINE;
@@ -60,7 +68,7 @@ t_list		*lexer(char *str)
 		{
 			if (cur->token)
 			{
-				cur->next = ft_list_new("");
+				cur->next = ft_list_new(NULL);
 				cur = cur->next;
 			}
 			cur->token = OPERATOR;
@@ -74,16 +82,17 @@ t_list		*lexer(char *str)
 				cur->raw = append(cur->raw, str[i]);
 			else
 			{
-				cur->next = ft_list_new("");
+				cur->next = ft_list_new(NULL);
 				cur = cur->next;
 				cur->token = QUOTED;
 			}
 		}
 		else if (str[i] == '$')
 		{
+//			i += get_var(str + i, cur);
 			if (cur->token)
 			{
-				cur->next = ft_list_new("");
+				cur->next = ft_list_new(NULL);
 				cur = cur->next;
 			}
 			cur->token = VAR;
@@ -101,7 +110,7 @@ t_list		*lexer(char *str)
 		{
 			cur->token = WORD;
 		}
-		cur->raw = append(cur->raw, str[i++]);
+		cur->raw = ft_append(cur->raw, str[i++]);
 	}
 	cur = head->next;
 	free(head);

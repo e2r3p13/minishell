@@ -53,5 +53,6 @@ char			*get_cmd();
 void			enable_raw_mode();
 t_list			*lexer(char *str);
 t_list			*ft_list_new(void *content);
+char			*ft_append(char *str, char c);
 
 #endif
