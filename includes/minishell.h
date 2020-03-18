@@ -54,6 +54,7 @@ void			enable_raw_mode();
 t_list			*lexer(char *str);
 t_list			*ft_list_new(void *content);
 char			*ft_append(char *str, char c);
+char			*ft_strndup(char *s1, size_t n);
 void			ctrlc_handler(int signal);
 
 #endif
