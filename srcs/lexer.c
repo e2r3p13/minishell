@@ -14,8 +14,19 @@ static int	get_quoted(char *str, t_list *cur)
 static int	get_comment(char *str, t_list *cur)
 {
 	int	i;
+	int	len;
 
 	i = 0;
+	len = 0;
+	while (str[len] && str[len] != 10)//add carriage ret?
+		len++;
+	cur->raw = ft_strndup(str, len);//ft_strndup does not exist
+	i = ft_strchr(str, '$') - str;
+	while (i < len)//euh... not so sure
+	{
+		i += get_var(str + i, cur);
+		i += ft_strchr(str + i, '$') - str;
+	}
 	return (i);
 }
 
@@ -33,7 +44,7 @@ t_list		*lexer(char *str)
 	t_list	*cur;
 	int	i;
 
-	head = ft_list_new("");
+	head = ft_list_new(NULL);
 	cur = head;
 	i = 0;
 	while (str[i])
@@ -113,6 +124,8 @@ t_list		*lexer(char *str)
 		cur->raw = ft_append(cur->raw, str[i++]);
 	}
 	cur = head->next;
+	if (head->raw)
+		free(head->raw);
 	free(head);
 	return (cur);
 }
