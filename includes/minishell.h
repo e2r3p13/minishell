@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/18 18:54:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/18 20:24:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct	s_cmd
 int				minishell(char **env);
 void			prompt(char **env);
 char			*get_env_var(char *var_name, char **env);
-void			save_command(char *line, char *path);
+void			save_cmd(char *line, char *path);
+t_cmd			*new_cmd();
+int				push(char c, t_cmd *cmd);
+void			pop(t_cmd *cmd);
+int				insert(char c, int index, t_cmd *cmd);
+int				stretch(t_cmd *cmd);
+void			delete(t_cmd *cmd);
+char			*get_cmd();
 
 #endif

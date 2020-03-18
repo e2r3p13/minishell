@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/18 19:43:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/18 20:28:57 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 t_cmd *new_cmd()
 {
-	t_cmd cmd;
+	t_cmd *cmd;
 
-	if !(cmd.raw = malloc(sizeof(char) * 32))
+	if (!(cmd = malloc(sizeof(t_cmd))))
 		return (NULL);
-	ft_memset(cmd.raw, 0, 32);
-	cmd.capacity = 32;
-	cmd.len = 0;
-	return (&cmd);
+	if (!(cmd->raw = malloc(sizeof(char) * 32)))
+		return (NULL);
+	ft_memset(cmd->raw, 0, 32);
+	cmd->capacity = 32;
+	cmd->len = 0;
+	return (cmd);
 }
 
 int push(char c, t_cmd *cmd)
@@ -38,7 +40,7 @@ int push(char c, t_cmd *cmd)
 
 void pop(t_cmd *cmd)
 {
-	if (len > 0)
+	if (cmd->len > 0)
 	{
 		cmd->raw[cmd->len] = 0;
 		cmd->len--;
@@ -60,7 +62,7 @@ int insert(char c, int index, t_cmd *cmd)
 		cmd->raw[l] = cmd->raw[l - 1];
 		l--;
 	}
-	cmd->raw = c;
+	cmd->raw[index] = c;
 	return (0);
 }
 
