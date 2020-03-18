@@ -14,7 +14,7 @@ t_list	*ft_list_new(void *content)
 	return (lst);
 }
 
-char	*ft_append(char *str, char c)
+/*char	*ft_append(char *str, char c)
 {
 	char	*s;
 	int	i;
@@ -40,7 +40,7 @@ char	*ft_append(char *str, char c)
 	s[i] = 0;
 	return (s);
 }
-
+*/
 char    *ft_strndup(const char *s1, size_t n)
 {
         size_t  len;
@@ -58,7 +58,7 @@ char    *ft_strndup(const char *s1, size_t n)
 		if (!(s2 = (char *)malloc(sizeof(char) * (n + 1))))
                 	return (NULL);
         	ft_strlcpy(s2, s1, n);
-		s2[n] = 0;
+		s2[++n] = 0;
         }
 	return (s2);
 }
