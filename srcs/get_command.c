@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:19:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 16:46:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ char *get_cmd()
 		}
 		else if (buf[0] == BACKSPACE_KEY)
 			handle_backspace(cmd);
+		else if (buf[0] == CTRL_D_KEY)
+			printf("coucou\n");
 		else
 		{
 			push(buf[0], cmd);
