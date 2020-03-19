@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 16:46:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 23:58:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static void handle_escape(t_cmd *cmd, char *buf)
 	if (buf[1] == 91)
 	{
 		if (buf[2] == ESC_KEY_UP)
-			printf("UP KEY\n");
+			printf("");
 		if (buf[2] == ESC_KEY_DOWN)
-			printf("DOWN KEY\n");
+			printf("");
 		if (buf[2] == ESC_KEY_RIGHT)
 		{
 			if (move_cursor_right(cmd))
@@ -58,6 +58,15 @@ static void handle_backspace(t_cmd *cmd)
 		write(0, "\b \b", ft_strlen("\b \b"));
 }
 
+static void handle_ctrl_d(t_cmd *cmd)
+{
+	if (cmd->cpos < cmd->len)
+	{
+		write(0, "\033[C\b \b\033[D", ft_strlen("\033[C\b \b\033[D"));
+		pop(cmd);
+	}
+}
+
 char *get_cmd()
 {
 	t_cmd			*cmd;
@@ -78,7 +87,7 @@ char *get_cmd()
 		else if (buf[0] == BACKSPACE_KEY)
 			handle_backspace(cmd);
 		else if (buf[0] == CTRL_D_KEY)
-			printf("coucou\n");
+			handle_ctrl_d(cmd);
 		else
 		{
 			push(buf[0], cmd);
