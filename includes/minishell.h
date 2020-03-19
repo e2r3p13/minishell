@@ -52,11 +52,14 @@ t_bool 			join_commands(t_cmd *c1, char *c2);
 char			*get_cmd();
 void			enable_raw_mode();
 t_list			*lexer(char *str);
-t_list			*ft_list_new(void *content);
-//char			*ft_append(char *str, char c);
+t_list			*ft_list_new(void);
 char			*ft_strndup(const char *s1, size_t n);
 int			lex_quoted(char *str, t_list **cur);
+int			lex_redirect(char *str, t_list *cur);
+int			lex_comment(char *str, t_list *cur);
+int			lex_word(char *str, t_list **cur);
 int			lex_var(char *str, t_list **cur);
+int			lex_operator(char *str, t_list *cur);
 void			ctrlc_handler(int signal);
 
 #endif

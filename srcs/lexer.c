@@ -1,77 +1,49 @@
 #include "libft.h"
 #include "tokens.h"
 #include "minishell.h"
+#include <stdlib.h>
 
-static int	lex_operator(char *str, t_list *cur)
+t_list 		*ft_list_new(void)
 {
-	int	i;
+        t_list *lst;
 
-	i = 0;
-	while (ft_isinset("+-/*=%!", str[i]))
-		i++;
-	cur->token = OPERATOR;
-	cur->raw = ft_strndup(str, i + 1);
-	return (i);
+        if (!(lst = (t_list *)malloc(sizeof(t_list))))
+                return (NULL);
+        lst->raw = NULL;
+        lst->token = 0;
+        lst->next = NULL;
+        return (lst);
 }
 
-int	lex_var(char *str, t_list **cur)
+char		*ft_strndup(const char *s1, size_t n)
 {
-	int	i;
+        size_t  len;
+        char    *s2;
 
-	i = 1;
-	ft_putstr("in get_var\n");
-	if (str[i] == '(')
-		while (str[i] && str[i] != ')')
-			i++;
-	else
-		while (str[i] && ft_isalnum(str[i]))
-			i++;
-	(*cur)->token = VAR;
-	(*cur)->raw = ft_strndup(str, i + 1);
-	return (i);
+        len = ft_strlen(s1);
+        if (len < n)
+        {
+                if (!(s2 = (char *)malloc(sizeof(char) * (len + 1))))
+                        return (NULL);
+                ft_strlcpy(s2, s1, n + 1);
+        }
+        else
+        {
+                if (!(s2 = (char *)malloc(sizeof(char) * (n + 1))))
+                        return (NULL);
+                ft_strlcpy(s2, s1, n);
+                s2[++n] = 0;
+        }
+        return (s2);
 }
 
-static int	get_word(char *str, t_list **cur)
+static void	lex(char *str, t_list *cur, int i)
 {
-	int	i;
-
-	i = 0;
-	ft_putstr("in get_word :\t");
-	while (str[i] && ft_isalnum(str[i]))
-		i++;
-	(*cur)->token = WORD;
-	(*cur)->raw = ft_strndup(str, i + 1);
-	return (i);
-}
-
-static int	lex_comment(char *str, t_list *cur)
-{
-	int	len;
-
-	len = 0;
-	ft_putstr("in get_comment :\t");
-	while (str[len] && str[len] != 10)//add carriage ret?
-		len++;
-	cur->token = COMMENT;
-	cur->raw = ft_strndup(str, len + 1);
-	return (len);
-}
-
-t_list		*lexer(char *str)
-{
-	t_list	*head;
-	t_list	*cur;
-	int	i;
-
-	head = ft_list_new(NULL);
-	cur = head;
-	i = 0;
 	while (str[i])
 	{
-//		ft_putstr("top while\n");
 		if (cur->token)
 		{
-			cur->next = ft_list_new(NULL);
+			cur->next = ft_list_new();
 			cur = cur->next;
 		}
 		ft_putchar(str[i]);
@@ -81,7 +53,7 @@ t_list		*lexer(char *str)
 			cur->token = EOI;
 		else if (str[i] == '\n' || str[i] == ';')
 			cur->token = NEWLINE;
-		else if (ft_isinset("+-*/%=!", str[i]) && cur->token != OPERATOR)
+		else if (ft_isinset("+-*/%=!", str[i]))
 			i += lex_operator(str + i, cur);
 		else if (ft_isinset("\\\'\"", str[i]))
 			i += lex_quoted(str + i, &cur);
@@ -89,8 +61,20 @@ t_list		*lexer(char *str)
 			i += lex_var(str + i, &cur);
 		else if (str[i] == '#')
 			i += lex_comment(str + i, cur);
+		else if (ft_isinset("<>|", str[i]))
+			i += lex_redirect(str + i, cur);
 		else
-			i += get_word(str + i, &cur);
+			i += lex_word(str + i, &cur);
 	}
+}
+
+t_list		*lexer(char *str)
+{
+	t_list	*head;
+	int	i;
+
+	head = ft_list_new();
+	i = 0;
+	lex(str, head, i);
 	return (head);
 }
