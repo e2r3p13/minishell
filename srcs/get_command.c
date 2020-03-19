@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 23:58:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 00:49:00 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,24 @@ static void handle_escape(t_cmd *cmd, char *buf)
 
 static void handle_backspace(t_cmd *cmd)
 {
+	int cpos_diff;
+
 	if (pop(cmd))
-		write(0, "\b \b", ft_strlen("\b \b"));
+	{
+		write(0, "\033[D", ft_strlen("\033[D"));
+		write(0, cmd->raw + cmd->cpos, cmd->len - cmd->cpos + 1);
+		write(0, " ", 1);
+		cpos_diff = cmd->len - cmd->cpos + 1;
+		for(int i = 0; i < cpos_diff; i++)
+			write(0, "\033[D", ft_strlen("\033[D"));
+	}
 }
 
 static void handle_ctrl_d(t_cmd *cmd)
 {
 	if (cmd->cpos < cmd->len)
 	{
-		write(0, "\033[C\b \b\033[D", ft_strlen("\033[C\b \b\033[D"));
+		write(0, "\177", ft_strlen("\177"));
 		pop(cmd);
 	}
 }
