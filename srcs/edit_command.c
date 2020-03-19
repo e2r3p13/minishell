@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 00:00:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 00:06:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,15 @@ t_bool pop(t_cmd *cmd)
 	if (cmd->len > 0)
 	{
 		if (cmd->len == cmd->cpos)
+		{
 			cmd->raw[cmd->len - 1] = 0;
+		}
 		else
+		{
+			if (cmd->cpos == 0)
+				return (false);
 			remove_at(cmd);
+		}
 		cmd->len--;
 		cmd->cpos--;
 		return (true);
