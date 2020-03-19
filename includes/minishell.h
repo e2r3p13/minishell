@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:16:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 15:30:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 # include <signal.h>
 #include <termios.h>
 # include "libft.h"
