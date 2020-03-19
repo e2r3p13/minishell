@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/18 20:24:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 00:45:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <signal.h>
+#include <termios.h>
 # include "libft.h"
 
 # define HISTORY_PATH "/tmp/minishell_history"
@@ -25,6 +26,7 @@
 typedef struct	s_cmd
 {
 	char		*raw;
+	size_t		cpos;
 	size_t		len;
 	size_t		capacity;
 }				t_cmd;
@@ -36,9 +38,9 @@ void			save_cmd(char *line, char *path);
 t_cmd			*new_cmd();
 int				push(char c, t_cmd *cmd);
 void			pop(t_cmd *cmd);
-int				insert(char c, int index, t_cmd *cmd);
 int				stretch(t_cmd *cmd);
 void			delete(t_cmd *cmd);
-char			*get_cmd();
+char			*get_cmd(char **env);
+void			enable_raw_mode();
 
 #endif

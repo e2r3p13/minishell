@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/18 20:25:58 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/19 00:35:43 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ SRCS =	main.c \
 		prompt.c \
 		history.c \
 		utils.c \
-		cmd_editing.c
+		get_command.c \
+		edit_command.c \
+		term_utils.c
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
