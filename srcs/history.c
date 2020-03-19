@@ -6,13 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/20 22:42:22 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/18 20:25:34 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	save_command(char *line, char *path)
+void	save_cmd(char *line, char *path)
 {
 	int	fd;
 

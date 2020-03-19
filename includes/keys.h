@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:21:06 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/03/19 10:56:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "keys.h"
+#ifndef KEYS_H
+# define KEYS_H
 
-int	minishell(char **env)
-{
-	char	*cmd_line;
+# define ESCAPE_KEY 27
+# define RETURN_KEY 10
+# define BACKSPACE_KEY 127
+# define ESC_KEY_UP 65
+# define ESC_KEY_DOWN 66
+# define ESC_KEY_RIGHT 67
+# define ESC_KEY_LEFT 68
 
-	while (1)
-	{
-		prompt(env);
-		enable_raw_mode();
-		cmd_line = get_cmd();
-		printf("\n\033[0;95mcmd: \033[0;00m%s\n", cmd_line);
-		//TODO: parse cmd and throw syntax errors if needed
-		save_cmd(cmd_line, HISTORY_PATH);
-		//TODO: process cmd
-		free(cmd_line);
-	}
-	return (0);
-}
+#endif
