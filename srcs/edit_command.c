@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:18:08 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 15:23:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ t_bool join_commands(t_cmd *c1, char *c2)
 	char	*new_cmd;
 	size_t	len;
 
+	pop(c1);
 	if (!(new_cmd = ft_strjoin(c1->raw, c2)))
 		return (false);
 	len = ft_strlen(new_cmd);
