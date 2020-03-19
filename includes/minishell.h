@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 10:40:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 14:45:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ void			prompt(char **env);
 char			*get_env_var(char *var_name, char **env);
 void			save_cmd(char *line, char *path);
 t_cmd			*new_cmd();
-int				push(char c, t_cmd *cmd);
-void			pop(t_cmd *cmd);
-int				stretch(t_cmd *cmd);
-void			delete(t_cmd *cmd);
+t_bool			push(char c, t_cmd *cmd);
+t_bool			pop(t_cmd *cmd);
+t_bool			stretch(t_cmd *cmd);
+t_bool 			move_cursor_left(t_cmd *cmd);
+t_bool 			move_cursor_right(t_cmd *cmd);
 char			*get_cmd();
 void			enable_raw_mode();
 

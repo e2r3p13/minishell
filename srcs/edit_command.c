@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 00:43:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 14:46:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static void insert_at(char c, t_cmd *cmd)
 	cmd->raw[cmd->cpos] = c;
 }
 
-int push(char c, t_cmd *cmd)
+t_bool push(char c, t_cmd *cmd)
 {
 	if (cmd->len == cmd->capacity)
 	{
-		if (stretch(cmd) == -1)
-			return (-1);
+		if (!stretch(cmd))
+			return (false);
 	}
 	if (cmd->cpos == cmd->len)
 		cmd->raw[cmd->len] = c;
@@ -53,10 +53,10 @@ int push(char c, t_cmd *cmd)
 		insert_at(c, cmd);
 	cmd->len++;
 	cmd->cpos++;
-	return (0);
+	return (true);
 }
 
-static void remove_at(t_cmd *cmd)
+void remove_at(t_cmd *cmd)
 {
 	size_t l;
 
@@ -68,7 +68,7 @@ static void remove_at(t_cmd *cmd)
 	}
 }
 
-void pop(t_cmd *cmd)
+t_bool pop(t_cmd *cmd)
 {
 	if (cmd->len > 0)
 	{
@@ -78,19 +78,41 @@ void pop(t_cmd *cmd)
 			remove_at(cmd);
 		cmd->len--;
 		cmd->cpos--;
+		return (true);
 	}
+	return (false);
 }
 
-int stretch(t_cmd *cmd)
+t_bool stretch(t_cmd *cmd)
 {
 	char	*new_raw;
 
 	cmd->capacity *= 2;
 	if (!(new_raw = malloc(sizeof(char) * cmd->capacity)))
-		return (-1);
+		return (false);
 	ft_memset(new_raw, 0, cmd->capacity);
 	ft_memcpy(new_raw, cmd->raw, cmd->len);
 	free(cmd->raw);
 	cmd->raw = new_raw;
-	return (0);
+	return (true);
+}
+
+t_bool move_cursor_left(t_cmd *cmd)
+{
+	if (cmd->cpos > 0)
+	{
+		cmd->cpos--;
+		return (true);
+	}
+	return (false);
+}
+
+t_bool move_cursor_right(t_cmd *cmd)
+{
+	if (cmd->cpos < cmd->len)
+	{
+		cmd->cpos++;
+		return (true);
+	}
+	return (false);
 }

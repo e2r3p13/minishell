@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 11:21:09 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 14:52:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 
 static void handle_return(t_cmd *cmd)
 {
-	printf("RETURN\n");
-	cmd->len++;
-	cmd->len--;
+	printf("\nVotre commande: '%s'\n", cmd->raw);
 }
 
-static void handle_escape_input(t_cmd *cmd, char *buf)
+static void handle_escape(t_cmd *cmd, char *buf)
 {
 	if (buf[1] == 91)
 	{
@@ -29,9 +27,15 @@ static void handle_escape_input(t_cmd *cmd, char *buf)
 		if (buf[2] == ESC_KEY_DOWN)
 			printf("DOWN KEY\n");
 		if (buf[2] == ESC_KEY_RIGHT)
-			printf("RIGHT KEY\n");
+		{
+			if (move_cursor_right(cmd))
+				write(0, "\033[C", ft_strlen("\033[C"));
+		}
 		if (buf[2] == ESC_KEY_LEFT)
-			printf("LEFT KEY\n");
+		{
+			if (move_cursor_left(cmd))
+				write(0, "\033[D", ft_strlen("\033[D"));
+		}
 	}
 	else
 	{
@@ -41,30 +45,33 @@ static void handle_escape_input(t_cmd *cmd, char *buf)
 	cmd->len--;
 }
 
+static void handle_backspace(t_cmd *cmd)
+{
+	if (pop(cmd))
+		write(0, "\b \b", ft_strlen("\b \b"));
+}
+
 char *get_cmd()
 {
 	t_cmd			*cmd;
-	size_t			cpos;
 	char			buf[4];
 
 	enable_raw_mode();
 	cmd = new_cmd();
-	cpos = 0;
 	while (1)
 	{
 		ft_memset(buf, 0, 4);
 		read(0, &buf, 4);
 		if (buf[0] == ESCAPE_KEY)
-			handle_escape_input(cmd, buf);
+			handle_escape(cmd, buf);
 		else if (buf[0] == RETURN_KEY)
 			handle_return(cmd);
 		else if (buf[0] == BACKSPACE_KEY)
-			pop(cmd);
+			handle_backspace(cmd);
 		else
 		{
 			push(buf[0], cmd);
 			write(0, buf, 1);
-			cpos++;
 		}
 	}
 	return (cmd->raw);
