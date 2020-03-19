@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 00:45:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 10:40:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int				push(char c, t_cmd *cmd);
 void			pop(t_cmd *cmd);
 int				stretch(t_cmd *cmd);
 void			delete(t_cmd *cmd);
-char			*get_cmd(char **env);
+char			*get_cmd();
 void			enable_raw_mode();
 
 #endif
