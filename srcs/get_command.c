@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 14:52:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 15:19:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 static void handle_return(t_cmd *cmd)
 {
-	printf("\nVotre commande: '%s'\n", cmd->raw);
+	char *next_line;
+
+	if (cmd->raw[cmd->len - 1] == '\\')
+	{
+		write(1, "\n > ", 4);
+		next_line = get_cmd();
+		join_commands(cmd, next_line);
+	}
 }
 
 static void handle_escape(t_cmd *cmd, char *buf)
@@ -56,7 +63,6 @@ char *get_cmd()
 	t_cmd			*cmd;
 	char			buf[4];
 
-	enable_raw_mode();
 	cmd = new_cmd();
 	while (1)
 	{
@@ -65,7 +71,10 @@ char *get_cmd()
 		if (buf[0] == ESCAPE_KEY)
 			handle_escape(cmd, buf);
 		else if (buf[0] == RETURN_KEY)
+		{
 			handle_return(cmd);
+			break;
+		}
 		else if (buf[0] == BACKSPACE_KEY)
 			handle_backspace(cmd);
 		else
