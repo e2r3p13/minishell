@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 00:06:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 14:12:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_cmd *new_cmd()
 
 	if (!(cmd = malloc(sizeof(t_cmd))))
 		return (NULL);
-	if (!(cmd->raw = malloc(sizeof(char) * 32)))
+	if (!(cmd->raw = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (NULL);
-	ft_memset(cmd->raw, 0, 32);
-	cmd->capacity = 32;
+	ft_memset(cmd->raw, 0, BUFFER_SIZE + 1);
+	cmd->capacity = BUFFER_SIZE;
 	cmd->len = 0;
 	cmd->cpos = 0;
 	return (cmd);
@@ -42,11 +42,8 @@ static void insert_at(char c, t_cmd *cmd)
 
 t_bool push(char c, t_cmd *cmd)
 {
-	if (cmd->len == cmd->capacity)
-	{
-		if (!stretch(cmd))
-			return (false);
-	}
+	if (!ft_isprint(c) || (cmd->len == cmd->capacity && !stretch(cmd)))
+		return (false);
 	if (cmd->cpos == cmd->len)
 		cmd->raw[cmd->len] = c;
 	else
@@ -74,9 +71,7 @@ t_bool pop(t_cmd *cmd)
 	if (cmd->len > 0)
 	{
 		if (cmd->len == cmd->cpos)
-		{
 			cmd->raw[cmd->len - 1] = 0;
-		}
 		else
 		{
 			if (cmd->cpos == 0)
@@ -95,16 +90,16 @@ t_bool stretch(t_cmd *cmd)
 	char	*new_raw;
 
 	cmd->capacity *= 2;
-	if (!(new_raw = malloc(sizeof(char) * cmd->capacity)))
+	if (!(new_raw = malloc(sizeof(char) * (cmd->capacity + 1))))
 		return (false);
-	ft_memset(new_raw, 0, cmd->capacity);
+	ft_memset(new_raw, 0, cmd->capacity + 1);
 	ft_memcpy(new_raw, cmd->raw, cmd->len);
 	free(cmd->raw);
 	cmd->raw = new_raw;
 	return (true);
 }
 
-t_bool move_cursor_left(t_cmd *cmd)
+t_bool can_move_cursor_left(t_cmd *cmd)
 {
 	if (cmd->cpos > 0)
 	{
@@ -114,7 +109,7 @@ t_bool move_cursor_left(t_cmd *cmd)
 	return (false);
 }
 
-t_bool move_cursor_right(t_cmd *cmd)
+t_bool can_move_cursor_right(t_cmd *cmd)
 {
 	if (cmd->cpos < cmd->len)
 	{
@@ -140,4 +135,11 @@ t_bool join_commands(t_cmd *c1, char *c2)
 	c1->capacity = len;
 	c1->cpos = len;
 	return (true);
+}
+
+void erase(t_cmd *cmd)
+{
+	ft_memset(cmd->raw, 0, cmd->capacity);
+	cmd->len = 0;
+	cmd->cpos = 0;
 }

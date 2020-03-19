@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/19 15:58:11 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/21 14:23:02 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,16 @@ SRCS_PATH = ./srcs/
 OBJS_PATH = ./objs/
 LBFT_PATH = ./libft/libft.a
 RSCS_PATH = /tmp/
-GDDS_NAME = gdd.sh
+GDDS_NAME = git_prompt.sh
 
 SRCS =	main.c \
 		minishell.c \
 		prompt.c \
-		history.c \
 		utils.c \
-		get_command.c \
-		edit_command.c \
-		term_utils.c \
+		cmd_get.c \
+		cmd_edit.c \
+		cmd_history.c \
+		termios_utils.c \
 		signals.c
 
 CC = gcc
