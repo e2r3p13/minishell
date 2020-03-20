@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 18:13:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 18:21:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void handle_return(t_cmd *cmd)
 {
 	char *next_line;
 
+	save_cmd(cmd->raw, HISTORY_PATH);
 	if (cmd->raw[cmd->len - 1] == '\\')
 	{
 		write(1, "\n\033[0;36m» \033[0;00m", ft_strlen("\n\033[0;36m» \033[0;00m"));
@@ -69,10 +70,15 @@ static void handle_backspace(t_cmd *cmd)
 
 static void handle_ctrl_d(t_cmd *cmd)
 {
+	if (cmd->len == 0)
+	{
+		exit(0);
+	}
 	if (cmd->cpos < cmd->len)
 	{
-		write(0, "\177", ft_strlen("\177"));
-		pop(cmd);
+		write(0, "\033[C", ft_strlen("\033[C"));
+		cmd->cpos++;
+		handle_backspace(cmd);
 	}
 }
 
