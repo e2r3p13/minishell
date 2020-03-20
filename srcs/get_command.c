@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 20:00:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 21:00:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,21 @@ static void cmd_backspace(t_cmd *cmd)
 	}
 }
 
-static void	cmd_character(t_cmd *cmd, char c)
+static void	cmd_character(t_cmd *cmd, char *buf)
 {
-	int cpos_diff;
+	int		cpos_diff;
 
-	if (push(c, cmd))
+	while (ft_isprint(*buf))
 	{
-		write(0, &c, 1);
-		write(0, cmd->raw + cmd->cpos, cmd->len - cmd->cpos + 1);
-		cpos_diff = cmd->len - cmd->cpos;
-		for(int i = 0; i < cpos_diff; i++)
-			write(0, CURSOR_LEFT, 3);
+		if (push(*buf, cmd))
+		{
+			write(0, buf, 1);
+			write(0, cmd->raw + cmd->cpos, cmd->len - cmd->cpos + 1);
+			cpos_diff = cmd->len - cmd->cpos;
+			for(int i = 0; i < cpos_diff; i++)
+				write(0, CURSOR_LEFT, 3);
+		}
+		buf++;
 	}
 }
 
@@ -92,12 +96,12 @@ static void cmd_ctrld(t_cmd *cmd)
 char		*get_cmd()
 {
 	t_cmd	*cmd;
-	char	buf[4];
+	char	buf[5];
 
 	cmd = new_cmd();
 	while (true)
 	{
-		ft_memset(buf, 0, 4);
+		ft_memset(buf, 0, 5);
 		read(0, &buf, 4);
 		if (*buf == ESCAPE_KEY)
 			cmd_arrows(cmd, buf + 1);
@@ -111,7 +115,7 @@ char		*get_cmd()
 		else if (*buf == CTRL_D_KEY)
 			cmd_ctrld(cmd);
 		else
-			cmd_character(cmd, *buf);
+			cmd_character(cmd, buf);
 	}
 	return (cmd->raw);
 }
