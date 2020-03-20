@@ -31,6 +31,13 @@ typedef struct	s_cmd
 	size_t		capacity;
 }				t_cmd;
 
+typedef	struct	s_list
+{
+	char		*raw;
+	int		token;
+	struct s_list	*next;
+}		t_list;
+
 int				minishell(char **env);
 void			prompt(char **env);
 char			*get_env_var(char *var_name, char **env);
@@ -44,6 +51,8 @@ t_bool 			move_cursor_right(t_cmd *cmd);
 t_bool 			join_commands(t_cmd *c1, char *c2);
 char			*get_cmd();
 void			enable_raw_mode();
-void			int_handler(int signal);
+t_list			*lexer(char *str);
+t_list			*ft_list_new(void *content);
+char			*ft_append(char *str, char c);
 
 #endif
