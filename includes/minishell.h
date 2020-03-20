@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 18:18:26 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 00:46:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,15 @@ t_cmd			*new_cmd();
 t_bool			push(char c, t_cmd *cmd);
 t_bool			pop(t_cmd *cmd);
 t_bool			stretch(t_cmd *cmd);
-t_bool 			move_cursor_left(t_cmd *cmd);
-t_bool 			move_cursor_right(t_cmd *cmd);
+t_bool 			can_move_cursor_left(t_cmd *cmd);
+t_bool 			can_move_cursor_right(t_cmd *cmd);
 t_bool 			join_commands(t_cmd *c1, char *c2);
+void			erase(t_cmd *cmd);
 char			*get_cmd();
 void			enable_raw_mode();
+void			move_cursor_left(int x);
+void			move_cursor_right(int x);
+void			fill_with(char c, size_t len);
 t_list			*lexer(char *str);
 t_list			*ft_list_new(void *content);
 char			*ft_append(char *str, char c);

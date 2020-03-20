@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 20:53:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 00:46:37 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_bool stretch(t_cmd *cmd)
 	return (true);
 }
 
-t_bool move_cursor_left(t_cmd *cmd)
+t_bool can_move_cursor_left(t_cmd *cmd)
 {
 	if (cmd->cpos > 0)
 	{
@@ -109,7 +109,7 @@ t_bool move_cursor_left(t_cmd *cmd)
 	return (false);
 }
 
-t_bool move_cursor_right(t_cmd *cmd)
+t_bool can_move_cursor_right(t_cmd *cmd)
 {
 	if (cmd->cpos < cmd->len)
 	{
@@ -135,4 +135,11 @@ t_bool join_commands(t_cmd *c1, char *c2)
 	c1->capacity = len;
 	c1->cpos = len;
 	return (true);
+}
+
+void erase(t_cmd *cmd)
+{
+	ft_memset(cmd->raw, 0, cmd->capacity);
+	cmd->len = 0;
+	cmd->cpos = 0;
 }
