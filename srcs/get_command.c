@@ -6,20 +6,23 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 00:57:52 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 17:42:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "keys.h"
 
+extern int g_minishell_pid;
+
 static void handle_return(t_cmd *cmd)
 {
 	char *next_line;
 
+	save_cmd(cmd->raw, HISTORY_PATH);
 	if (cmd->raw[cmd->len - 1] == '\\')
 	{
-		write(1, "\n > ", 4);
+		write(1, "\n»» ", 4);
 		next_line = get_cmd();
 		join_commands(cmd, next_line);
 	}
@@ -70,7 +73,9 @@ static void handle_backspace(t_cmd *cmd)
 static void handle_ctrl_d(t_cmd *cmd)
 {
 	if (cmd->len == 0)
-		exit(0);
+	{
+		kill(g_minishell_pid, SIGTERM);
+	}
 	if (cmd->cpos < cmd->len)
 	{
 		write(0, "\033[C", ft_strlen("\033[C"));

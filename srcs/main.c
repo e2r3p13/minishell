@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:57:39 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 11:54:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ int	main(int ac, char **av, char **env)
 {
 	av[ac] = NULL;
 	signal(SIGINT, int_handler);
+	signal(SIGTERM, term_handler);
 	return (minishell(env));
 }

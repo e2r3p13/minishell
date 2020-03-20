@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:59:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 11:55:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ t_bool 			join_commands(t_cmd *c1, char *c2);
 char			*get_cmd();
 void			enable_raw_mode();
 void			int_handler(int signal);
+void			term_handler(int signal);
 
 #endif
