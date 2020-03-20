@@ -6,14 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 15:57:51 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 16:40:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 18:10:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void int_handler(int signal)
+void ctrlc_handler(int signal)
 {
-	printf("%i\n", signal);
-	exit(0);
+	exit(signal);
 }

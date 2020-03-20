@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:59:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 18:09:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void			enable_raw_mode();
 t_list			*lexer(char *str);
 t_list			*ft_list_new(void *content);
 char			*ft_append(char *str, char c);
+void			ctrlc_handler(int signal);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 00:49:00 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 18:13:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void handle_return(t_cmd *cmd)
 
 	if (cmd->raw[cmd->len - 1] == '\\')
 	{
-		write(1, "\n > ", 4);
+		write(1, "\n\033[0;36m» \033[0;00m", ft_strlen("\n\033[0;36m» \033[0;00m"));
 		next_line = get_cmd();
 		join_commands(cmd, next_line);
 	}
@@ -76,6 +76,20 @@ static void handle_ctrl_d(t_cmd *cmd)
 	}
 }
 
+static void	handle_characters(t_cmd *cmd, char c)
+{
+	int cpos_diff;
+
+	if (push(c, cmd))
+	{
+		write(0, &c, 1);
+		write(0, cmd->raw + cmd->cpos, cmd->len - cmd->cpos + 1);
+		cpos_diff = cmd->len - cmd->cpos;
+		for(int i = 0; i < cpos_diff; i++)
+			write(0, "\033[D", ft_strlen("\033[D"));
+	}
+}
+
 char *get_cmd()
 {
 	t_cmd			*cmd;
@@ -98,10 +112,7 @@ char *get_cmd()
 		else if (buf[0] == CTRL_D_KEY)
 			handle_ctrl_d(cmd);
 		else
-		{
-			push(buf[0], cmd);
-			write(0, buf, 1);
-		}
+			handle_characters(cmd, buf[0]);
 	}
 	return (cmd->raw);
 }
