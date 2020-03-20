@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 00:49:00 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 00:57:52 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,13 @@ static void handle_backspace(t_cmd *cmd)
 
 static void handle_ctrl_d(t_cmd *cmd)
 {
+	if (cmd->len == 0)
+		exit(0);
 	if (cmd->cpos < cmd->len)
 	{
-		write(0, "\177", ft_strlen("\177"));
-		pop(cmd);
+		write(0, "\033[C", ft_strlen("\033[C"));
+		cmd->cpos++;
+		handle_backspace(cmd);
 	}
 }
 
