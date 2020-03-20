@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 00:06:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 20:53:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,8 @@ static void insert_at(char c, t_cmd *cmd)
 
 t_bool push(char c, t_cmd *cmd)
 {
-	if (cmd->len == cmd->capacity)
-	{
-		if (!stretch(cmd))
-			return (false);
-	}
+	if (!ft_isprint(c) || (cmd->len == cmd->capacity && !stretch(cmd)))
+		return (false);
 	if (cmd->cpos == cmd->len)
 		cmd->raw[cmd->len] = c;
 	else
@@ -74,9 +71,7 @@ t_bool pop(t_cmd *cmd)
 	if (cmd->len > 0)
 	{
 		if (cmd->len == cmd->cpos)
-		{
 			cmd->raw[cmd->len - 1] = 0;
-		}
 		else
 		{
 			if (cmd->cpos == 0)
