@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 15:23:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/20 00:06:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ void remove_at(t_cmd *cmd)
 	size_t l;
 
 	l = cmd->cpos;
-	while (l < cmd->len)
+	while (l - 1 < cmd->len)
 	{
 		cmd->raw[l - 1] = cmd->raw[l];
 		l++;
 	}
+	cmd->raw[l - 1] = 0;
 }
 
 t_bool pop(t_cmd *cmd)
@@ -73,9 +74,15 @@ t_bool pop(t_cmd *cmd)
 	if (cmd->len > 0)
 	{
 		if (cmd->len == cmd->cpos)
+		{
 			cmd->raw[cmd->len - 1] = 0;
+		}
 		else
+		{
+			if (cmd->cpos == 0)
+				return (false);
 			remove_at(cmd);
+		}
 		cmd->len--;
 		cmd->cpos--;
 		return (true);

@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/19 00:35:43 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/19 15:58:11 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS =	main.c \
 		utils.c \
 		get_command.c \
 		edit_command.c \
-		term_utils.c
+		term_utils.c \
+		signals.c
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror

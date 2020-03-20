@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/19 10:56:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/19 16:46:18 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # define ESC_KEY_DOWN 66
 # define ESC_KEY_RIGHT 67
 # define ESC_KEY_LEFT 68
+# define CTRL_D_KEY 4
 
 #endif
