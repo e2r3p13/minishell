@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/21 00:48:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 14:02:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 #include "prompt.h"
 #include "keys.h"
 
-static void cmd_return(t_cmd *cmd)
+static char *cmd_return(t_cmd *cmd)
 {
-	char *next_line;
+	char	*next_line;
+	char	*command;
 
 	//Multiline, if line is trailed by '\'
 	if (cmd->raw[cmd->len - 1] == '\\')
@@ -25,6 +26,9 @@ static void cmd_return(t_cmd *cmd)
 		next_line = get_cmd();
 		join_commands(cmd, next_line);
 	}
+	command = cmd->raw;
+	free(cmd);
+	return (command);
 }
 
 static void cmd_arrows(t_cmd *cmd, char *buf)
@@ -32,10 +36,6 @@ static void cmd_arrows(t_cmd *cmd, char *buf)
 	//Handle arrows for cmd editing and history
 	if (*buf++ == '[')
 	{
-		if (*buf == ESC_KEY_UP)
-			printf("");
-		if (*buf == ESC_KEY_DOWN)
-			printf("");
 		if (*buf == ESC_KEY_RIGHT)
 			if (can_move_cursor_right(cmd))
 				write(1, CURSOR_RIGHT, 3);
@@ -120,6 +120,5 @@ char		*get_cmd()
 		else
 			cmd_character(cmd, buf);
 	}
-	cmd_return(cmd);
-	return (cmd->raw);
+	return (cmd_return(cmd));
 }

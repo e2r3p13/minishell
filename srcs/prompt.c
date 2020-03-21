@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/21 00:16:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 13:47:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*g_execve_av[2] = {GDD_PATH, NULL};
 static void	prompt_path(char **env)
 {
 	char	*pwd;
+	char	*tmp;
 	char	*hd;
 
 	pwd = getcwd(NULL, 0);
@@ -27,9 +28,11 @@ static void	prompt_path(char **env)
 	{
 		if (ft_strncmp(pwd, hd, ft_strlen(hd)) == 0)
 		{
+			tmp = pwd;
 			pwd = ft_strjoin("~", pwd + ft_strlen(hd));
 			write(1, pwd, ft_strlen(pwd));
 			free(pwd);
+			free(tmp);
 		}
 		else
 			write(1, pwd, ft_strlen(pwd));
