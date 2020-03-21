@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/21 00:46:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 14:12:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_cmd *new_cmd()
 
 	if (!(cmd = malloc(sizeof(t_cmd))))
 		return (NULL);
-	if (!(cmd->raw = malloc(sizeof(char) * 32)))
+	if (!(cmd->raw = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (NULL);
-	ft_memset(cmd->raw, 0, 32);
-	cmd->capacity = 32;
+	ft_memset(cmd->raw, 0, BUFFER_SIZE + 1);
+	cmd->capacity = BUFFER_SIZE;
 	cmd->len = 0;
 	cmd->cpos = 0;
 	return (cmd);
@@ -90,9 +90,9 @@ t_bool stretch(t_cmd *cmd)
 	char	*new_raw;
 
 	cmd->capacity *= 2;
-	if (!(new_raw = malloc(sizeof(char) * cmd->capacity)))
+	if (!(new_raw = malloc(sizeof(char) * (cmd->capacity + 1))))
 		return (false);
-	ft_memset(new_raw, 0, cmd->capacity);
+	ft_memset(new_raw, 0, cmd->capacity + 1);
 	ft_memcpy(new_raw, cmd->raw, cmd->len);
 	free(cmd->raw);
 	cmd->raw = new_raw;
