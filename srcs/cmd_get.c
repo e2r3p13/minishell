@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_command.c                                      :+:      :+:    :+:   */
+/*   cmd_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/21 14:02:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 14:25:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static char *cmd_return(t_cmd *cmd)
 	char	*next_line;
 	char	*command;
 
-	//Multiline, if line is trailed by '\'
 	if (cmd->raw[cmd->len - 1] == '\\')
 	{
 		write(1, NEW_LINE_PROMPT, 18);
@@ -33,7 +32,6 @@ static char *cmd_return(t_cmd *cmd)
 
 static void cmd_arrows(t_cmd *cmd, char *buf)
 {
-	//Handle arrows for cmd editing and history
 	if (*buf++ == '[')
 	{
 		if (*buf == ESC_KEY_RIGHT)
@@ -77,7 +75,6 @@ static void cmd_ctrld(t_cmd *cmd)
 {
 	if (cmd->len == 0)
 	{
-		//Must exit full program;
 		exit(0);
 	}
 	if (cmd->cpos < cmd->len)
