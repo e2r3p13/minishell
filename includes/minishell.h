@@ -23,6 +23,7 @@
 # include "libft.h"
 
 # define HISTORY_PATH "/tmp/minishell_history"
+# define BUILTINS_PATH "./srcs/builtins/"
 
 typedef struct			s_cmd
 {
