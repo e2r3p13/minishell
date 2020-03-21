@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/18 14:58:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/21 13:47:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,27 @@ char	*g_execve_av[2] = {GDD_PATH, NULL};
 static void	prompt_path(char **env)
 {
 	char	*pwd;
+	char	*tmp;
 	char	*hd;
 
 	pwd = getcwd(NULL, 0);
 	hd = get_env_var("HOME=", env);
-	write(0, PATH_COLOR, ft_strlen(PATH_COLOR));
+	write(1, PATH_COLOR, ft_strlen(PATH_COLOR));
 	if (pwd && hd)
 	{
 		if (ft_strncmp(pwd, hd, ft_strlen(hd)) == 0)
 		{
+			tmp = pwd;
 			pwd = ft_strjoin("~", pwd + ft_strlen(hd));
-			write(0, pwd, ft_strlen(pwd));
+			write(1, pwd, ft_strlen(pwd));
 			free(pwd);
+			free(tmp);
 		}
 		else
-			write(0, pwd, ft_strlen(pwd));
+			write(1, pwd, ft_strlen(pwd));
 	}
 	if (pwd && !hd)
-		write(0, pwd, ft_strlen(pwd));
+		write(1, pwd, ft_strlen(pwd));
 }
 
 static void	prompt_git(char **env)
