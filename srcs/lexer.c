@@ -24,11 +24,10 @@ static void	lex_tokenize(char *str, t_lex_lst *cur)
 			cur->next = lex_lstnew();
 			cur = cur->next;
 		}
-		if (*str == '\n' || *str == ';')
-		{
-			cur->token = NEWLINE;
+		if (*str == ' ')
 			str++;
-		}
+		if (*str == '\n' || *str == ';')
+			str += lex_newline(str, cur);
 		else if (ft_isinset("+-*/%=!", *str))
 			str += lex_operator(str, cur);
 		else if (ft_isinset("\\\'\"", *str))

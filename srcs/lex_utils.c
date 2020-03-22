@@ -2,28 +2,35 @@
 #include "libft.h"
 #include "tokens.h"
 
+int	lex_newline(char *str, t_lex_lst *cur)
+{
+    cur->token = NEWLINE;
+    cur->raw = ft_strndup(str, 1);
+    return (1);
+}
+
 int	lex_redirect(char *str, t_lex_lst *cur)
 {
-        int     len;
+    int	len;
 
-        len = 1;
-        if (str[len] && ft_isinset("<>|", str[len]))
-                len++;
-        cur->token = REDIRECT;
-        cur->raw = ft_strndup(str, len + 1);
-        return (len);
+    len = 1;
+    if (str[len] && ft_isinset("<>|", str[len]))
+        len++;
+    cur->token = REDIRECT;
+    cur->raw = ft_strndup(str, len + 1);
+    return (len);
 }
 
 int	lex_comment(char *str, t_lex_lst *cur)
 {
-        int     len;
+    int	len;
 
-        len = 0;
-        while (str[len] && str[len] != 10)//add carriage ret?
-                len++;
-        cur->token = COMMENT;
-        cur->raw = ft_strndup(str, len + 1);
-        return (len);
+    len = 0;
+    while (str[len] && str[len] != 10)//add carriage ret?
+    	len++;
+    cur->token = COMMENT;
+    cur->raw = ft_strndup(str, len + 1);
+    return (len);
 }
 
 int	lex_word(char *str, t_lex_lst **cur)
