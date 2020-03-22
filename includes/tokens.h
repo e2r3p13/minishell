@@ -15,5 +15,6 @@
 # define BSLASH 12
 # define PIPE 13
 # define VARIABLE 14
+# define REDIRECT 15
 
 #endif

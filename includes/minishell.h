@@ -40,6 +40,13 @@ typedef	struct			s_lex_lst
 	struct s_lex_lst	*next;
 }						t_lex_lst;
 
+typedef struct			s_rdct
+{
+	int	type;
+	void	*left;
+	void	*right;
+}				t_rdct;
+
 int					minishell(char **env);
 void				prompt(char **env);
 char				*get_env_var(char *var_name, char **env);
