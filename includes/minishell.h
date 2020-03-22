@@ -56,9 +56,14 @@ void			move_cursor_left(int x);
 void			move_cursor_right(int x);
 void			fill_with(char c, size_t len);
 t_list			*lexer(char *str);
-t_list			*ft_list_new(void *content);
-char			*ft_append(char *str, char c);
-char			*ft_strndup(char *s1, size_t n);
+t_list			*ft_list_new(void);
+char			*ft_strndup(const char *s1, size_t n);
+int			lex_quoted(char *str, t_list **cur);
+int			lex_redirect(char *str, t_list *cur);
+int			lex_comment(char *str, t_list *cur);
+int			lex_word(char *str, t_list **cur);
+int			lex_var(char *str, t_list **cur);
+int			lex_operator(char *str, t_list *cur);
 void			ctrlc_handler(int signal);
 void			ctrld_handler(int signal);
 

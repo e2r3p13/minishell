@@ -1,64 +1,67 @@
-#include <stdlib.h>
 #include "minishell.h"
 #include "libft.h"
+#include "tokens.h"
 
-t_list	*ft_list_new(void *content)
+int	lex_redirect(char *str, t_list *cur)
 {
-	t_list *lst;
+        int     len;
 
-	if (!(lst = (t_list *)malloc(sizeof(t_list))))
-		return (NULL);
-	lst->raw = content;
-	lst->token = 0;
-	lst->next = NULL;
-	return (lst);
+        len = 1;
+        if (str[len] && ft_isinset("<>|", str[len]))
+                len++;
+        cur->token = REDIRECT;
+        cur->raw = ft_strndup(str, len + 1);
+        return (len);
 }
 
-char	*ft_append(char *str, char c)
+int	lex_comment(char *str, t_list *cur)
 {
-	char	*s;
-	int	i;
+        int     len;
 
-	i = 0;
-	if (!str || !*str)
-	{
-		if (!(s = (char *)malloc(2)))
-			return (NULL);
-	}
-	else
-	{
-		if (!(s = (char *)malloc(sizeof(char) * ft_strlen(str) + 1)))
-			return (NULL);
-		while(str[i])
-		{
-			s[i] = str[i];
-			i++;
-		}
-		free(str);
-	}
-	s[i++] = c;
-	s[i] = 0;
-	return (s);
+        len = 0;
+        while (str[len] && str[len] != 10)//add carriage ret?
+                len++;
+        cur->token = COMMENT;
+        cur->raw = ft_strndup(str, len + 1);
+        return (len);
 }
 
-char    *ft_strndup(const char *s1, size_t n)
+int	lex_word(char *str, t_list **cur)
 {
-        size_t  len;
-        char    *s2;
+        int     i;
 
-        len = ft_strlen(s1);
-	if (len < n)
-	{
-        	if (!(s2 = (char *)malloc(sizeof(char) * (len + 1))))
-                	return (NULL);
-        	ft_strlcpy(s2, s1, n + 1);
-	}
-	else
-	{
-		if (!(s2 = (char *)malloc(sizeof(char) * (n + 1))))
-                	return (NULL);
-        	ft_strlcpy(s2, s1, n);
-		s2[n] = 0;
-        }
-	return (s2);
+        i = 0;
+        while (str[i] && ft_isalnum(str[i]))
+                i++;
+        (*cur)->token = WORD;
+        (*cur)->raw = ft_strndup(str, i + 1);
+        return (i);
+}
+
+int	lex_var(char *str, t_list **cur)
+{
+        int     i;
+
+        i = 1;
+        if (str[i] == '(')
+                while (str[i] && str[i] != ')')
+                        i++;
+        else
+                while (str[i] && ft_isalnum(str[i]))
+                        i++;
+        (*cur)->token = VAR;
+        (*cur)->raw = ft_strndup(str, i + 1);
+        return (i);
+}
+
+int	lex_operator(char *str, t_list *cur)
+{
+        int     i;
+
+        i = 0;
+        while (ft_isinset("+-/*=%!", str[i]))
+                i++;
+        cur->token = OPERATOR;
+        cur->raw = ft_strndup(str, i + 1);
+        return (i);
 }
