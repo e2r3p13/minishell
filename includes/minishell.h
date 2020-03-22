@@ -76,6 +76,8 @@ int					get_cmd_length(t_lex_lst *head);
 int					check_builtin(char **smp_cmd, char **env);
 int					get_simple_cmd(t_lex_lst *head, char **env);
 char 				**lex_to_args(t_lex_lst *lst);
+t_lex_lst			*mini_parse(t_lex_lst *lst);
+t_rdct				*parser(t_lex_lst *lst);
 void				execute(char **, char **env);
 
 int					ms_cd(int ac, char **av, char **env);
