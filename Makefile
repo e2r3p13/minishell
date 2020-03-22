@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/21 14:23:02 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/22 18:51:32 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ SRCS =	main.c \
 		cmd_get.c \
 		cmd_edit.c \
 		cmd_history.c \
+		lex_utils.c \
+		lexer.c \
+		lex_quote.c \
 		termios_utils.c \
 		signals.c
 

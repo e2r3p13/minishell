@@ -2,7 +2,7 @@
 #include "libft.h"
 #include "tokens.h"
 
-int	lex_redirect(char *str, t_list *cur)
+int	lex_redirect(char *str, t_lex_lst *cur)
 {
         int     len;
 
@@ -14,7 +14,7 @@ int	lex_redirect(char *str, t_list *cur)
         return (len);
 }
 
-int	lex_comment(char *str, t_list *cur)
+int	lex_comment(char *str, t_lex_lst *cur)
 {
         int     len;
 
@@ -26,42 +26,42 @@ int	lex_comment(char *str, t_list *cur)
         return (len);
 }
 
-int	lex_word(char *str, t_list **cur)
+int	lex_word(char *str, t_lex_lst **cur)
 {
-        int     i;
+    int	i;
 
-        i = 0;
+    i = 0;
+    while (str[i] && ft_isalnum(str[i]))
+		i++;
+    (*cur)->token = WORD;
+    (*cur)->raw = ft_strndup(str, i + 1);
+    return (i);
+}
+
+int	lex_var(char *str, t_lex_lst **cur)
+{
+    int	i;
+
+    i = 1;
+    if (str[i] == '(')
+        while (str[i] && str[i] != ')')
+            i++;
+    else
         while (str[i] && ft_isalnum(str[i]))
-                i++;
-        (*cur)->token = WORD;
-        (*cur)->raw = ft_strndup(str, i + 1);
-        return (i);
+                    i++;
+    (*cur)->token = VAR;
+    (*cur)->raw = ft_strndup(str, i + 1);
+    return (i);
 }
 
-int	lex_var(char *str, t_list **cur)
+int	lex_operator(char *str, t_lex_lst *cur)
 {
-        int     i;
+    int	i;
 
-        i = 1;
-        if (str[i] == '(')
-                while (str[i] && str[i] != ')')
-                        i++;
-        else
-                while (str[i] && ft_isalnum(str[i]))
-                        i++;
-        (*cur)->token = VAR;
-        (*cur)->raw = ft_strndup(str, i + 1);
-        return (i);
-}
-
-int	lex_operator(char *str, t_list *cur)
-{
-        int     i;
-
-        i = 0;
-        while (ft_isinset("+-/*=%!", str[i]))
-                i++;
-        cur->token = OPERATOR;
-        cur->raw = ft_strndup(str, i + 1);
-        return (i);
+    i = 0;
+    while (ft_isinset("+-/*=%!", *str++))
+            i++;
+    cur->token = OPERATOR;
+    cur->raw = ft_strndup(str, i + 1);
+    return (i);
 }

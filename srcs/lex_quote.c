@@ -2,7 +2,7 @@
 #include "tokens.h"
 #include "libft.h"
 
-static int      lex_anti_quote(char *str, t_list *cur)
+static int      lex_anti_quote(char *str, t_lex_lst *cur)
 {
         int     i;
 
@@ -12,7 +12,7 @@ static int      lex_anti_quote(char *str, t_list *cur)
         return (i);
 }
 
-static int      lex_single_quote(char *str, t_list *cur)
+static int      lex_single_quote(char *str, t_lex_lst *cur)
 {
         int     len;
 	char	*c;
@@ -32,7 +32,7 @@ static int      lex_single_quote(char *str, t_list *cur)
         return (len);
 }
 
-static void	spot_var(char *s, t_list **c, int j)
+static void	spot_var(char *s, t_lex_lst **c, int j)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ static void	spot_var(char *s, t_list **c, int j)
 	{
 		if (s[i] == '$' || s[i] == '\\')
 		{
-                	(*c)->next = ft_list_new();
+                	(*c)->next = lex_lstnew();
                 	*c = (*c)->next;
 		}
 		if (s[i] == '$')
@@ -52,7 +52,7 @@ static void	spot_var(char *s, t_list **c, int j)
 	}
 }
 
-static int      lex_double_quote(char *str, t_list **cur)
+static int      lex_double_quote(char *str, t_lex_lst **cur)
 {
         int     len;
 
@@ -70,7 +70,7 @@ static int      lex_double_quote(char *str, t_list **cur)
         return (len);
 }
 
-int      lex_quoted(char *str, t_list **cur)
+int      lex_quoted(char *str, t_lex_lst **cur)
 {
         int     i;
 

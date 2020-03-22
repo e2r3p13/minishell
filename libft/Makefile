@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 11:56:25 by lfalkau           #+#    #+#              #
-#    Updated: 2020/01/17 18:53:08 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/22 18:28:20 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS =			ft_atoi.c \
 				ft_strncmp.c \
 				ft_strnstr.c \
 				ft_strdup.c \
+				ft_strndup.c \
 				ft_strlcat.c \
 				ft_strlcpy.c \
 				ft_putstr_fd.c  \
