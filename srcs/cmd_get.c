@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/21 18:57:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 18:32:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ static void cmd_ctrld(t_cmd *cmd)
 {
 	if (cmd->len == 0)
 	{
-		kill(getppid(), SIGTERM);
+		write(1, "\n", 1);
+		exit(0);
 	}
 	if (cmd->cpos < cmd->len)
 	{

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 15:57:51 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 15:27:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 18:33:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@ extern int g_cpid;
 
 void ctrlc_handler(int signal)
 {
-	if (getppid() == g_pid)
-	{
-		write(1, "\n", 1);
-		exit(signal);
-	}
-}
-
-void ctrld_handler(int signal)
-{
 	write(1, "\n", 1);
-	kill(g_cpid, SIGABRT);
 	exit(signal);
 }
