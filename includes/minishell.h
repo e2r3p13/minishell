@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/22 19:11:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 14:31:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@ void				move_cursor_right(int x);
 void				fill_with(char c, size_t len);
 t_lex_lst			*lexer(char *str);
 t_lex_lst			*lex_lstnew(void);
-int					lex_quoted(char *str, t_lex_lst **cur);
+int					lex_quote(char *str, t_lex_lst *cur);
 int					lex_newline(char *str, t_lex_lst *cur);
 int					lex_redirect(char *str, t_lex_lst *cur);
-int					lex_comment(char *str, t_lex_lst *cur);
-int					lex_word(char *str, t_lex_lst **cur);
-int					lex_var(char *str, t_lex_lst **cur);
-int					lex_operator(char *str, t_lex_lst *cur);
+int					lex_word(char *str, t_lex_lst *cur);
+int					lex_variable(char *str, t_lex_lst *cur);
 void				ctrlc_handler(int signal);
 void				ctrld_handler(int signal);
 
