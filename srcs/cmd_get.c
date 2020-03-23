@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 18:53:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 18:56:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static t_bool	cmd_ctrld_shoould_exit(t_cmd *cmd)
 
 static void		cmd_ctrlu(t_cmd *cmd)
 {
-	//Erase full line;
 	move_cursor_left(cmd->cpos);
 	fill_with(' ', cmd->len);
 	move_cursor_left(cmd->len);
