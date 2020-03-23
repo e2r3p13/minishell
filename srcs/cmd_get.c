@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 18:32:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 18:53:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "prompt.h"
 #include "keys.h"
 
-static char *cmd_return(t_cmd *cmd)
+static char		*cmd_return(t_cmd *cmd)
 {
 	char	*next_line;
 	char	*command;
@@ -30,7 +30,7 @@ static char *cmd_return(t_cmd *cmd)
 	return (command);
 }
 
-static void cmd_arrows(t_cmd *cmd, char *buf)
+static void		cmd_arrows(t_cmd *cmd, char *buf)
 {
 	if (*buf++ == '[')
 	{
@@ -43,7 +43,7 @@ static void cmd_arrows(t_cmd *cmd, char *buf)
 	}
 }
 
-static void cmd_backspace(t_cmd *cmd)
+static void		cmd_backspace(t_cmd *cmd)
 {
 	int cpos_diff;
 
@@ -57,7 +57,7 @@ static void cmd_backspace(t_cmd *cmd)
 	}
 }
 
-static void	cmd_character(t_cmd *cmd, char *buf)
+static void		cmd_character(t_cmd *cmd, char *buf)
 {
 	int		cpos_diff;
 
@@ -71,12 +71,14 @@ static void	cmd_character(t_cmd *cmd, char *buf)
 	}
 }
 
-static void cmd_ctrld(t_cmd *cmd)
+static t_bool	cmd_ctrld_shoould_exit(t_cmd *cmd)
 {
 	if (cmd->len == 0)
 	{
-		write(1, "\n", 1);
-		exit(0);
+		if (cmd->capacity < 5)
+			return (false);
+		ft_memcpy(cmd->raw, "exit\0", 5);
+		return (true);
 	}
 	if (cmd->cpos < cmd->len)
 	{
@@ -84,9 +86,10 @@ static void cmd_ctrld(t_cmd *cmd)
 		cmd->cpos++;
 		cmd_backspace(cmd);
 	}
+	return (false);
 }
 
-static void cmd_ctrlu(t_cmd *cmd)
+static void		cmd_ctrlu(t_cmd *cmd)
 {
 	//Erase full line;
 	move_cursor_left(cmd->cpos);
@@ -95,7 +98,7 @@ static void cmd_ctrlu(t_cmd *cmd)
 	erase(cmd);
 }
 
-char		*get_cmd()
+char			*get_cmd()
 {
 	t_cmd	*cmd;
 	char	buf[5];
@@ -111,8 +114,8 @@ char		*get_cmd()
 			break;
 		else if (*buf == BACKSPACE_KEY)
 			cmd_backspace(cmd);
-		else if (*buf == CTRL_D_KEY)
-			cmd_ctrld(cmd);
+		else if (*buf == CTRL_D_KEY && cmd_ctrld_shoould_exit(cmd))
+			break;
 		else if (*buf == CTRL_U_KEY)
 			cmd_ctrlu(cmd);
 		else
