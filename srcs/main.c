@@ -6,17 +6,18 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 18:33:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 19:50:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//Real main
+struct termios g_save;
 
 int	main(int ac, char **av, char **env)
 {
 	av[ac] = NULL;
+	tcgetattr(STDIN_FILENO, &g_save);;
 	signal(SIGINT, ctrlc_handler);
 	return (minishell(env));
 }
