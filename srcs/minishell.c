@@ -6,15 +6,16 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 14:50:20 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 15:26:23 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "keys.h"
 
-int g_pid;
-int g_cpid;
+int				g_pid;
+int				g_cpid;
+struct termios	g_ogterm;
 
 static void lex_printlst(t_lex_lst *lst)
 {
@@ -40,18 +41,14 @@ int	minishell(char **env)
 			enable_raw_mode();
 			cmd_line = get_cmd();
 			printf("\n\033[0;95mcmd: \033[0;00m%s\n", cmd_line);
-			//TODO: parse cmd and throw syntax errors if needed
 			save_cmd(cmd_line, HISTORY_PATH);
-			//TODO: process cmd
 			lst = lexer(cmd_line);
 			lex_printlst(lst);
 			free(cmd_line);
 			exit(0);
 		}
 		else
-		{
 			wait(0);
-		}
 	}
 	return (0);
 }

@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term_utils.c                                       :+:      :+:    :+:   */
+/*   termios_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 20:31:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/21 00:48:31 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 15:26:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+extern struct termios g_ogterm;
+
 void	enable_raw_mode()
 {
 	struct termios raw;
 
-	tcgetattr(STDIN_FILENO, &raw);
+	tcgetattr(STDIN_FILENO, &g_ogterm);
+	atexit(disable_raw_mode);
+	raw = g_ogterm;
 	raw.c_lflag &= ~(ICANON);
 	raw.c_lflag &= ~(ECHO);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+}
+
+void	disable_raw_mode()
+{
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_ogterm);
 }
 
 void	move_cursor_left(int x)
