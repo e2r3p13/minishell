@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 14:31:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/23 15:05:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <signal.h>
-#include <termios.h>
+# include <termios.h>
+# include <sys/wait.h>
 # include "libft.h"
 
 # define HISTORY_PATH "/tmp/minishell_history"
