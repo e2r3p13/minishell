@@ -13,7 +13,6 @@ void	*g_ascii_tokens[256] =
 	['$'] = lex_variable,
 	['\''] = lex_quote,
 	['\"'] = lex_quote,
-	['\\'] = lex_quote,
 };
 
 t_lex_lst 	*lex_lstnew(void)

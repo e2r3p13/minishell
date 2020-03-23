@@ -39,7 +39,7 @@ int	lex_word(char *str, t_lex_lst *cur)
     int	i;
 
     i = 0;
-    while (str[i] && !ft_isinset("<>|;\n$\'\"\\ ", str[i]))
+    while (str[i] && !ft_isinset("<>|;\n$\'\" ", str[i]))
 		i++;
     cur->token = WORD;
     cur->raw = ft_strndup(str, i);
