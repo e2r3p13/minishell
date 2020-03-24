@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/24 20:50:49 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/24 18:46:53 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ OBJS_PATH = ./objs/
 LBFT_PATH = ./libft/libft.a
 RSCS_PATH = /tmp/
 GDDS_NAME = ipt_git_prompt.sh
+BTNS_PATH = ./builtins/
+BTSC_PATH = ./srcs/builtins/
 
 SRCS =	main.c \
 		minishell.c \
@@ -39,12 +41,20 @@ OBJS = $(addprefix $(OBJS_PATH),$(TMP))
 
 NAME = minishell
 
-all: aff_h $(NAME) aff_e move_script
+all: aff_h $(NAME) move_script
 
 $(NAME): $(OBJS)
 	@make -C ./libft/
-	@make aff_b
+	@printf "● minishell "
 	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LBFT_PATH) -o $(NAME)
+	@printf "\033[32m✓\033[0m\n"
+	@mkdir -p $(BTNS_PATH)
+	@$(CC) $(CFLAGS) $(BTSC_PATH)echo.c -o $(BTNS_PATH)echo
+	@printf "● echo "
+	@printf "\033[32m✓\033[0m\n"
+	@$(CC) $(CFLAGS) $(BTSC_PATH)pwd.c -o $(BTNS_PATH)pwd
+	@printf "● pwd "
+	@printf "\033[32m✓\033[0m\n"
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
@@ -56,6 +66,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -rf $(BTNS_PATH)
 	@rm -f $(RSCS_PATH)$(GDDS_NAME)
 	@rm -f $(RSCS_PATH)/history
 
@@ -68,12 +79,6 @@ aff_h:
 	@printf "| | | | |   | |_ -|   | -_| | |\n"
 	@printf "|_|_|_|_|_|_|_|___|_|_|___|_|_|\n"
 	@printf "\n"
-
-aff_b:
-	@printf "● Minishell "
-
-aff_e:
-	@printf "\033[32m✓\033[0m\n"
 
 move_script:
 	@cp $(SRCS_PATH)$(GDDS_NAME) $(RSCS_PATH)
