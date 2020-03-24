@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 18:34:42 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/24 20:51:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,8 @@ int					lex_redirect(char *str, t_lex_lst *cur);
 int					lex_word(char *str, t_lex_lst *cur);
 int					lex_variable(char *str, t_lex_lst *cur);
 void				ctrlc_handler(int signal);
+int					get_cmd_length(t_lex_lst *head);
+int					check_builtin(char **smp_cmd, char **env);
+int					get_simple_cmd(t_lex_lst *head, char **env);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/24 13:47:38 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/24 20:50:49 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS =	main.c \
 		lex_main.c \
 		lex_tokens.c \
 		termios_utils.c \
+		exe_main.c \
 		signals.c
 
 CC = gcc
