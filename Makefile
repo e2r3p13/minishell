@@ -29,6 +29,7 @@ SRCS =	main.c \
 		lex_main.c \
 		lex_tokens.c \
 		termios_utils.c \
+		exe_main.c \
 		signals.c
 
 CC = gcc
