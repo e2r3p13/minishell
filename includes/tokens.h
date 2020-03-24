@@ -5,6 +5,7 @@
 # define ASSIGNMENT_WORD 2
 # define NAME 3
 # define NEWLINE 4
+# define EXITCODE 5
 # define LESS 6
 # define DLESS 7
 # define GREAT 8

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/24 13:49:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/24 14:55:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,22 @@ int	lex_variable(char *str, t_lex_lst *cur)
 {
     int	i;
 
-    i = 1;
-    if (str[i] == '(')
-        while (str[i] && str[i] != ')')
-            i++;
-    else
-        while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-            i++;
-    cur->token = VARIABLE;
+	if (str[1] == ' ' || str[1] == '\0')
+	{
+		cur->token = WORD;
+	    cur->raw = ft_strdup("$");
+	    return (1);
+	}
+	if (str[1] == '?')
+	{
+		cur->token = EXITCODE;
+		cur->raw = ft_strdup("$?");
+	    return (2);
+	}
+	i = 1;
+	while (str[i] == '_' || ft_isalnum(str[i]))
+		i++;
+	cur->token = VARIABLE;
     cur->raw = ft_strndup(str, i);
     return (i);
 }
