@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/24 20:51:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/24 22:54:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "libft.h"
 
 # define HISTORY_PATH "/tmp/minishell_history"
-# define BUILTINS_PATH "./srcs/builtins/"
+# define BUILTINS_PATH "./builtins/"
 
 typedef struct			s_cmd
 {
