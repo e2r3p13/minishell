@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 13:27:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 22:00:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef	struct			s_lex_lst
 {
 	char				*raw;
 	int					token;
+	t_bool				space;
 	struct s_lex_lst	*next;
 }						t_lex_lst;
 
@@ -79,6 +80,7 @@ char 				**lex_to_args(t_lex_lst *lst);
 t_lex_lst			*mini_parse(t_lex_lst *lst);
 t_rdct				*parser(t_lex_lst *lst);
 void				execute(char **, char **env);
+t_bool				expand(t_lex_lst *lst, char **env);
 
 int					ms_cd(int ac, char **av, char **env);
 int					ms_echo(int ac, char **av);

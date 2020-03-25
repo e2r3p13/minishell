@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/25 12:38:50 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/25 20:54:35 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,11 @@ SRCS =	main.c \
 		builtins/env.c \
 		builtins/pwd.c \
 		builtins/exit.c \
+		expand.c \
 		signals.c
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 OFLAGS = -g3 -fsanitize=address
 
 TMP = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/24 14:55:26 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 21:53:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,12 @@ int	lex_word(char *str, t_lex_lst *cur)
     int	i;
 
     i = 0;
-    while (str[i] && !ft_isinset("<>|;\n$\'\" ", str[i]))
+    while (str[i] && !ft_isinset("<>|;\n\'\" ", str[i]))
+	{
+		if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
+			return (i);
 		i++;
+	}
     cur->token = WORD;
     cur->raw = ft_strndup(str, i);
     return (i);
@@ -75,17 +79,15 @@ int	lex_variable(char *str, t_lex_lst *cur)
 {
     int	i;
 
-	if (str[1] == ' ' || str[1] == '\0')
-	{
-		cur->token = WORD;
-	    cur->raw = ft_strdup("$");
-	    return (1);
-	}
 	if (str[1] == '?')
 	{
 		cur->token = EXITCODE;
 		cur->raw = ft_strdup("$?");
 	    return (2);
+	}
+	if (!ft_isalnum(str[1]) && str[1] != '_')
+	{
+		return (lex_word(str, cur));
 	}
 	i = 1;
 	while (str[i] == '_' || ft_isalnum(str[i]))

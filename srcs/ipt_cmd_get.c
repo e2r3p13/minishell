@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 12:34:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 21:31:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char		*cmd_return(t_cmd *cmd)
 	char	*next_line;
 	char	*command;
 
-	if (cmd->raw[cmd->len - 1] == '\\')
+	if (cmd->len > 0 && cmd->raw[cmd->len - 1] == '\\')
 	{
 		write(1, NEW_LINE_PROMPT, 18);
 		next_line = get_cmd();

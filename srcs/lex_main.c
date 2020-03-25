@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/24 13:49:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 22:02:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_lex_lst 	*lex_lstnew(void)
     lst->raw = NULL;
     lst->token = 0;
     lst->next = NULL;
+	lst->space = false;
     return (lst);
 }
 
@@ -49,13 +50,16 @@ t_lex_lst	*lexer(char *str)
 	cur = head;
 	while (*str)
 	{
+		if (cur->token && *str == ' ')
+		{
+			cur->space = true;
+			str++;
+		}
 		if (cur->token)
 		{
 			cur->next = lex_lstnew();
 			cur = cur->next;
 		}
-		if (*str == ' ')
-			str++;
 		if (!(f = g_ascii_tokens[(int)*str]))
 			f = lex_word;
 		str += f(str, cur);
