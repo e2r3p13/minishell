@@ -6,11 +6,15 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:42 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 12:12:03 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 12:39:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
 int ms_exit(int ac, char **av, char **env)
 {
-
+	if (av != env)
+		av[ac] = NULL;
+	exit(0);
 }

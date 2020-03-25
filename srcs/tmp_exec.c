@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 12:32:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 13:36:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ static int lstsize(t_lex_lst *lst)
 	return (i);
 }
 
+static int arglen(char **av)
+{
+	int i;
+
+	i = 0;
+	while (av[i])
+		i++;
+	return (i);
+}
+
 static void	*get_builtin_func(char *exename)
 {
 	if (ft_strncmp("cd", exename, 3) == 0)
@@ -33,8 +43,8 @@ static void	*get_builtin_func(char *exename)
 		return (&ms_echo);
 	if (ft_strncmp("env", exename, 3) == 0)
 		return (&ms_env);
-	// if (ft_strncmp("exit", exename, 3) == 0)
-	// 	return (&ms_exit);
+	if (ft_strncmp("exit", exename, 3) == 0)
+		return (&ms_exit);
 	// if (ft_strncmp("export", exename, 3) == 0)
 	// 	return (&ms_export);
 	if (ft_strncmp("pwd", exename, 3) == 0)
@@ -44,11 +54,10 @@ static void	*get_builtin_func(char *exename)
 	return (NULL);
 }
 
-int			execute_builtin(t_lex_lst *lst, char **env)
+char 		**lex_to_args(t_lex_lst *lst)
 {
-	int			i;
-	char		**av;
-	int			(*f)(int ac, char **av, char **env);
+	char	**av;
+	int		i;
 
 	i = 0;
 	av = malloc(sizeof(char *) * (lstsize(lst) + 1));
@@ -58,13 +67,35 @@ int			execute_builtin(t_lex_lst *lst, char **env)
 	       lst = lst->next;
 	}
 	av[i] = NULL;
+	return (av);
+}
+
+void		execute(char **av, char **env)
+{
+	char	**pathes;
+	char	*relpath;
+	char	*exepath;
+	int		i;
+	int		(*f)(int ac, char **av, char **env);
+
 	if ((f = get_builtin_func(av[0])))
-		f(i, av, env);
+		f(arglen(av), av, env);
 	else
 	{
-		write(1, "minishell: command not foud: ", 29);
-		write(1, av[0], ft_strlen(av[0]));
-		write(1, "\n", 1);
+		i = 0;
+		pathes = ft_split(get_env_var("PATH=", env), ':');
+		relpath = ft_strjoin("/", av[0]);
+		while (pathes[i])
+		{
+			exepath = ft_strjoin(pathes[i], relpath);
+			if (fork() == 0)
+			{
+				execve(exepath, av, env);
+				exit(0);
+			}
+			else
+				wait(0);
+			i++;
+		}
 	}
-	return (0);
 }
