@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_get.c                                          :+:      :+:    :+:   */
+/*   ipt_cmd_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 18:56:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 12:34:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static t_bool	cmd_ctrld_shoould_exit(t_cmd *cmd)
 		if (cmd->capacity < 5)
 			return (false);
 		ft_memcpy(cmd->raw, "exit\0", 5);
+		write(1, "exit", 4);
 		return (true);
 	}
 	if (cmd->cpos < cmd->len)

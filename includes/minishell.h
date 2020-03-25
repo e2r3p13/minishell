@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/24 22:54:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 12:22:19 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,14 @@ void				ctrlc_handler(int signal);
 int					get_cmd_length(t_lex_lst *head);
 int					check_builtin(char **smp_cmd, char **env);
 int					get_simple_cmd(t_lex_lst *head, char **env);
+int					execute_builtin(t_lex_lst *lst, char **env);
+
+int					ms_cd(int ac, char **av, char **env);
+int					ms_echo(int ac, char **av);
+int					ms_env(int ac, char **av, char **env);
+int					ms_exit(int ac, char **av, char **env);
+int					ms_export(int ac, char **av);
+int					ms_pwd(int ac, char **av, char **env);
+int					ms_unset(int ac, char **av);
 
 #endif

@@ -6,18 +6,18 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/24 21:13:23 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/25 12:13:05 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS_PATH = ./includes/
 SRCS_PATH = ./srcs/
 OBJS_PATH = ./objs/
+OBJB_PATH = ./objs/builtins
 LBFT_PATH = ./libft/libft.a
 RSCS_PATH = /tmp/
 GDDS_NAME = ipt_git_prompt.sh
 BTNS_PATH = ./builtins/
-BTSC_PATH = ./srcs/builtins/
 
 SRCS =	main.c \
 		minishell.c \
@@ -30,6 +30,11 @@ SRCS =	main.c \
 		lex_tokens.c \
 		termios_utils.c \
 		exe_main.c \
+		tmp_exec.c \
+		builtins/cd.c \
+		builtins/echo.c \
+		builtins/env.c \
+		builtins/pwd.c \
 		signals.c
 
 CC = gcc
@@ -49,18 +54,10 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LBFT_PATH) -o $(NAME)
 	@printf "\033[32m✓\033[0m\n"
 	@mkdir -p $(BTNS_PATH)
-	@printf "● echo "
-	@$(CC) $(CFLAGS) $(BTSC_PATH)echo.c -o $(BTNS_PATH)echo
-	@printf "\033[32m✓\033[0m\n"
-	@printf "● pwd "
-	@$(CC) $(CFLAGS) $(BTSC_PATH)pwd.c -o $(BTNS_PATH)pwd
-	@printf "\033[32m✓\033[0m\n"
-	@printf "● cd "
-	@$(CC) $(CFLAGS) $(BTSC_PATH)cd.c -o $(BTNS_PATH)cd
-	@printf "\033[32m✓\033[0m\n"
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
+	@mkdir -p $(OBJB_PATH)
 	@$(CC) -D GDD_PATH=\"$(RSCS_PATH)$(GDDS_NAME)\" $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
 
 clean:

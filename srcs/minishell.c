@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/24 23:33:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 12:30:25 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct termios	g_ogterm;
 int	minishell(char **env)
 {
 	char		*cmd;
-	t_lex_lst	*lst;
+	t_lex_lst	*lex;
 
 	while (true)
 	{
@@ -38,11 +38,8 @@ int	minishell(char **env)
 		cmd = get_cmd();
 		write(1, "\n", 1);
 		save_cmd(cmd, HISTORY_PATH);
-		lst = lexer(cmd);
-		if (fork() == 0)
-			get_simple_cmd(lst, env);
-		else
-			wait(0);
+		lex = lexer(cmd);
+		execute_builtin(lex, env);
 		free(cmd);
 	}
 	return (0);
