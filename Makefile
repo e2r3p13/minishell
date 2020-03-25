@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/25 22:56:54 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/26 00:07:07 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,8 @@ SRCS =	main/main.c \
 		lexer/lexer.c \
 		lexer/tokenize.c \
 		lexer/expand.c \
+		lexer/expand_quotes.c \
 		lexer/utils.c \
-		execution/execute_2.c \
 		execution/execute.c \
 		builtins/cd.c \
 		builtins/echo.c \

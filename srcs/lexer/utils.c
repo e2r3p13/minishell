@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 22:51:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 23:12:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 23:52:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ char	*superjoin(char *b, char *m, char *e, char *i)
 	free(e);
 	free(i);
 	return (str);
+}
+
+t_lex_lst 	*lex_lstnew(void)
+{
+    t_lex_lst	*lst;
+
+    if (!(lst = malloc(sizeof(t_lex_lst))))
+		return (NULL);
+    lst->raw = NULL;
+    lst->token = 0;
+    lst->next = NULL;
+	lst->space = false;
+    return (lst);
 }
 
 t_lex_lst	*tkn_dup(t_lex_lst **head, int token)

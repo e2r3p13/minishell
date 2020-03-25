@@ -6,8 +6,7 @@
 # define EXITCODE 3
 # define SQUOTE 4
 # define DQUOTE 5
-# define BSLASH 6
-# define VARIABLE 7
-# define REDIRECT 8
+# define VARIABLE 6
+# define REDIRECT 7
 
 #endif

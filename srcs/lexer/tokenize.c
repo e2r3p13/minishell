@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 23:43:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 23:50:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ int	lex_redirect(char *str, t_lex_lst *cur)
     return (len);
 }
 
+int	lex_quote(char *str, t_lex_lst *cur)
+{
+	int		len;
+	char	*cq;
+
+	len = 1;
+	if ((cq = ft_strchr(str + 1, *str)))
+		len = cq - str + 1;
+	cur->raw = ft_strndup(str, len);
+    cur->token = *str == '"' ? DQUOTE : SQUOTE;
+    return (len);
+}
+
 int	lex_word(char *str, t_lex_lst *cur)
 {
     int	i;
@@ -47,19 +60,6 @@ int	lex_word(char *str, t_lex_lst *cur)
     cur->token = WORD;
     cur->raw = ft_strndup(str, i);
     return (i);
-}
-
-int	lex_quote(char *str, t_lex_lst *cur)
-{
-	int		len;
-	char	*cq;
-
-	len = 1;
-	if ((cq = ft_strchr(str + 1, *str)))
-		len = cq - str + 1;
-	cur->raw = ft_strndup(str, len);
-    cur->token = *str == '"' ? DQUOTE : SQUOTE;
-    return (len);
 }
 
 int	lex_variable(char *str, t_lex_lst *cur)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_main.c                                         :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 22:02:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 00:23:47 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,12 @@ void	*g_ascii_tokens[256] =
 	['<'] = lex_redirect,
 	['>'] = lex_redirect,
 	['|'] = lex_redirect,
+	['$'] = lex_variable,
 	[';'] = lex_newline,
 	['\n'] = lex_newline,
-	['$'] = lex_variable,
 	['\''] = lex_quote,
 	['\"'] = lex_quote,
 };
-
-t_lex_lst 	*lex_lstnew(void)
-{
-    t_lex_lst	*lst;
-
-    if (!(lst = malloc(sizeof(t_lex_lst))))
-		return (NULL);
-    lst->raw = NULL;
-    lst->token = 0;
-    lst->next = NULL;
-	lst->space = false;
-    return (lst);
-}
 
 t_lex_lst	*lexer(char *str)
 {
@@ -50,16 +37,15 @@ t_lex_lst	*lexer(char *str)
 	cur = head;
 	while (*str)
 	{
-		if (cur->token && *str == ' ')
-		{
-			cur->space = true;
-			str++;
-		}
 		if (cur->token)
 		{
+			if (*str == ' ')
+				cur->space = true;
 			cur->next = lex_lstnew();
 			cur = cur->next;
 		}
+		if (*str == ' ')
+			str++;
 		if (!(f = g_ascii_tokens[(int)*str]))
 			f = lex_word;
 		str += f(str, cur);

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 23:13:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 00:08:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,15 @@ typedef struct			s_rdct
 	void				*right;
 }						t_rdct;
 
+//					main functions
 int					minishell(char **env);
-void				prompt(char **env);
+
+//					Generic functions
 char				*get_env_var(char *var_name, char **env);
+void				ctrlc_handler(int signal);
+
+//					input functions
+void				prompt(char **env);
 void				save_cmd(char *line, char *path);
 t_cmd				*new_cmd();
 t_bool				push(char c, t_cmd *cmd);
@@ -65,6 +71,8 @@ void				enable_raw_mode();
 void				move_cursor_left(int x);
 void				move_cursor_right(int x);
 void				fill_with(char c, size_t len);
+
+//					lexer functions
 t_lex_lst			*lexer(char *str);
 t_lex_lst			*lex_lstnew(void);
 int					lex_quote(char *str, t_lex_lst *cur);
@@ -72,17 +80,25 @@ int					lex_newline(char *str, t_lex_lst *cur);
 int					lex_redirect(char *str, t_lex_lst *cur);
 int					lex_word(char *str, t_lex_lst *cur);
 int					lex_variable(char *str, t_lex_lst *cur);
-void				ctrlc_handler(int signal);
-int					get_cmd_length(t_lex_lst *head);
-int					check_builtin(char **smp_cmd, char **env);
-int					get_simple_cmd(t_lex_lst *head, char **env);
-char 				**lex_to_args(t_lex_lst *lst);
-t_lex_lst			*mini_parse(t_lex_lst *lst);
-t_rdct				*parser(t_lex_lst *lst);
-void				execute(char **, char **env);
+
+//					lexer - parser transitional functions
 t_bool				expand(t_lex_lst *lst, char **env);
 char				*superjoin(char *b, char *m, char *e, char *i);
+char				*remove_quotes(char *raw);
+t_bool				expand_squotes(t_lex_lst *lst);
+t_bool				expand_dquotes(t_lex_lst *lst, char **env);
+char				*expand_variable(char *raw, char **env);
+char				*expand_exitcode(char *raw);
+void				join_unspaced_words(t_lex_lst *lst);
+char 				**lex_to_args(t_lex_lst *lst);
 
+//					parser functions
+t_rdct				*parser(t_lex_lst *lst);
+void				execute(char **, char **env);
+
+//					exectution's functions
+
+//					Builtins functions
 int					ms_cd(int ac, char **av, char **env);
 int					ms_echo(int ac, char **av);
 int					ms_env(int ac, char **av, char **env);
