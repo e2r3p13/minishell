@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_tokens.c                                       :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 21:53:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 23:43:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,9 @@ int	lex_redirect(char *str, t_lex_lst *cur)
     int	len;
 
 	len = 1;
-    if (*str == '<' || *str == '>')
-	{
-		if (*(str + 1) && *(str + 1) == *str)
-		{
-			cur->token = *str == '<' ? DLESS : DGREAT;
-			len = 2;
-		}
-		else
-		{
-			cur->token = *str == '<' ? LESS : GREAT;
-		}
-	}
-	else if (*str == '|')
-	{
-		cur->token = PIPE;
-	}
+    if ((*str == '<' || *str == '>') && *(str + 1) && *(str + 1) == *str)
+		len = 2;
+	cur->token = REDIRECT;
     cur->raw = ft_strndup(str, len);
     return (len);
 }
