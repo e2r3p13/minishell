@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 22:20:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 23:06:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_bool			expand(t_lex_lst *lst, char **env)
 		lst->token = WORD;
 		lst = lst->next;
 	}
-	while(lsd)
+	while (lsd)
 	{
 		if (lsd->space == false && lsd->next && lsd->next->token == WORD)
 		{
@@ -132,11 +132,12 @@ t_bool			expand(t_lex_lst *lst, char **env)
 			lsd->raw = ft_strjoin(tmp, lsd->next->raw);
 			free(tmp);
 			lst = lsd->next;
+			if (lst->next)
+				lst->next->space = lst->space;
 			lsd->next = lst->next;
 			free(lst);
 		}
-		else
-			lsd = lsd->next;
+		lsd = lsd->next;
 	}
 	return (true);
 }

@@ -6,38 +6,38 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/25 20:54:35 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/25 22:56:54 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 INCS_PATH = ./includes/
 SRCS_PATH = ./srcs/
 OBJS_PATH = ./objs/
-OBJB_PATH = ./objs/builtins
 LBFT_PATH = ./libft/libft.a
 RSCS_PATH = /tmp/
-GDDS_NAME = ipt_git_prompt.sh
+GDDS_NAME = /git_prompt.sh
 BTNS_PATH = ./builtins/
 
-SRCS =	main.c \
-		minishell.c \
-		ipt_prompt.c \
-		utils.c \
-		ipt_cmd_get.c \
-		ipt_cmd_edit.c \
-		ipt_cmd_history.c \
-		lex_main.c \
-		lex_tokens.c \
-		termios_utils.c \
-		exe_main.c \
-		tmp_exec.c \
+SRCS =	main/main.c \
+		main/minishell.c \
+		input/prompt.c \
+		input/get_command.c \
+		input/edit_command.c \
+		input/command_history.c \
+		input/utils.c \
+		lexer/lexer.c \
+		lexer/tokenize.c \
+		lexer/expand.c \
+		lexer/utils.c \
+		execution/execute_2.c \
+		execution/execute.c \
 		builtins/cd.c \
 		builtins/echo.c \
 		builtins/env.c \
 		builtins/pwd.c \
 		builtins/exit.c \
-		expand.c \
-		signals.c
+		signals.c \
+		utils.c
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
@@ -59,7 +59,12 @@ $(NAME): $(OBJS)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
-	@mkdir -p $(OBJB_PATH)
+	@mkdir -p ./objs/main
+	@mkdir -p ./objs/input
+	@mkdir -p ./objs/lexer
+	@mkdir -p ./objs/parser
+	@mkdir -p ./objs/execution
+	@mkdir -p ./objs/builtins
 	@$(CC) -D GDD_PATH=\"$(RSCS_PATH)$(GDDS_NAME)\" $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
 
 clean:

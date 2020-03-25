@@ -6,16 +6,16 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 15:57:51 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/24 23:26:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/25 22:58:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern struct termios g_save;
+extern int g_chpid;
 
 void ctrlc_handler(int signal)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_save);
-	exit(signal);
+	if (getpid() == g_chpid)
+		exit(signal);
 }
