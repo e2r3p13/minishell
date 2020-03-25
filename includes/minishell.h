@@ -40,6 +40,13 @@ typedef	struct			s_lex_lst
 	struct s_lex_lst	*next;
 }						t_lex_lst;
 
+typedef struct			s_rdct
+{
+	int	type;
+	void	*left;
+	void	*right;
+}				t_rdct;
+
 int					minishell(char **env);
 void				prompt(char **env);
 char				*get_env_var(char *var_name, char **env);
@@ -69,6 +76,8 @@ int					get_cmd_length(t_lex_lst *head);
 int					check_builtin(char **smp_cmd, char **env);
 int					get_simple_cmd(t_lex_lst *head, char **env);
 char 				**lex_to_args(t_lex_lst *lst);
+t_lex_lst			*mini_parse(t_lex_lst *lst);
+t_rdct				*parser(t_lex_lst *lst);
 void				execute(char **, char **env);
 
 int					ms_cd(int ac, char **av, char **env);
