@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:57:08 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 13:53:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ int					lex_variable(char *str, t_lex_lst *cur);
 
 //					lexer - parser transitional functions
 t_bool				expand(t_lex_lst *lst, char **env);
-char				*superjoin(char *b, char *m, char *e, char *i);
 char				*remove_quotes(char *raw);
 t_bool				expand_squotes(t_lex_lst *lst);
 t_bool				expand_dquotes(t_lex_lst *lst, char **env);
 char				*expand_variable(char *raw, char **env);
 char				*expand_exitcode(char *raw);
+char				*expand_dquoted_variable(char *raw, char *var, size_t vlen, char **env);
 void				join_unspaced_words(t_lex_lst *lst);
 char 				**lex_to_args(t_lex_lst *lst);
 

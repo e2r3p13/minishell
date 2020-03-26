@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 11:00:07 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 14:25:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ t_bool	expand(t_lex_lst *lst, char **env)
 			return (false);
 		if (lst->token == VARIABLE)
 			 lst->raw = expand_variable(lst->raw, env);
-		 if (lst->token == EXITCODE)
- 			 lst->raw = expand_exitcode(lst->raw);
-		lst->token = WORD;
+		if (lst->token == EXITCODE)
+ 			lst->raw = expand_exitcode(lst->raw);
+		if (lst->token != REDIRECT && lst->token != NEWLINE)
+			lst->token = WORD;
 		lst = lst->next;
 	}
 	join_unspaced_words(save);
