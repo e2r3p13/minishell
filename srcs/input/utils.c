@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   termios_utils.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 20:31:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/23 18:34:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 10:46:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Switch terminal to canocical mode
 void	enable_raw_mode()
 {
 	struct termios raw;
@@ -22,26 +23,21 @@ void	enable_raw_mode()
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
-void	move_cursor_left(int x)
+// Move the printed cursor by 'x' in 'dir' direction
+void	move_cursor(t_dir dir, int x)
 {
 	if (x > 0)
 	{
 		write(1, "\033[", 2);
 		ft_putnbr(x);
-		write(1, "D", 1);
+		if (dir == left)
+			write(1, "D", 1);
+		else
+			write(1, "C", 1);
 	}
 }
 
-void	move_cursor_right(int x)
-{
-	if (x > 0)
-	{
-		write(1, "\033[", 2);
-		ft_putnbr(x);
-		write(1, "C", 1);
-	}
-}
-
+// Write 'len' times the 'c' char, trying to do as less write calls as possible
 void	fill_with(char c, size_t len)
 {
 	char *s;

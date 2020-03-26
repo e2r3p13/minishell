@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/26 00:07:07 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/26 10:00:32 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS =	main/main.c \
 		main/minishell.c \
 		input/prompt.c \
 		input/get_command.c \
-		input/edit_command.c \
+		input/edit_command_1.c \
+		input/edit_command_2.c \
 		input/command_history.c \
 		input/utils.c \
 		lexer/lexer.c \

@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
+/*   command_history.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 18:53:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 10:16:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Just write the cmd line at the end of the history file, with a newline
 void	save_cmd(char *line, char *path)
 {
 	int	len;

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 00:08:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 10:39:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ typedef struct			s_rdct
 	void				*right;
 }						t_rdct;
 
+typedef enum			e_dir
+{
+	left,
+	right,
+}						t_dir;
+
 //					main functions
 int					minishell(char **env);
 
@@ -57,20 +63,25 @@ void				ctrlc_handler(int signal);
 
 //					input functions
 void				prompt(char **env);
+void				prompt_path(char **env);
 void				save_cmd(char *line, char *path);
 t_cmd				*new_cmd();
 t_bool				push(char c, t_cmd *cmd);
 t_bool				pop(t_cmd *cmd);
 t_bool				stretch(t_cmd *cmd);
-t_bool 				can_move_cursor_left(t_cmd *cmd);
-t_bool 				can_move_cursor_right(t_cmd *cmd);
+t_bool 				can_move_cursor(t_cmd *cmd, t_dir dir);
+void				move_cursor(t_dir dir, int x);
 t_bool 				join_commands(t_cmd *c1, char *c2);
 void				erase(t_cmd *cmd);
 char				*get_cmd();
 void				enable_raw_mode();
-void				move_cursor_left(int x);
-void				move_cursor_right(int x);
 void				fill_with(char c, size_t len);
+char				*cmd_return(t_cmd *cmd);
+void				cmd_arrows(t_cmd *cmd, char *buf);
+void				cmd_backspace(t_cmd *cmd);
+void				cmd_character(t_cmd *cmd, char *buf);
+t_bool				cmd_ctrld_shoould_exit(t_cmd *cmd);
+void				cmd_ctrlu(t_cmd *cmd);
 
 //					lexer functions
 t_lex_lst			*lexer(char *str);
