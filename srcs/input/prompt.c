@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 14:48:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 15:30:31 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	prompt(char **env)
 	else if (pid > 0)
 		wait(0);
 	else
-		write(1, "\033[0;00m", 7);s
+		write(1, "\033[0;00m", 7);
 }
 
 void	prompt_path(char **env)
