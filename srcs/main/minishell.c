@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 00:48:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 10:53:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,20 @@ int	minishell(char **env)
 	// We don't want our shell to exit unless specific cases
 	while (true)
 	{
-		// Here we ask user to type a command and hit enter
+		// Input
 		prompt(env);
 		enable_raw_mode();
 		cmd = get_cmd();
 		write(1, "\n", 1);
-		// We save that command to the history file
 		save_cmd(cmd, HISTORY_PATH);
-		// Now we turn the command line into a lexed list
-		// The lexer should free cmd
+		// Lexer
 		lxl = lexer(cmd);
 		expand(lxl, env);
-		// Lex to args doesn't free the lexer tree cause they refer to same heap
 		av = lex_to_args(lxl);
-		// Here we have to parse
-		// Note that its the parser's responsability to free the lexed list after use
-		// Then we exectute our parsed command with pipes etc
+		// Parser
+		// Execution
 		execute(av, env);
+		// Free allocated memory
 		free(cmd);
 	}
 	return (0);
