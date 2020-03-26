@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:53:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 10:55:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	minishell(char **env)
 		write(1, "\n", 1);
 		save_cmd(cmd, HISTORY_PATH);
 		// Lexer
-		lxl = lexer(cmd);
+		lxl = lexer(cmd, env);
 		expand(lxl, env);
 		av = lex_to_args(lxl);
 		// Parser

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:39:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 10:57:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_bool				cmd_ctrld_shoould_exit(t_cmd *cmd);
 void				cmd_ctrlu(t_cmd *cmd);
 
 //					lexer functions
-t_lex_lst			*lexer(char *str);
+t_lex_lst			*lexer(char *str, char **env);
 t_lex_lst			*lex_lstnew(void);
 int					lex_quote(char *str, t_lex_lst *cur);
 int					lex_newline(char *str, t_lex_lst *cur);
