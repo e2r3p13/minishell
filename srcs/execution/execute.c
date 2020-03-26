@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tmp_exec.c                                         :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 21:30:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 10:50:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,19 @@ static int arglen(char **av)
 
 static void	*get_builtin_func(char *exename)
 {
-	if (ft_strncmp("cd", exename, 3) == 0)
+	int exelen;
+
+	exelen = ft_strlen(exename) + 1;
+	if (ft_strncmp("cd", exename, exelen) == 0)
 		return (&ms_cd);
-	if (ft_strncmp("echo", exename, 3) == 0)
+	if (ft_strncmp("echo", exename, exelen) == 0)
 		return (&ms_echo);
-	if (ft_strncmp("env", exename, 3) == 0)
+	if (ft_strncmp("env", exename, exelen) == 0)
 		return (&ms_env);
-	if (ft_strncmp("exit", exename, 3) == 0)
+	if (ft_strncmp("exit", exename, exelen) == 0)
 		return (&ms_exit);
-	// if (ft_strncmp("export", exename, 3) == 0)
-	// 	return (&ms_export);
-	if (ft_strncmp("pwd", exename, 3) == 0)
+	if (ft_strncmp("pwd", exename, exelen) == 0)
 		return (&ms_pwd);
-	// if (ft_strncmp("unset", exename, 3) == 0)
-	// 	return (&ms_unset);
 	return (NULL);
 }
 
