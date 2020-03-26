@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:50:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 17:54:20 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int						g_chpid;
 extern struct termios	g_save;
+int						g_exitcode;
 
 static int lstsize(t_lex_lst *lst)
 {
@@ -84,7 +85,7 @@ void		execute(char **av, char **env)
 	if (av[0] == NULL)
 		return ;
 	if ((f = get_builtin_func(av[0])))
-		f(arglen(av), av, env);
+		g_exitcode = f(arglen(av), av, env);
 	else
 	{
 		pathes = ft_split(get_env_var("PATH=", env), ':');
@@ -103,12 +104,15 @@ void		execute(char **av, char **env)
 			write(1, "minishell: command not found: ", 30);
 			write(1, av[0], ft_strlen(av[0]));
 			write(1, "\n", 1);
-			exit(0);
+			exit(127);
 		}
 		else
 		{
 			g_chpid = pid;
-			wait(0);
+			waitpid(pid, &g_exitcode, 0);
+
+			if (WIFEXITED(g_exitcode))
+        		g_exitcode = WEXITSTATUS(g_exitcode);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 13:53:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 18:28:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_bool				expand_squotes(t_lex_lst *lst);
 t_bool				expand_dquotes(t_lex_lst *lst, char **env);
 char				*expand_variable(char *raw, char **env);
 char				*expand_exitcode(char *raw);
-char				*expand_dquoted_variable(char *raw, char *var, size_t vlen, char **env);
+char				*expand_quoted_dollar(char *r, char *v, size_t l, char **e);
 void				join_unspaced_words(t_lex_lst *lst);
 char 				**lex_to_args(t_lex_lst *lst);
 

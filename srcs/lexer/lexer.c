@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 14:25:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 18:28:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ t_lex_lst	*lexer(char *str, char **env)
 		str += f(str, cur);
 	}
 	cur = head;
-	expand(cur, env);
 	return (head);
 }
 
