@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:36:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 14:48:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ void	prompt(char **env)
 	if (pid == 0)
 	{
 		execve(g_execve_av[0], g_execve_av, env);
+		// Simple git prompt if execve fails
+		write(1, " » \033[0;00m", 11);
 		exit(0);
 	}
 	else if (pid > 0)
 		wait(0);
 	else
-		write(1, "\033[36m", 5);
+		write(1, "\033[0;00m", 7);s
 }
 
 void	prompt_path(char **env)
