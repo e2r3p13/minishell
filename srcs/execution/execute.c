@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 17:54:20 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 18:29:21 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void		execute(char **av, char **env)
 		{
 			g_chpid = pid;
 			waitpid(pid, &g_exitcode, 0);
-
 			if (WIFEXITED(g_exitcode))
         		g_exitcode = WEXITSTATUS(g_exitcode);
 		}
