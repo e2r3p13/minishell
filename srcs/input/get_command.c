@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/27 14:57:18 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/27 23:49:37 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,11 @@ void	cmd_arrows(t_hst **hst, char *buf)
 		if (*buf == ESC_KEY_LEFT)
 			if (can_move_cursor((*hst)->cmd, left))
 				write(1, CURSOR_LEFT, 3);
-		if (*buf == ESC_KEY_UP && (*hst)->prev)
+		if ((*buf == ESC_KEY_UP && (*hst)->prev) ||
+			(*buf == ESC_KEY_DOWN && (*hst)->next))
 		{
 			len = ft_strlen((*hst)->cmd->raw);
-			*hst = (*hst)->prev;
-			move_cursor(left, len);
-			fill_with(' ', len);
-			move_cursor(left, len);
-			write(1,(*hst)->cmd->raw, (*hst)->cmd->len);
-			(*hst)->cmd->cpos = (*hst)->cmd->len;
-		}
-		if (*buf == ESC_KEY_DOWN && (*hst)->next)
-		{
-			len = ft_strlen((*hst)->cmd->raw);
-			*hst = (*hst)->next;
+			*hst = *buf == ESC_KEY_UP ? (*hst)->prev : (*hst)->next;
 			move_cursor(left, len);
 			fill_with(' ', len);
 			move_cursor(left, len);
