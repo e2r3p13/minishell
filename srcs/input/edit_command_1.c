@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:33:34 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/27 14:55:31 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ t_bool join_commands(t_cmd *c1, char *c2)
 	if (!(new_cmd = ft_strjoin(c1->raw, c2)))
 		return (false);
 	len = ft_strlen(new_cmd);
-	free(c1->raw);
-	free(c2);
 	c1->raw = new_cmd;
 	c1->len = len;
 	c1->capacity = len;
@@ -74,4 +72,10 @@ void erase(t_cmd *cmd)
 	ft_memset(cmd->raw, 0, cmd->capacity);
 	cmd->len = 0;
 	cmd->cpos = 0;
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	free(cmd->raw);
+	free(cmd);
 }

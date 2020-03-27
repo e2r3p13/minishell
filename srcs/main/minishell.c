@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:55:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/27 14:50:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,36 @@ int	minishell(char **env)
 	char		*cmd;
 	char		**av;
 	t_lex_lst	*lxl;
+	t_hst		*hst;
 
+	hst = get_hst();
 	// We don't want our shell to exit unless specific cases
 	while (true)
 	{
 		// Input
 		prompt(env);
 		enable_raw_mode();
-		cmd = get_cmd();
+		cmd = get_cmd(&hst);
 		write(1, "\n", 1);
-		save_cmd(cmd, HISTORY_PATH);
 		// Lexer
-		lxl = lexer(cmd, env);
+		lxl = lexer(cmd);
 		expand(lxl, env);
 		av = lex_to_args(lxl);
 		// Parser
 		// Execution
 		execute(av, env);
-		// Free allocated memory
-		free(cmd);
 	}
 	return (0);
 }
+
+// void	print_hst(t_hst *hst)
+// {
+// 	while(hst)
+// 	{
+// 		printf("%s\n", hst->tcmd);
+// 		hst = hst->prev;
+// 	}
+// }
 
 // static void lex_printlst(t_lex_lst *lst)
 // {

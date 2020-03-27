@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 18:28:22 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/27 14:51:25 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct			s_cmd
 	size_t				len;
 	size_t				capacity;
 }						t_cmd;
+
+typedef struct		s_hst
+{
+	t_cmd			*cmd;
+	struct	s_hst	*next;
+	struct	s_hst	*prev;
+}					t_hst;
 
 typedef	struct			s_lex_lst
 {
@@ -64,7 +71,7 @@ void				ctrlc_handler(int signal);
 //					input functions
 void				prompt(char **env);
 void				prompt_path(char **env);
-void				save_cmd(char *line, char *path);
+void				save_cmd(t_cmd *line, t_hst *hst, t_bool pushback);
 t_cmd				*new_cmd();
 t_bool				push(char c, t_cmd *cmd);
 t_bool				pop(t_cmd *cmd);
@@ -73,18 +80,23 @@ t_bool 				can_move_cursor(t_cmd *cmd, t_dir dir);
 void				move_cursor(t_dir dir, int x);
 t_bool 				join_commands(t_cmd *c1, char *c2);
 void				erase(t_cmd *cmd);
-char				*get_cmd();
+void				free_cmd(t_cmd *cmd);
+char				*get_cmd(t_hst **hst);
 void				enable_raw_mode();
 void				fill_with(char c, size_t len);
-char				*cmd_return(t_cmd *cmd);
-void				cmd_arrows(t_cmd *cmd, char *buf);
+char				*cmd_return(t_hst *hst);
+void				cmd_arrows(t_hst **hda, char *buf);
 void				cmd_backspace(t_cmd *cmd);
 void				cmd_character(t_cmd *cmd, char *buf);
 t_bool				cmd_ctrld_shoould_exit(t_cmd *cmd);
 void				cmd_ctrlu(t_cmd *cmd);
+void				free_hst(t_hst	*hst);
+int					push_back_hst(t_hst **hst, t_cmd *cmd);
+t_hst				*get_hst(void);
+void				pop_back_hst(t_hst	*hst);
 
 //					lexer functions
-t_lex_lst			*lexer(char *str, char **env);
+t_lex_lst			*lexer(char *str);
 t_lex_lst			*lex_lstnew(void);
 int					lex_quote(char *str, t_lex_lst *cur);
 int					lex_newline(char *str, t_lex_lst *cur);

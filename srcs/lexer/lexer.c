@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 18:28:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/26 20:12:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*g_ascii_tokens[256] =
 	['\"'] = lex_quote,
 };
 
-t_lex_lst	*lexer(char *str, char **env)
+t_lex_lst	*lexer(char *str)
 {
 	t_lex_lst	*head;
 	t_lex_lst	*cur;

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:41:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/27 14:57:18 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,26 @@
 #include "keys.h"
 
 // Can either return the command or start the multiline command process
-char	*cmd_return(t_cmd *cmd)
+char	*cmd_return(t_hst *hst)
 {
 	char	*next_line;
-	char	*command;
 
-	if (cmd->len > 0 && cmd->raw[cmd->len - 1] == '\\')
+	if (hst->cmd->len > 0 && hst->cmd->raw[hst->cmd->len - 1] == '\\')
 	{
 		write(1, NEW_LINE_PROMPT, 18);
-		next_line = get_cmd();
-		join_commands(cmd, next_line);
+		next_line = get_cmd(&hst);
+		join_commands(hst->prev->cmd, next_line);
 	}
-	command = cmd->raw;
-	free(cmd);
-	return (command);
-}
-
-// Handle cursor movement, and history later
-void	cmd_arrows(t_cmd *cmd, char *buf)
-{
-	if (*buf++ == '[')
+	if (hst->next)
 	{
-		if (*buf == ESC_KEY_RIGHT)
-			if (can_move_cursor(cmd, right))
-				write(1, CURSOR_RIGHT, 3);
-		if (*buf == ESC_KEY_LEFT)
-			if (can_move_cursor(cmd, left))
-				write(1, CURSOR_LEFT, 3);
+		pop_back_hst(hst);
+		save_cmd(hst->cmd, hst, true);
 	}
+	else
+	{
+		save_cmd(hst->cmd, hst, false);
+	}
+	return (hst->cmd->raw);
 }
 
 // Delete the character just before the cursor, if there's some
@@ -104,29 +96,66 @@ void	cmd_ctrlu(t_cmd *cmd)
 	erase(cmd);
 }
 
+// Handle cursor movement, and history commands
+void	cmd_arrows(t_hst **hst, char *buf)
+{
+	size_t len;
+
+	if (*buf++ == '[')
+	{
+		if (*buf == ESC_KEY_RIGHT)
+			if (can_move_cursor((*hst)->cmd, right))
+				write(1, CURSOR_RIGHT, 3);
+		if (*buf == ESC_KEY_LEFT)
+			if (can_move_cursor((*hst)->cmd, left))
+				write(1, CURSOR_LEFT, 3);
+		if (*buf == ESC_KEY_UP && (*hst)->prev)
+		{
+			len = ft_strlen((*hst)->cmd->raw);
+			*hst = (*hst)->prev;
+			move_cursor(left, len);
+			fill_with(' ', len);
+			move_cursor(left, len);
+			write(1,(*hst)->cmd->raw, (*hst)->cmd->len);
+			(*hst)->cmd->cpos = (*hst)->cmd->len;
+		}
+		if (*buf == ESC_KEY_DOWN && (*hst)->next)
+		{
+			len = ft_strlen((*hst)->cmd->raw);
+			*hst = (*hst)->next;
+			move_cursor(left, len);
+			fill_with(' ', len);
+			move_cursor(left, len);
+			write(1,(*hst)->cmd->raw, (*hst)->cmd->len);
+			(*hst)->cmd->cpos = (*hst)->cmd->len;
+		}
+	}
+}
+
 // Main loop of input, reads and processes input, only returns the raw of cmd
-char	*get_cmd()
+char	*get_cmd(t_hst **hst)
 {
 	t_cmd	*cmd;
 	char	buf[5];
 
 	cmd = new_cmd();
+	push_back_hst(hst, cmd);
 	while (true)
 	{
 		ft_memset(buf, 0, 5);
 		read(0, &buf, 4);
 		if (*buf == ESCAPE_KEY)
-			cmd_arrows(cmd, buf + 1);
+			cmd_arrows(hst, buf + 1);
 		else if (*buf == RETURN_KEY)
 			break;
 		else if (*buf == BACKSPACE_KEY)
-			cmd_backspace(cmd);
-		else if (*buf == CTRL_D_KEY && cmd_ctrld_shoould_exit(cmd))
+			cmd_backspace((*hst)->cmd);
+		else if (*buf == CTRL_D_KEY && cmd_ctrld_shoould_exit((*hst)->cmd))
 			break;
 		else if (*buf == CTRL_U_KEY)
-			cmd_ctrlu(cmd);
+			cmd_ctrlu((*hst)->cmd);
 		else
-			cmd_character(cmd, buf);
+			cmd_character((*hst)->cmd, buf);
 	}
-	return (cmd_return(cmd));
+	return (cmd_return(*hst));
 }
