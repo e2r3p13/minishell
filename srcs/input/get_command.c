@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 13:49:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 14:45:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@
 // Can either return the command or start the multiline command process
 char	*cmd_return(t_hst *hst)
 {
-	char	*next_line;
-
 	if (hst->cmd->len > 0 && hst->cmd->raw[hst->cmd->len - 1] == '\\')
 	{
 		write(1, NEW_LINE_PROMPT, 18);
-		next_line = get_cmd(&hst);
-		join_commands(hst->prev->cmd, next_line);
+		get_cmd(&hst);
+		join_last_commands(&hst);
 	}
 	if (hst->next)
 		use_old_cmd(&hst, hst->cmd);

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/27 14:55:31 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 14:59:37 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,26 @@ t_bool stretch(t_cmd *cmd)
 }
 
 // Concatenate c2 to c1->raw and update the struct
-t_bool join_commands(t_cmd *c1, char *c2)
+t_bool join_last_commands(t_hst **hst)
 {
+	t_cmd	*c1;
+	t_cmd	*c2;
 	char	*new_cmd;
 	size_t	len;
 
-	pop(c1);
-	if (!(new_cmd = ft_strjoin(c1->raw, c2)))
+	c1 = (*hst)->cmd;
+	c2 = (*hst)->prev->cmd;
+	pop(c2);
+	if (!(new_cmd = ft_strjoin(c2->raw, c1->raw)))
 		return (false);
 	len = ft_strlen(new_cmd);
-	c1->raw = new_cmd;
-	c1->len = len;
-	c1->capacity = len;
-	c1->cpos = len;
+	c2->raw = new_cmd;
+	c2->len = len;
+	c2->capacity = len;
+	c2->cpos = len;
+	(*hst) = (*hst)->prev;
+	free_cmd((*hst)->next->cmd);
+	(*hst)->next = NULL;
 	return (true);
 }
 
