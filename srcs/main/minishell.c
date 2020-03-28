@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/27 14:50:22 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 17:09:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,27 +66,31 @@ int	minishell(char **env)
 
 // int	minishell(char **env)
 // {
-// 	char		*cmd;
-// 	char		**av;
-// 	t_lex_lst	**tkn_lst;
-// 	t_rdct		*head;
+//  	char		*cmd;
+//  	t_lex_lst	**tkn_lst;
+//  	t_rdct		*head;
+// 	int		i;
 //
-// 	while (true)
-// 	{
-// 		prompt(env);
-// 		cmd = get_cmd();
-// 		write(1, "\n", 1);
-// 		save_cmd(cmd, HISTORY_PATH);
-// 		av = lex_to_args(lexer(cmd));
-// 		execute(av, env);
-// 		tkn_lst = split_tkn_lst(lexer(cmd));
-// 		while (*tkn_lst)
-// 		{	*tkn_lst = mini_parse(*tkn_lst);
-// 			head = parser(*tkn_lst);
-// 			tkn_lst++;
-// 			printf("type first tree node : %d\n", head->type);
-// 		}
-// 		free(cmd);
-// 	}
-// 	return (0);
+//  	while (true)
+//  	{
+//  		prompt(env);
+// 		enable_raw_mode();
+//  		cmd = get_cmd();
+//  		write(1, "\n", 1);
+//  		save_cmd(cmd, HISTORY_PATH);
+//  		tkn_lst = split_tkn_lst(lexer(cmd));
+// 		i = 0;
+//  		while (tkn_lst[i])
+//  		{
+// 			expand(tkn_lst[i], env);
+//  			head = parser(tkn_lst[i]);
+// 			tree_exec(head, env);
+// 			free(tkn_lst[i]);
+//  			i++;
+//  		}
+// 		free(tkn_lst);
+// //		tree_free(head);
+//  		free(cmd);
+//  	}
+//  	return (0);
 // }
