@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/27 23:49:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 13:49:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,8 @@ char	*cmd_return(t_hst *hst)
 		join_commands(hst->prev->cmd, next_line);
 	}
 	if (hst->next)
-	{
-		pop_back_hst(hst);
-		save_cmd(hst->cmd, hst, true);
-	}
-	else
-	{
-		save_cmd(hst->cmd, hst, false);
-	}
+		use_old_cmd(&hst, hst->cmd);
+	save_cmd(hst->cmd);
 	return (hst->cmd->raw);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/27 14:51:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 13:48:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include "libft.h"
 
 # define HISTORY_PATH "/tmp/minishell_history"
@@ -71,7 +72,7 @@ void				ctrlc_handler(int signal);
 //					input functions
 void				prompt(char **env);
 void				prompt_path(char **env);
-void				save_cmd(t_cmd *line, t_hst *hst, t_bool pushback);
+void				save_cmd(t_cmd *line);
 t_cmd				*new_cmd();
 t_bool				push(char c, t_cmd *cmd);
 t_bool				pop(t_cmd *cmd);
@@ -94,6 +95,7 @@ void				free_hst(t_hst	*hst);
 int					push_back_hst(t_hst **hst, t_cmd *cmd);
 t_hst				*get_hst(void);
 void				pop_back_hst(t_hst	*hst);
+int					use_old_cmd(t_hst **hst, t_cmd *cmd);
 
 //					lexer functions
 t_lex_lst			*lexer(char *str);

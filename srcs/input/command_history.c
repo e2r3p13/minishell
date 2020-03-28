@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/27 14:46:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 13:48:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Just write the cmd line at the end of the history file, with a newline
-void	save_cmd(t_cmd *cmd, t_hst *hst, t_bool pushback)
+void	save_cmd(t_cmd *cmd)
 {
 	int	len;
 	int	fd;
@@ -25,8 +25,6 @@ void	save_cmd(t_cmd *cmd, t_hst *hst, t_bool pushback)
 		{
 			write(fd, cmd->raw, ft_strlen(cmd->raw));
 			write(fd, "\n", 1);
-			if (pushback)
-				push_back_hst(&hst, cmd);
 		}
 		close(fd);
 	}
@@ -116,4 +114,17 @@ t_hst	*get_hst(void)
 		return (hst);
 	}
 	return (NULL);
+}
+
+int		use_old_cmd(t_hst **hst, t_cmd *cmd)
+{
+	while ((*hst)->next)
+		*hst = (*hst)->next;
+	free((*hst)->cmd->raw);
+	if (!((*hst)->cmd->raw = ft_strdup(cmd->raw)))
+		return (0);
+	(*hst)->cmd->len = cmd->len;
+	(*hst)->cmd->capacity = (*hst)->cmd->len;
+	(*hst)->cmd->cpos = (*hst)->cmd->len;
+	return (1);
 }
