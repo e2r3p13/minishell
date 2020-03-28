@@ -2,7 +2,7 @@
 #include "tokens.h"
 #include "libft.h"
 
-static int lstsize(t_lex_lst *lst)
+static int lstsize(t_lxr *lst)
 {
         int i;
 
@@ -15,7 +15,7 @@ static int lstsize(t_lex_lst *lst)
         return (i);
 }
 
-char            **lex_to_args(t_lex_lst *lst)
+char            **lex_to_args(t_lxr *lst)
 {
         char    **av;
         int             i;
@@ -31,7 +31,7 @@ char            **lex_to_args(t_lex_lst *lst)
         return (av);
 }
 
-static char	**create_simple_cmd(t_lex_lst **head)
+static char	**create_simple_cmd(t_lxr **head)
 {
 	char	**cmd;
 
@@ -42,20 +42,26 @@ static char	**create_simple_cmd(t_lex_lst **head)
 }
 		
 
-static t_rdct	*create_redirect_cmd(void *left, t_lex_lst **cur)
+static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 {
 	t_rdct	*lst_head;
 
 	if (!(lst_head = (t_rdct *)malloc(sizeof(t_rdct))))
 		return (NULL);
 	lst_head->left = left;
+	if (!cur)
+	{
+		lst_head->type = 0;
+		lst_head->right = NULL;
+		return (lst_head);
+	}
 	if (!(*cur) || (*cur)->token != REDIRECT)
 		lst_head->type = 0;
 	else if (!ft_strncmp((*cur)->raw, "|", 2))
 		lst_head->type = PIPE;
 	else if (!ft_strncmp((*cur)->raw,"<", 2))
 		lst_head->type = LESS;
-	else if (!ft_strncmp((*cur)->raw, "<<", 3))
+	else if (!ft_strncmp((*cur)->raw, "<<", 3))//useless
 		lst_head->type = DLESS;
 	else if (!ft_strncmp((*cur)->raw, ">", 2))
 		lst_head->type = GREAT;
@@ -74,14 +80,10 @@ t_rdct		*parser(t_lex_lst *cur)
 
 	prs_head = NULL;
 	cmd = create_simple_cmd(&cur);
+	prs_head = create_redirect_cmd(cmd, NULL);
 	if (!cur)
-		return (create_redirect_cmd(cmd, &cur));
+		return (prs_head);
 	while (cur && cur->token == REDIRECT)
-	{
-		if (!prs_head)
-			prs_head = create_redirect_cmd(cmd, &cur);
-		else
-			prs_head = create_redirect_cmd(prs_head, &cur);
-	}
+		prs_head = create_redirect_cmd(prs_head, &cur);
 	return (prs_head);
 }
