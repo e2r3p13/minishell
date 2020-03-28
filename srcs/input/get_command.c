@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 15:02:31 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 20:33:39 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 #include "prompt.h"
 #include "keys.h"
 
+// static void	print_hst(t_hst *hst)
+// {
+// 	while(hst)
+// 	{
+// 		printf("\n%s", hst->cmd->raw);
+// 		hst = hst->prev;
+// 	}
+// 	printf("\n");
+// }
+
 // Can either return the command or start the multiline command process
 char	*cmd_return(t_hst *hst)
 {
-	if (hst->cmd->len > 0 && hst->cmd->raw[hst->cmd->len - 1] == '\\')
-	{
-		write(1, NEW_LINE_PROMPT, 18);
-		get_cmd(&hst);
-		join_last_commands(&hst);
-	}
 	if (hst->next)
 		use_old_cmd(&hst, hst->cmd);
 	save_cmd(hst->cmd);
@@ -118,11 +122,9 @@ void	cmd_arrows(t_hst **hst, char *buf)
 // Main loop of input, reads and processes input, only returns the raw of cmd
 char	*get_cmd(t_hst **hst)
 {
-	t_cmd	*cmd;
 	char	buf[5];
 
-	cmd = new_cmd();
-	push_back_hst(hst, cmd);
+	push_back_hst(hst, new_cmd());
 	while (true)
 	{
 		ft_memset(buf, 0, 5);

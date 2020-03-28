@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 14:47:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 20:36:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_bool				pop(t_cmd *cmd);
 t_bool				stretch(t_cmd *cmd);
 t_bool 				can_move_cursor(t_cmd *cmd, t_dir dir);
 void				move_cursor(t_dir dir, int x);
-t_bool 				join_last_commands(t_hst **hst);
 void				erase(t_cmd *cmd);
 void				free_cmd(t_cmd *cmd);
 char				*get_cmd(t_hst **hst);
