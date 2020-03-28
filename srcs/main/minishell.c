@@ -30,7 +30,7 @@ int	minishell(char **env, t_hst *history)
 			i = 0;
 			while (lexlst[i] && expand(lexlst[i], env))
 			{
-				tree_exec(parser(lexlst[i]), env);
+				tree_exec(parser(lexlst[i++]), env);
 				lxr_free(lexlst[i++]);
 			}
 			// Free all things funtion instead of three following lines

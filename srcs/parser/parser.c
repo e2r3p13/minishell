@@ -7,7 +7,7 @@ static int lstsize(t_lxr *lst)
         int i;
 
         i = 0;
-        while (lst)
+        while (lst && lst->token == WORD)
         {
                 lst = lst->next;
                 i++;
