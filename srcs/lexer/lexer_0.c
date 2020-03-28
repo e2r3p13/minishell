@@ -94,6 +94,7 @@ static void	lxr_pop(t_lxr *head, t_lxr **cur)
 	while (head->next != *cur)
 		head = head->next;
 	head->next = (*cur)->next;
+	free((*cur)->raw);
 	free(*cur);
 }
 // Turns *t_lxr into **t_lxr, allowing us to execute each commands separately
