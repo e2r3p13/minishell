@@ -2,7 +2,7 @@
 #include "tokens.h"
 #include "libft.h"
 
-/*static int lstsize(t_lxr *lst)
+static int lstsize(t_lxr *lst)
 {
         int i;
 
@@ -15,7 +15,7 @@
         return (i);
 }
 
-char            **lex_to_args(t_lxr *lst)
+static char            **lex_to_arg(t_lxr *lst)
 {
         char    **av;
         int             i;
@@ -30,12 +30,12 @@ char            **lex_to_args(t_lxr *lst)
         av[i] = NULL;
         return (av);
 }
-*/
+
 static char	**create_simple_cmd(t_lxr **head)
 {
 	char	**cmd;
 
-	cmd = lex_to_args(*head);
+	cmd = lex_to_arg(*head);
 	while (*head && (*head)->token == WORD)
 		*head = (*head)->next;
 	return (cmd);
