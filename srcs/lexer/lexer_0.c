@@ -88,6 +88,14 @@ t_lxr	*lxr_check_grammar(t_lxr *head)
 	return (NULL);
 }
 
+
+static void	lxr_pop(t_lxr *head, t_lxr **cur)
+{
+	while (head->next != *cur)
+		head = head->next;
+	head->next = (*cur)->next;
+	free(*cur);
+}
 // Turns *t_lxr into **t_lxr, allowing us to execute each commands separately
 t_lxr	**lxr_split(t_lxr *head)
 {
@@ -100,6 +108,8 @@ t_lxr	**lxr_split(t_lxr *head)
 		return (NULL);
 	while (cur)
 	{
+		if (*(cur->raw) == 0)//ugly fix
+			lxr_pop(head, &cur);//ugly fix
 		if (cur->token == NEWLINE && cur->next)
 			i++;
 		cur = cur->next;
