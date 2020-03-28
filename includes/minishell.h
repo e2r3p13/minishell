@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 20:36:08 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 22:50:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 typedef struct			s_cmd
 {
 	char				*raw;
-	size_t				cpos;
+	size_t				pos;
 	size_t				len;
 	size_t				capacity;
 }						t_cmd;
@@ -71,30 +71,29 @@ void				ctrlc_handler(int signal);
 
 //					input functions
 void				prompt(char **env);
-void				prompt_path(char **env);
-void				save_cmd(t_cmd *line);
-t_cmd				*new_cmd();
-t_bool				push(char c, t_cmd *cmd);
-t_bool				pop(t_cmd *cmd);
-t_bool				stretch(t_cmd *cmd);
-t_bool 				can_move_cursor(t_cmd *cmd, t_dir dir);
-void				move_cursor(t_dir dir, int x);
-void				erase(t_cmd *cmd);
-void				free_cmd(t_cmd *cmd);
-char				*get_cmd(t_hst **hst);
-void				enable_raw_mode();
-void				fill_with(char c, size_t len);
-char				*cmd_return(t_hst *hst);
-void				cmd_arrows(t_hst **hda, char *buf);
-void				cmd_backspace(t_cmd *cmd);
-void				cmd_character(t_cmd *cmd, char *buf);
-t_bool				cmd_ctrld_shoould_exit(t_cmd *cmd);
-void				cmd_ctrlu(t_cmd *cmd);
-void				free_hst(t_hst	*hst);
-int					push_back_hst(t_hst **hst, t_cmd *cmd);
-t_hst				*get_hst(void);
-void				pop_back_hst(t_hst	*hst);
-int					use_old_cmd(t_hst **hst, t_cmd *cmd);
+t_cmd				*cmd_get(t_hst **hst);
+t_cmd				*cmd_new();
+void				cmd_save(t_cmd *line);
+t_bool				cmd_push_char(char c, t_cmd *cmd);
+t_bool				cmd_pop_char(t_cmd *cmd);
+t_bool				cmd_stretch(t_cmd *cmd);
+t_bool 				cmd_can_move_cursor(t_cmd *cmd, t_dir dir);
+void				cmd_erase(t_cmd *cmd);
+void				cmd_free(t_cmd *cmd);
+t_hst				*hst_get(void);
+void				*hst_free(t_hst *hst);
+int					hst_push_cmd(t_hst **hst, t_cmd *cmd);
+void				hst_pop_cmd(t_hst **hst);
+int					hst_reuse_cmd(t_hst **hst, t_cmd *cmd);
+void				term_move_cursor(t_dir dir, int x);
+void				term_enable_raw_mode();
+void				term_writen(char c, size_t len);
+void				cmd_handle_arrows(t_hst **hda, char *buf);
+void				cmd_handle_backspace(t_cmd *cmd);
+void				cmd_handle_character(t_cmd *cmd, char *buf);
+t_bool				cmd_handle_ctrld(t_cmd *cmd);
+void				cmd_handle_ctrlu(t_cmd *cmd);
+t_cmd				*cmd_handle_return(t_hst *hst);
 
 //					lexer functions
 t_lex_lst			*lexer(char *str);

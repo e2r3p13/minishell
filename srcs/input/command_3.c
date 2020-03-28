@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   edit_command_2.c                                   :+:      :+:    :+:   */
+/*   command_3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:55:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 10:13:07 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 23:12:47 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,81 +15,83 @@
 // The t_cms structure is a dynamic array, including a 'char * raw' that wrap
 // the command itself, a 'size_t len' that contains the cmd length,
 // a 'size_t capacity' that indicates how many bytes have been allocated,
-// that is also the max length cmd can be and a 'size_t cpos' showing us
+// that is also the max length cmd can be and a 'size_t pos' showing us
 // the cursor position is the raw, vefry useful for command editing.
 
-static void insert_at(char c, t_cmd *cmd)
-{
-	size_t l;
-
-	l = cmd->len;
-	while (l > cmd->cpos)
-	{
-		cmd->raw[l] = cmd->raw[l - 1];
-		l--;
-	}
-	cmd->raw[cmd->cpos] = c;
-}
-
 // Insert a character at the cursor position
-t_bool push(char c, t_cmd *cmd)
+t_bool	cmd_push_char(char c, t_cmd *cmd)
 {
-	if (!ft_isprint(c) || (cmd->len == cmd->capacity && !stretch(cmd)))
+	size_t len;
+
+	if (!cmd)
 		return (false);
-	if (cmd->cpos == cmd->len)
-		cmd->raw[cmd->len] = c;
-	else
-		insert_at(c, cmd);
+	len = cmd->len;
+	if (!ft_isprint(c) || (len == cmd->capacity && !cmd_stretch(cmd)))
+		return (false);
+	while (len > cmd->pos)
+	{
+		cmd->raw[len] = cmd->raw[len - 1];
+		len--;
+	}
+	cmd->raw[cmd->pos] = c;
 	cmd->len++;
-	cmd->cpos++;
+	cmd->pos++;
 	return (true);
 }
 
-void remove_at(t_cmd *cmd)
-{
-	size_t l;
-
-	l = cmd->cpos;
-	while (l - 1 < cmd->len)
-	{
-		cmd->raw[l - 1] = cmd->raw[l];
-		l++;
-	}
-	cmd->raw[l - 1] = 0;
-}
-
 // Remove a character at the cursor position
-t_bool pop(t_cmd *cmd)
+t_bool	cmd_pop_char(t_cmd *cmd)
 {
-	if (cmd->len > 0)
+	size_t pos;
+
+	if (!cmd)
+		return (false);
+	pos = cmd->pos;
+	if (cmd->len > 0 && pos > 0)
 	{
-		if (cmd->len == cmd->cpos)
-			cmd->raw[cmd->len - 1] = 0;
-		else
+		while (pos - 1 < cmd->len)
 		{
-			if (cmd->cpos == 0)
-				return (false);
-			remove_at(cmd);
+			cmd->raw[pos - 1] = cmd->raw[pos];
+			pos++;
 		}
+		cmd->raw[pos - 1] = 0;
 		cmd->len--;
-		cmd->cpos--;
+		cmd->pos--;
 		return (true);
 	}
 	return (false);
 }
 
 // Try to move the cursor in the struct and return weither it succeeds or not
-t_bool can_move_cursor(t_cmd *cmd, t_dir dir)
+t_bool	cmd_can_move_cursor(t_cmd *cmd, t_dir dir)
 {
-	if (dir == left && cmd->cpos > 0)
+	if (!cmd)
+		return (false);
+	if (dir == left && cmd->pos > 0)
 	{
-		cmd->cpos--;
+		cmd->pos--;
 		return (true);
 	}
-	else if (dir == right && cmd->cpos < cmd->len)
+	else if (dir == right && cmd->pos < cmd->len)
 	{
-		cmd->cpos++;
+		cmd->pos++;
 		return (true);
 	}
 	return (false);
+}
+
+// Append history file with the command's raw
+void	cmd_save(t_cmd *cmd)
+{
+	int	fd;
+
+	if ((fd = open(HISTORY_PATH, O_WRONLY | O_APPEND | O_CREAT, 77777)) != -1)
+	{
+		if (cmd && cmd->raw && ft_strlen(cmd->raw) > 0)
+		{
+			write(fd, cmd->raw, ft_strlen(cmd->raw));
+			write(fd, "\n", 1);
+		}
+		close(fd);
+	}
 }

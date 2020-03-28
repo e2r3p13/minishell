@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 14:35:34 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/20 19:28:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/28 22:59:19 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,5 @@
 # ifndef PATH_COLOR
 #  define PATH_COLOR "\033[36m"
 # endif
-
-# define NEW_LINE_PROMPT "\n\033[0;36m» \033[0;00m"
 
 #endif
