@@ -2,7 +2,7 @@
 #include "tokens.h"
 #include "libft.h"
 
-static int lstsize(t_lxr *lst)
+/*static int lstsize(t_lxr *lst)
 {
         int i;
 
@@ -30,7 +30,7 @@ char            **lex_to_args(t_lxr *lst)
         av[i] = NULL;
         return (av);
 }
-
+*/
 static char	**create_simple_cmd(t_lxr **head)
 {
 	char	**cmd;
@@ -61,8 +61,8 @@ static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 		lst_head->type = PIPE;
 	else if (!ft_strncmp((*cur)->raw,"<", 2))
 		lst_head->type = LESS;
-	else if (!ft_strncmp((*cur)->raw, "<<", 3))//useless
-		lst_head->type = DLESS;
+//	else if (!ft_strncmp((*cur)->raw, "<<", 3))//useless
+//		lst_head->type = DLESS;
 	else if (!ft_strncmp((*cur)->raw, ">", 2))
 		lst_head->type = GREAT;
 	else if (!ft_strncmp((*cur)->raw, ">>", 3))
@@ -73,7 +73,7 @@ static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 	return (lst_head);
 }
 
-t_rdct		*parser(t_lex_lst *cur)
+t_rdct		*parser(t_lxr *cur)
 {
 	void		*prs_head;
 	char		**cmd;

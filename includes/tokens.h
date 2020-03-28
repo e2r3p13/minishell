@@ -9,4 +9,9 @@
 # define VARIABLE 6
 # define REDIRECT 7
 
+# define PIPE 1
+# define GREAT 2
+# define DGREAT 3
+# define LESS 4
+
 #endif

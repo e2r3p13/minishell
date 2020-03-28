@@ -36,7 +36,7 @@ int	minishell(char **env)
 			while (lexlst[i])
 			{
 				expand(lexlst[i], env);
-				//execute(parse(lexerlst[i]));
+				tree_exec(parser(lexlst[i]), env);
 				lxr_free(lexlst[i]);
 				i++;
 			}

@@ -15,7 +15,7 @@
 
 # define ESCAPE_KEY 27
 # define RETURN_KEY 10
-# define BACKSPACE_KEY 127
+# define BACKSPACE_KEY 8
 # define KEY_UP 65
 # define KEY_DOWN 66
 # define KEY_RIGHT 67

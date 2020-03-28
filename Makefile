@@ -31,7 +31,9 @@ SRCS =	main/main.c \
 		lexer/lexer_1.c \
 		lexer/tokenize.c \
 		lexer/expand.c \
+		parser/parser.c \
 		execution/execute.c \
+		execution/redirect.c \
 		builtins/cd.c \
 		builtins/echo.c \
 		builtins/env.c \

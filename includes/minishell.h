@@ -125,6 +125,7 @@ t_rdct				*parser(t_lxr *lst);
 void				execute(char **, char **env);
 
 //					exectution's functions
+void				tree_exec(t_rdct *cur, char **env);
 
 //					Builtins functions
 int					ms_cd(int ac, char **av, char **env);
