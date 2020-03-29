@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 23:16:08 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 13:36:03 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,14 @@ int	minishell(char **env)
 	t_hst		*hst;
 
 	hst = hst_get();
-	// We don't want our shell to exit unless specific cases
 	while (true)
 	{
-		// Input
 		prompt(env);
-		term_enable_raw_mode();
 		cmd = cmd_get(&hst);
 		write(1, "\n", 1);
-		//Lexer
 		lxl = lexer(cmd->raw);
 		expand(lxl, env);
 		av = lex_to_args(lxl);
-		//Parser
-		//Execution
 		execute(av, env);
 		if (ft_strlen(cmd->raw) == 0)
 			hst_pop_cmd(&hst);

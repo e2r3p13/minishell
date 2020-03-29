@@ -6,12 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:59:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 13:38:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "keys.h"
+
+extern struct termios	g_save;
 
 // Read and process stdin, return a t_cmd, pushed at the end of history
 t_cmd	*cmd_get(t_hst **hst)
@@ -20,6 +22,7 @@ t_cmd	*cmd_get(t_hst **hst)
 
 	if (!(hst_push_cmd(hst, cmd_new())))
 		return (NULL);
+	term_enable_raw_mode();
 	while (true)
 	{
 		ft_memset(buf, 0, 5);
@@ -37,6 +40,7 @@ t_cmd	*cmd_get(t_hst **hst)
 		else
 			cmd_handle_character((*hst)->cmd, buf);
 	}
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_save);
 	return (cmd_handle_return(*hst));
 }
 
