@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/28 22:46:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 13:00:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 13:24:47 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 // Move terminal cursor inside the command
 static void	cmd_move_cursor(t_hst *hst, char key)
 {
-	if (key == ESC_KEY_RIGHT)
+	if (key == KEY_RIGHT)
 		if (cmd_can_move_cursor(hst->cmd, right))
 			write(1, CURSOR_RIGHT, 3);
-	if (key == ESC_KEY_LEFT)
+	if (key == KEY_LEFT)
 		if (cmd_can_move_cursor(hst->cmd, left))
 			write(1, CURSOR_LEFT, 3);
 }
 
-// Allows us to scroll history and execute old commands 
+// Allows us to scroll history and execute old commands
 static void cmd_scroll_history(t_hst **hst, char key)
 {
 	size_t	len;
@@ -32,7 +32,7 @@ static void cmd_scroll_history(t_hst **hst, char key)
 
 	len = (*hst)->cmd->len;
 	pos = (*hst)->cmd->pos;
-	*hst = key == ESC_KEY_UP ? (*hst)->prev : (*hst)->next;
+	*hst = key == KEY_UP ? (*hst)->prev : (*hst)->next;
 	term_move_cursor(left, pos);
 	term_writen(' ', len);
 	term_move_cursor(left, len);
@@ -43,10 +43,9 @@ static void cmd_scroll_history(t_hst **hst, char key)
 // Handle arrows, del, and other input leaded by '^]]..'
 void	cmd_esc_seq(t_hst **hst, char *buf)
 {
-	if (*buf == ESC_KEY_LEFT || *buf == ESC_KEY_RIGHT)
+	if (*buf == KEY_LEFT || *buf == KEY_RIGHT)
 		cmd_move_cursor(*hst, *buf);
-	if ((*buf == ESC_KEY_UP && (*hst)->prev) ||
-		(*buf == ESC_KEY_DOWN && (*hst)->next))
+	if ((*buf == KEY_UP && (*hst)->prev) || (*buf == KEY_DOWN && (*hst)->next))
 			cmd_scroll_history(hst, *buf);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/21 00:17:08 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 13:25:03 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # define ESCAPE_KEY 27
 # define RETURN_KEY 10
 # define BACKSPACE_KEY 127
-# define ESC_KEY_UP 65
-# define ESC_KEY_DOWN 66
-# define ESC_KEY_RIGHT 67
-# define ESC_KEY_LEFT 68
+# define KEY_UP 65
+# define KEY_DOWN 66
+# define KEY_RIGHT 67
+# define KEY_LEFT 68
 # define CTRL_D_KEY 4
 # define CTRL_U_KEY 21
 
