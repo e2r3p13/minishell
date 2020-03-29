@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 23:07:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:09:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_cmd	*cmd_get(t_hst **hst)
 }
 
 // Bash style Ctrl-D, exit shell if empty command, DEL's behaviour otherwise
+// Return true if minishell have to exit, false else
 t_bool	cmd_handle_ctrld(t_cmd *cmd)
 {
 	if (cmd->len == 0)

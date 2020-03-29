@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 23:15:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:12:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,18 @@ t_hst	*hst_get(void)
 }
 
 // Push a given t_cmd at the end of the history list
-int		hst_push_cmd(t_hst **hst, t_cmd *cmd)
+t_bool	hst_push_cmd(t_hst **hst, t_cmd *cmd)
 {
 	t_hst	*new;
 
 	if (!cmd)
-		return (0);
+		return (failure);
 	if (*hst)
 	{
 		while ((*hst)->next)
 			*hst = (*hst)->next;
 		if (!(new = malloc(sizeof(t_hst))))
-			return (0);
+			return (failure);
 		(*hst)->next = new;
 		new->cmd = cmd;
 		new->prev = *hst;
@@ -67,12 +67,12 @@ int		hst_push_cmd(t_hst **hst, t_cmd *cmd)
 	else
 	{
 		if (!(*hst = malloc(sizeof(t_hst))))
-			return (0);
+			return (failure);
 		(*hst)->cmd = cmd;
 		(*hst)->prev = NULL;
 		(*hst)->next = NULL;
 	}
-	return (1);
+	return (success);
 }
 
 // Remove the last element of the history list
@@ -98,19 +98,19 @@ void	hst_pop_cmd(t_hst **hst)
 }
 
 // Replace the last command of the history list by a given command
-int		hst_reuse_cmd(t_hst **hst, t_cmd *cmd)
+t_bool	hst_reuse_cmd(t_hst **hst, t_cmd *cmd)
 {
 	if (!(*hst) || !cmd)
-		return (0);
+		return (failure);
 	while ((*hst)->next)
 		*hst = (*hst)->next;
 	free((*hst)->cmd->raw);
 	if (!((*hst)->cmd->raw = ft_strdup(cmd->raw)))
-		return (0);
+		return (failure);
 	(*hst)->cmd->len = cmd->len;
 	(*hst)->cmd->capacity = (*hst)->cmd->len;
 	(*hst)->cmd->pos = (*hst)->cmd->len;
-	return (1);
+	return (success);
 }
 
 // Free the whole history list

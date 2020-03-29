@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:55:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 23:12:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:11:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ t_bool	cmd_push_char(char c, t_cmd *cmd)
 	size_t len;
 
 	if (!cmd)
-		return (false);
+		return (failure);
 	len = cmd->len;
 	if (!ft_isprint(c) || (len == cmd->capacity && !cmd_stretch(cmd)))
-		return (false);
+		return (failure);
 	while (len > cmd->pos)
 	{
 		cmd->raw[len] = cmd->raw[len - 1];
@@ -36,7 +36,7 @@ t_bool	cmd_push_char(char c, t_cmd *cmd)
 	cmd->raw[cmd->pos] = c;
 	cmd->len++;
 	cmd->pos++;
-	return (true);
+	return (success);
 }
 
 // Remove a character at the cursor position
@@ -45,7 +45,7 @@ t_bool	cmd_pop_char(t_cmd *cmd)
 	size_t pos;
 
 	if (!cmd)
-		return (false);
+		return (failure);
 	pos = cmd->pos;
 	if (cmd->len > 0 && pos > 0)
 	{
@@ -57,16 +57,16 @@ t_bool	cmd_pop_char(t_cmd *cmd)
 		cmd->raw[pos - 1] = 0;
 		cmd->len--;
 		cmd->pos--;
-		return (true);
+		return (success);
 	}
-	return (false);
+	return (failure);
 }
 
 // Try to move the cursor in the struct and return weither it succeeds or not
 t_bool	cmd_can_move_cursor(t_cmd *cmd, t_dir dir)
 {
 	if (!cmd)
-		return (false);
+		return (failure);
 	if (dir == left && cmd->pos > 0)
 	{
 		cmd->pos--;

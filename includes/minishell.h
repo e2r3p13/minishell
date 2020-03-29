@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 22:50:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:12:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void				cmd_erase(t_cmd *cmd);
 void				cmd_free(t_cmd *cmd);
 t_hst				*hst_get(void);
 void				*hst_free(t_hst *hst);
-int					hst_push_cmd(t_hst **hst, t_cmd *cmd);
+t_bool				hst_push_cmd(t_hst **hst, t_cmd *cmd);
 void				hst_pop_cmd(t_hst **hst);
-int					hst_reuse_cmd(t_hst **hst, t_cmd *cmd);
+t_bool				hst_reuse_cmd(t_hst **hst, t_cmd *cmd);
 void				term_move_cursor(t_dir dir, int x);
 void				term_enable_raw_mode();
 void				term_writen(char c, size_t len);

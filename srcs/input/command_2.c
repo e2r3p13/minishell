@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 23:13:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:10:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ t_bool	cmd_stretch(t_cmd *cmd)
 	char	*new_raw;
 
 	if (!cmd)
-		return (false);
+		return (failure);
 	cmd->capacity *= 2;
 	if (!(new_raw = malloc(sizeof(char) * (cmd->capacity + 1))))
-		return (false);
+		return (failure);
 	ft_memset(new_raw, 0, cmd->capacity + 1);
 	ft_memcpy(new_raw, cmd->raw, cmd->len);
 	if (cmd->raw)
 		free(cmd->raw);
 	cmd->raw = new_raw;
-	return (true);
+	return (success);
 }
 
 // Delete the command's content, without freeing it as we can reuse it later

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:57:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/22 18:28:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:08:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ typedef struct	s_lf
 typedef enum	e_bool
 {
 	false = 0,
+	failure = 0,
 	true = 1,
+	success = 1,
 }				t_bool;
 
 size_t			ft_strlen(const char *s);
