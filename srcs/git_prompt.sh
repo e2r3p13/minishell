@@ -26,11 +26,11 @@ done < <(cat /tmp/.minishell_git_logs)
 if [ $id -eq 0 ]; then
 	printf "${C} » ${W}"
 elif [ $id -lt 10 ]; then
-	printf "${Y} » ${W}"
+	printf "${G} » ${W}"
 elif [ $id -lt 100 ]; then
 	printf "${P} » ${W}"
 elif [ $id -lt 1000 ]; then
-	printf "${G} » ${W}"
+	printf "${Y} » ${W}"
 else
 	printf "${R} » ${W}"
 fi
