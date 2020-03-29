@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:12:26 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:28:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_bool				cmd_pop_char(t_cmd *cmd);
 t_bool				cmd_stretch(t_cmd *cmd);
 t_bool 				cmd_can_move_cursor(t_cmd *cmd, t_dir dir);
 void				cmd_erase(t_cmd *cmd);
-void				cmd_free(t_cmd *cmd);
+void				*cmd_free(t_cmd *cmd);
 t_hst				*hst_get(void);
 void				*hst_free(t_hst *hst);
 t_bool				hst_push_cmd(t_hst **hst, t_cmd *cmd);
@@ -88,7 +88,7 @@ t_bool				hst_reuse_cmd(t_hst **hst, t_cmd *cmd);
 void				term_move_cursor(t_dir dir, int x);
 void				term_enable_raw_mode();
 void				term_writen(char c, size_t len);
-void				cmd_handle_arrows(t_hst **hda, char *buf);
+void				cmd_esc_seq(t_hst **hda, char *buf);
 void				cmd_handle_backspace(t_cmd *cmd);
 void				cmd_handle_character(t_cmd *cmd, char *buf);
 t_bool				cmd_handle_ctrld(t_cmd *cmd);

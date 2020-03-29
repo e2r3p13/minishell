@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:10:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:21:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,11 @@ void	cmd_erase(t_cmd *cmd)
 }
 
 // Free the command
-void	cmd_free(t_cmd *cmd)
+void	*cmd_free(t_cmd *cmd)
 {
 	if (cmd && cmd->raw)
 		free(cmd->raw);
 	if (cmd)
 		free(cmd);
+	return (NULL);
 }

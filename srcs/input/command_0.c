@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:09:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:59:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_cmd	*cmd_get(t_hst **hst)
 	{
 		ft_memset(buf, 0, 5);
 		read(0, &buf, 4);
-		if (*buf == ESCAPE_KEY)
-			cmd_handle_arrows(hst, buf + 1);
+		if (*buf == ESCAPE_KEY && *(buf + 1) == '[')
+			cmd_esc_seq(hst, buf + 2);
 		else if (*buf == RETURN_KEY)
 			break;
 		else if (*buf == BACKSPACE_KEY)
@@ -38,6 +38,30 @@ t_cmd	*cmd_get(t_hst **hst)
 			cmd_handle_character((*hst)->cmd, buf);
 	}
 	return (cmd_handle_return(*hst));
+}
+
+// Can either return the command or start the multiline command process
+t_cmd	*cmd_handle_return(t_hst *hst)
+{
+	if (hst->next)
+		hst_reuse_cmd(&hst, hst->cmd);
+	cmd_save(hst->cmd);
+	return (hst->cmd);
+}
+
+// Handle all printable characters, adding them at the good position in the cmd
+void	cmd_handle_character(t_cmd *cmd, char *buf)
+{
+	int		pos_diff;
+
+	while (ft_isprint(*buf) && cmd_push_char(*buf, cmd))
+	{
+		write(1, buf, 1);
+		write(1, cmd->raw + cmd->pos, cmd->len - cmd->pos + 1);
+		pos_diff = cmd->len - cmd->pos;
+		term_move_cursor(left, pos_diff);
+		buf++;
+	}
 }
 
 // Bash style Ctrl-D, exit shell if empty command, DEL's behaviour otherwise

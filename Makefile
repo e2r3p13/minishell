@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/28 22:46:54 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/29 12:19:23 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,6 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(BTNS_PATH)
-	@rm -f $(RSCS_PATH)$(GDDS_NAME)
 	@rm -f $(RSCS_PATH)/history
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:12:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 12:57:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_bool	hst_push_cmd(t_hst **hst, t_cmd *cmd)
 		while ((*hst)->next)
 			*hst = (*hst)->next;
 		if (!(new = malloc(sizeof(t_hst))))
-			return (failure);
+			return ((t_bool)cmd_free(cmd));
 		(*hst)->next = new;
 		new->cmd = cmd;
 		new->prev = *hst;
@@ -67,7 +67,7 @@ t_bool	hst_push_cmd(t_hst **hst, t_cmd *cmd)
 	else
 	{
 		if (!(*hst = malloc(sizeof(t_hst))))
-			return (failure);
+			return ((t_bool)cmd_free(cmd));
 		(*hst)->cmd = cmd;
 		(*hst)->prev = NULL;
 		(*hst)->next = NULL;
