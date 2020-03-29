@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:25:07 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 20:38:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,22 @@
 
 struct termios	g_ogterm;
 
-int	minishell(char **env)
+int	minishell(char **env, t_hst *history)
 {
-	t_hst	*history;
 	t_cmd	*command;
 	t_lxr	**lexlst;
 	int		i;
 
-	history = hst_get();
 	while (true)
 	{
-		prompt(env);
-		command = cmd_get(&history);
-		write(1, "\n", 1);
+		command = cmd_get(env, &history);
 		if (command && (lexlst = lxr_split(lexer(command->raw))))
 		{
 			i = 0;
 			while (lexlst[i] && expand(lexlst[i], env))
 			{
 				tree_exec(parser(lexlst[i]), env);
-				lxr_free(lexlst[i]);
-				i++;
+				lxr_free(lexlst[i++]);
 			}
 			// Free all things funtion instead of three following lines
 			free(lexlst);

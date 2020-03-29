@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:20:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 20:39:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef enum			e_dir
 }						t_dir;
 
 //					main functions
-int					minishell(char **env);
+int					minishell(char **env, t_hst *history);
 
 //					Generic functions
 char				*get_env_var(char *var_name, char **env);
@@ -71,7 +71,7 @@ void				ctrlc_handler(int signal);
 
 //					input functions
 void				prompt(char **env);
-t_cmd				*cmd_get(t_hst **hst);
+t_cmd				*cmd_get(char **env, t_hst **hst);
 t_cmd				*cmd_new();
 void				cmd_save(t_cmd *line);
 t_bool				cmd_push_char(char c, t_cmd *cmd);

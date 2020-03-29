@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 13:38:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 20:39:57 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 extern struct termios	g_save;
 
 // Read and process stdin, return a t_cmd, pushed at the end of history
-t_cmd	*cmd_get(t_hst **hst)
+t_cmd	*cmd_get(char **env, t_hst **hst)
 {
 	char	buf[5];
 
+	prompt(env);
 	if (!(hst_push_cmd(hst, cmd_new())))
 		return (NULL);
 	term_enable_raw_mode();
@@ -50,6 +51,7 @@ t_cmd	*cmd_handle_return(t_hst *hst)
 	if (hst->next)
 		hst_reuse_cmd(&hst, hst->cmd);
 	cmd_save(hst->cmd);
+	write(1, "\n", 1);
 	return (hst->cmd);
 }
 
