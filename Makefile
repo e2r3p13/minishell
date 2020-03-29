@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/29 17:47:06 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/29 19:40:05 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,9 @@ SRCS =	main/main.c \
 		input/utils.c \
 		lexer/lexer_0.c \
 		lexer/lexer_1.c \
-		lexer/tokenize.c \
-		lexer/expand.c \
+		lexer/lexer_2.c \
+		lexer/expand_0.c \
+		lexer/expand_1.c \
 		parser/parser.c \
 		execution/execute.c \
 		execution/redirect.c \

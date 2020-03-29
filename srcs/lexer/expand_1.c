@@ -1,65 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   expand_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 18:05:03 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/03/29 19:39:50 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/03/29 20:21:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "tokens.h"
 
-extern int g_exitcode;
-
-t_bool	expand(t_lxr *lst, char **env)
-{
-	t_lxr	*save;
-
-	save = lst;
-	while (lst)
-	{
-		if (lst->token == DQUOTE && !expand_dquotes(lst, env))
-			return (false);
-		if (lst->token == SQUOTE && !expand_squotes(lst))
-			return (false);
-		if (lst->token == VARIABLE)
-			 lst->raw = expand_variable(lst->raw, env);
-		if (lst->token == EXITCODE)
- 			lst->raw = expand_exitcode(lst->raw);
-		if (lst->token != REDIRECT && lst->token != NEWLINE)
-			lst->token = WORD;
-		lst = lst->next;
-	}
-	join_unspaced_words(save);
-	return (true);
-}
-
-void	join_unspaced_words(t_lxr *lst)
-{
-	void	*tmp;
-
-	while (lst)
-	{
-		if (lst->space == false && lst->next && lst->next->token == WORD)
-		{
-			tmp = lst->raw;
-			lst->raw = ft_strjoin(tmp, lst->next->raw);
-			free(tmp);
-			if (lst->next)
-				lst->space = lst->next->space;
-			tmp = lst->next;
-			lst->next = lst->next->next;
-			free(tmp);
-		}
-		else
-			lst = lst->next;
-	}
-}
-
+// Do I really have to explain this one ?
 char	*remove_quotes(char *raw)
 {
 	char	len;
@@ -74,17 +27,19 @@ char	*remove_quotes(char *raw)
 		free(tmp);
 		return (raw);
 	}
-	write(1, "minishell: closing quote is missing", 35);
+	write(1, "minishell: closing quote is missing\n", 36);
 	return (NULL);
 }
 
+// Samething here
 t_bool	expand_squotes(t_lxr *lst)
 {
 	if (!(lst->raw = remove_quotes(lst->raw)))
-		return (false);
-	return (true);
+		return (failure);
+	return (success);
 }
 
+// Expand variables or exitcode into double quotes
 char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, char **env)
 {
 	size_t	len;
@@ -114,13 +69,14 @@ char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, char **env)
 	return (tmp_2);
 }
 
+// Quite nothing to explain
 t_bool	expand_dquotes(t_lxr *lst, char **env)
 {
 	char	*s;
 	size_t	vlen;
 
 	if (!(lst->raw = remove_quotes(lst->raw)))
-		return (false);
+		return (failure);
 	s = lst->raw;
 	while (*s)
 	{
@@ -131,42 +87,11 @@ t_bool	expand_dquotes(t_lxr *lst, char **env)
 				vlen++;
 			vlen = *(s + 1) == '?' ? 2 : vlen;
 			if (!(lst->raw = expand_quoted_dollar(lst->raw, s, vlen, env)))
-				return (false);
+				return (failure);
 			s = lst->raw;
 		}
 		else
 			s++;
 	}
-	return (true);
-}
-
-char	*expand_variable(char *raw, char **env)
-{
-	char *var;
-	char *val;
-
-	if (!raw)
-		return (NULL);
-	var = ft_strjoin(raw + 1, "=");
-	if (!var)
-		return (NULL);
-	val = get_env_var(var, env);
-	val = val ? ft_strdup(val) : ft_strdup("");
-	if (!val)
-		return (NULL);
-	free(raw);
-	free(var);
-	raw = val;
-	return (raw);
-}
-
-char	*expand_exitcode(char *raw)
-{
-	char	*i;
-
-	if (!(i = ft_itoa(g_exitcode)))
-		return (NULL);
-	if (raw != NULL)
-		free(raw);
-	return (i);
+	return (success);
 }

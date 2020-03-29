@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 18:04:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 20:20:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ void				cmd_handle_ctrlu(t_cmd *cmd);
 t_cmd				*cmd_handle_return(t_hst *hst);
 
 //					lexer functions
-t_lxr			*lexer(char *str);
-t_lxr			*lxr_lstnew(void);
-t_lxr			*lxr_check_grammar(t_lxr *head);
-t_lxr			**lxr_split(t_lxr *head);
-t_lxr			*lxr_get_cmd_head(t_lxr **head);
+t_lxr				*lexer(char *str);
+t_lxr				*lxr_lstnew(void);
+t_lxr				*lxr_check_grammar(t_lxr *head);
+t_lxr				**lxr_split(t_lxr *head);
+t_lxr				*lxr_get_cmd_head(t_lxr **head);
 void				*lxr_free(t_lxr *head);
 int					lxr_quote(char *str, t_lxr *cur);
 int					lxr_newline(char *str, t_lxr *cur);
@@ -117,7 +117,7 @@ t_bool				expand_dquotes(t_lxr *lst, char **env);
 char				*expand_variable(char *raw, char **env);
 char				*expand_exitcode(char *raw);
 char				*expand_quoted_dollar(char *r, char *v, size_t l, char **e);
-void				join_unspaced_words(t_lxr *lst);
+t_bool				join_unspaced_words(t_lxr *lst);
 char 				**lex_to_args(t_lxr *lst);
 
 //					parser functions

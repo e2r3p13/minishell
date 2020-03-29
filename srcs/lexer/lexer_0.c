@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 18:15:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 19:37:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_lxr	*lxr_check_grammar(t_lxr *head)
 	if (is_cmd_valid)
 		return (head);
 	lxr_free(head);
+	write(1, "Invalid command\n", 16);
 	return (NULL);
 }
 
