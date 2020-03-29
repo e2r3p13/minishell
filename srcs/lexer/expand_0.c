@@ -29,6 +29,8 @@ t_bool	expand(t_lxr *lst, char **env)
 			return (failure);
 		if (lst->token == VARIABLE)
 			 lst->raw = expand_variable(lst->raw, env);
+		if (lst->token == WILDCARD)
+			expand_wildcard(&lst, lst);
 		if (lst->token == EXITCODE)
  			lst->raw = expand_exitcode(lst->raw);
 		if (lst->token != REDIRECT && lst->token != NEWLINE)

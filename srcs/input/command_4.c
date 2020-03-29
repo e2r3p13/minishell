@@ -32,7 +32,7 @@ static char *find_cmp(t_cmd *cmd, size_t *size)
 	return (cmp);
 }
 
-static char *find_path(char **cmp)
+char *find_path(char **cmp)
 {
 	char	*path;
 	char	*tmp;
