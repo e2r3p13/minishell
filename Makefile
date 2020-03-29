@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/03/29 12:19:23 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/03/29 17:47:06 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,10 @@ SRCS =	main/main.c \
 		input/command_3.c \
 		input/history.c \
 		input/utils.c \
-		lexer/lexer.c \
+		lexer/lexer_0.c \
+		lexer/lexer_1.c \
 		lexer/tokenize.c \
 		lexer/expand.c \
-		lexer/utils.c \
 		execution/execute.c \
 		builtins/cd.c \
 		builtins/echo.c \
@@ -41,7 +41,7 @@ SRCS =	main/main.c \
 		utils.c
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 OFLAGS = -g3 -fsanitize=address
 
 TMP = $(SRCS:.c=.o)

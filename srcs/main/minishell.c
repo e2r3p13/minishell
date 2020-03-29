@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 13:36:03 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 18:06:19 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,48 @@ struct termios	g_ogterm;
 
 int	minishell(char **env)
 {
-	t_cmd		*cmd;
-	char		**av;
-	t_lex_lst	*lxl;
-	t_hst		*hst;
+	t_hst	*history;
+	t_cmd	*command;
+	t_lxr	**lexlst;
+	int		i;
 
-	hst = hst_get();
+	history = hst_get();
 	while (true)
 	{
 		prompt(env);
-		cmd = cmd_get(&hst);
+		command = cmd_get(&history);
 		write(1, "\n", 1);
-		lxl = lexer(cmd->raw);
-		expand(lxl, env);
-		av = lex_to_args(lxl);
-		execute(av, env);
-		if (ft_strlen(cmd->raw) == 0)
-			hst_pop_cmd(&hst);
+		if ((lexlst = lxr_split(lexer(command->raw))))
+		{
+			lxr_print(lexlst);
+			i = 0;
+			while (lexlst[i])
+			{
+				expand(lexlst[i], env);
+				//execute(parse(lexerlst[i]));
+				lxr_free(lexlst[i]);
+				i++;
+			}
+			free(lexlst);
+			if (ft_strlen(command->raw) == 0)
+				hst_pop_cmd(&history);
+		}
+		else
+			write(1, "Invalid command\n", 16);
 	}
 	return (0);
 }
 
-// void	print_hst(t_hst *hst)
+// void	print_hst(t_hst *history)
 // {
-// 	while(hst)
+// 	while(history)
 // 	{
-// 		printf("%s\n", hst->tcmd);
-// 		hst = hst->prev;
+// 		printf("%s\n", history->tcmd);
+// 		history = history->prev;
 // 	}
 // }
 
-// static void lex_printlst(t_lex_lst *lst)
+// static void lex_printlst(t_lxr *lst)
 // {
 // 	while (lst)
 // 	{
@@ -57,13 +68,13 @@ int	minishell(char **env)
 // 	}
 // }
 
-// printf("\n\033[0;95mcmd: \033[0;00m%s\n", cmd);
+// printf("\n\033[0;95mcmd: \033[0;00m%s\n", command);
 // lex_printlst(lst);
 
 // int	minishell(char **env)
 // {
-//  	char		*cmd;
-//  	t_lex_lst	**tkn_lst;
+//  	char		*command;
+//  	t_lxr	**tkn_lst;
 //  	t_rdct		*head;
 // 	int		i;
 //
@@ -71,10 +82,10 @@ int	minishell(char **env)
 //  	{
 //  		prompt(env);
 // 		enable_raw_mode();
-//  		cmd = get_cmd();
+//  		command = get_cmd();
 //  		write(1, "\n", 1);
-//  		save_cmd(cmd, HISTORY_PATH);
-//  		tkn_lst = split_tkn_lst(lexer(cmd));
+//  		save_cmd(command, HISTORY_PATH);
+//  		tkn_lst = split_tkn_lst(lexer(command));
 // 		i = 0;
 //  		while (tkn_lst[i])
 //  		{
@@ -86,7 +97,7 @@ int	minishell(char **env)
 //  		}
 // 		free(tkn_lst);
 // //		tree_free(head);
-//  		free(cmd);
+//  		free(command);
 //  	}
 //  	return (0);
 // }

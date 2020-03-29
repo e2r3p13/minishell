@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 18:25:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 18:05:03 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,51 @@
 #include "tokens.h"
 
 extern int g_exitcode;
+
+t_bool	expand(t_lxr *lst, char **env)
+{
+	t_lxr	*save;
+
+	save = lst;
+	while (lst)
+	{
+		if (lst->token == DQUOTE && !expand_dquotes(lst, env))
+			return (false);
+		if (lst->token == SQUOTE && !expand_squotes(lst))
+			return (false);
+		if (lst->token == VARIABLE)
+			 lst->raw = expand_variable(lst->raw, env);
+		if (lst->token == EXITCODE)
+ 			lst->raw = expand_exitcode(lst->raw);
+		if (lst->token != REDIRECT && lst->token != NEWLINE)
+			lst->token = WORD;
+		lst = lst->next;
+	}
+	join_unspaced_words(save);
+	return (true);
+}
+
+void	join_unspaced_words(t_lxr *lst)
+{
+	void	*tmp;
+
+	while (lst)
+	{
+		if (lst->space == false && lst->next && lst->next->token == WORD)
+		{
+			tmp = lst->raw;
+			lst->raw = ft_strjoin(tmp, lst->next->raw);
+			free(tmp);
+			if (lst->next)
+				lst->space = lst->next->space;
+			tmp = lst->next;
+			lst->next = lst->next->next;
+			free(tmp);
+		}
+		else
+			lst = lst->next;
+	}
+}
 
 char	*remove_quotes(char *raw)
 {
@@ -33,7 +78,7 @@ char	*remove_quotes(char *raw)
 	return (NULL);
 }
 
-t_bool	expand_squotes(t_lex_lst *lst)
+t_bool	expand_squotes(t_lxr *lst)
 {
 	if (!(lst->raw = remove_quotes(lst->raw)))
 		return (false);
@@ -69,7 +114,7 @@ char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, char **env)
 	return (tmp_2);
 }
 
-t_bool	expand_dquotes(t_lex_lst *lst, char **env)
+t_bool	expand_dquotes(t_lxr *lst, char **env)
 {
 	char	*s;
 	size_t	vlen;

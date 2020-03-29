@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:28:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 18:04:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,20 @@ typedef struct			s_cmd
 	size_t				capacity;
 }						t_cmd;
 
-typedef struct		s_hst
+typedef struct			s_hst
 {
-	t_cmd			*cmd;
-	struct	s_hst	*next;
-	struct	s_hst	*prev;
-}					t_hst;
+	t_cmd				*cmd;
+	struct	s_hst		*next;
+	struct	s_hst		*prev;
+}						t_hst;
 
-typedef	struct			s_lex_lst
+typedef	struct			s_lxr
 {
 	char				*raw;
 	int					token;
 	t_bool				space;
-	struct s_lex_lst	*next;
-}						t_lex_lst;
+	struct s_lxr		*next;
+}						t_lxr;
 
 typedef struct			s_rdct
 {
@@ -96,27 +96,32 @@ void				cmd_handle_ctrlu(t_cmd *cmd);
 t_cmd				*cmd_handle_return(t_hst *hst);
 
 //					lexer functions
-t_lex_lst			*lexer(char *str);
-t_lex_lst			*lex_lstnew(void);
-int					lex_quote(char *str, t_lex_lst *cur);
-int					lex_newline(char *str, t_lex_lst *cur);
-int					lex_redirect(char *str, t_lex_lst *cur);
-int					lex_word(char *str, t_lex_lst *cur);
-int					lex_variable(char *str, t_lex_lst *cur);
+t_lxr			*lexer(char *str);
+t_lxr			*lxr_lstnew(void);
+t_lxr			*lxr_check_grammar(t_lxr *head);
+t_lxr			**lxr_split(t_lxr *head);
+t_lxr			*lxr_get_cmd_head(t_lxr **head);
+void				*lxr_free(t_lxr *head);
+int					lxr_quote(char *str, t_lxr *cur);
+int					lxr_newline(char *str, t_lxr *cur);
+int					lxr_redirect(char *str, t_lxr *cur);
+int					lxr_word(char *str, t_lxr *cur);
+int					lxr_variable(char *str, t_lxr *cur);
+void				lxr_print(t_lxr **lst);
 
 //					lexer - parser transitional functions
-t_bool				expand(t_lex_lst *lst, char **env);
+t_bool				expand(t_lxr *lst, char **env);
 char				*remove_quotes(char *raw);
-t_bool				expand_squotes(t_lex_lst *lst);
-t_bool				expand_dquotes(t_lex_lst *lst, char **env);
+t_bool				expand_squotes(t_lxr *lst);
+t_bool				expand_dquotes(t_lxr *lst, char **env);
 char				*expand_variable(char *raw, char **env);
 char				*expand_exitcode(char *raw);
 char				*expand_quoted_dollar(char *r, char *v, size_t l, char **e);
-void				join_unspaced_words(t_lex_lst *lst);
-char 				**lex_to_args(t_lex_lst *lst);
+void				join_unspaced_words(t_lxr *lst);
+char 				**lex_to_args(t_lxr *lst);
 
 //					parser functions
-t_rdct				*parser(t_lex_lst *lst);
+t_rdct				*parser(t_lxr *lst);
 void				execute(char **, char **env);
 
 //					exectution's functions

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 23:50:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 18:05:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "libft.h"
 #include "tokens.h"
 
-int	lex_newline(char *str, t_lex_lst *cur)
+int	lxr_newline(char *str, t_lxr *cur)
 {
     cur->token = NEWLINE;
     cur->raw = ft_strndup(str, 1);
     return (1);
 }
 
-int	lex_redirect(char *str, t_lex_lst *cur)
+int	lxr_redirect(char *str, t_lxr *cur)
 {
     int	len;
 
@@ -33,7 +33,7 @@ int	lex_redirect(char *str, t_lex_lst *cur)
     return (len);
 }
 
-int	lex_quote(char *str, t_lex_lst *cur)
+int	lxr_quote(char *str, t_lxr *cur)
 {
 	int		len;
 	char	*cq;
@@ -46,7 +46,7 @@ int	lex_quote(char *str, t_lex_lst *cur)
     return (len);
 }
 
-int	lex_word(char *str, t_lex_lst *cur)
+int	lxr_word(char *str, t_lxr *cur)
 {
     int	i;
 
@@ -62,7 +62,7 @@ int	lex_word(char *str, t_lex_lst *cur)
     return (i);
 }
 
-int	lex_variable(char *str, t_lex_lst *cur)
+int	lxr_variable(char *str, t_lxr *cur)
 {
     int	i;
 
@@ -74,7 +74,7 @@ int	lex_variable(char *str, t_lex_lst *cur)
 	}
 	if (!ft_isalnum(str[1]) && str[1] != '_')
 	{
-		return (lex_word(str, cur));
+		return (lxr_word(str, cur));
 	}
 	i = 1;
 	while (str[i] == '_' || ft_isalnum(str[i]))

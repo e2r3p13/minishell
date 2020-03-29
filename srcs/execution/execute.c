@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/26 18:29:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 18:16:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int						g_chpid;
 extern struct termios	g_save;
 int						g_exitcode;
 
-static int lstsize(t_lex_lst *lst)
+static int lstsize(t_lxr *lst)
 {
 	int i;
 
@@ -57,7 +57,7 @@ static void	*get_builtin_func(char *exename)
 	return (NULL);
 }
 
-char 		**lex_to_args(t_lex_lst *lst)
+char 		**lex_to_args(t_lxr *lst)
 {
 	char	**av;
 	int		i;
