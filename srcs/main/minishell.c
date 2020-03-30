@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:38:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 16:29:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	minishell(char **env, t_hst *history)
 			i = 0;
 			while (lexlst[i] && expand(lexlst[i], env))
 			{
-				tree_exec(parser(lexlst[i++]), env);
+				tree_exec(parser(lexlst[i]), env);
 				lxr_free(lexlst[i++]);
 			}
 			// Free all things funtion instead of three following lines
