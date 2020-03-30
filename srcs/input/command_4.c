@@ -112,6 +112,12 @@ void	cmd_handle_tab(t_cmd *cmd)
 	mch = NULL;
 	if (!(cmp = find_cmp(cmd, & csiz)))
 		return ;
+	if (ft_strchr(cmp, '*'))
+	{
+			mch = wildcard_to_str(cmp);
+			modify_cmd(cmd, mch, cmp);
+			free(mch);
+	}
 	if ((pth = find_path(&cmp)) && (dir = opendir(pth)))
 	{
 		mch = find_match(dir, cmp);

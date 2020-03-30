@@ -25,9 +25,16 @@ static int	get_match_nb(DIR *dir, char *s, char *pth)
 	char		*tmp;
 
 	i = 0;
+//	printf("pth : %s\n", pth);
 	while ((ent = readdir(dir)))
 	{
-		tmp = ft_strjoin(pth, ent->d_name);
+		if (ft_strncmp(pth, "./", 3))
+		{
+			tmp = ft_strjoin(pth, ent->d_name);
+			tmp = append_backslash(tmp);
+		}
+		else
+			tmp = ft_strdup(ent->d_name);
 		if (*(ent->d_name) != '.' && wd_mch(tmp, s))
 			i++;
 		free(tmp);
@@ -42,9 +49,17 @@ static void	find_wildcard_match(DIR *dir, char *s, char **tab, char *pth)
 	int		i;
 
 	i = 0;
+//	printf("s: %s\n", s);
 	while((ent = readdir(dir)))
 	{
-		tmp = ft_strjoin(pth, ent->d_name);
+		if (ft_strncmp(pth, "./", 3))
+		{
+			tmp = ft_strjoin(pth, ent->d_name);
+			tmp = append_backslash(tmp);
+		}
+		else
+			tmp = ft_strdup(ent->d_name);
+//		printf("tmp : %s\n", tmp);
 		if (*(ent->d_name) != '.' && wd_mch(tmp, s))
 		{
 			tab[i++] = ft_strdup(tmp);
@@ -87,7 +102,7 @@ char	*wildcard_to_str(char *str)
 	s1 = NULL;
 	tab = match_wildcard(str);
 	if (!tab || !tab[i])
-		return (str);
+		return (ft_strdup(str));
 	s1 = ft_strdup(tab[i++]);
 	while (tab[i])
 	{
@@ -104,12 +119,14 @@ void	expand_wildcard(t_lxr **head, t_lxr *cur)
 {
 	int	i;
 	char	**tab;
+	char	*tmp;
 	t_lxr	*save;
 	
 	save = cur->next;
-	cur->raw = wildcard_to_str(cur->raw);
-	tab = ft_split(cur->raw, ' ');
+	tmp = wildcard_to_str(cur->raw);
+	tab = ft_split(tmp, ' ');
 	free(cur->raw);
+	free(tmp);
 	i = 0;
 	while (tab[i])
 	{
