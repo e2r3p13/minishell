@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 16:41:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 17:00:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char *find_cmp(t_cmd *cmd, size_t *size)
 	char	*cmp;
 	char	*tmp;
 
-	if (cmd->pos != cmd->len || cmd->len == 0)
+	if (cmd->pos != cmd->len)
 		return (NULL);
 	cmp = cmd->raw;
 	if ((tmp = ft_strrchr(cmp, ' ')))
@@ -60,7 +60,7 @@ static char *find_match(DIR *dir, char *cmp)
 	occur = 0;
 	while ((ent = readdir(dir)))
 	{
-		if (ft_strncmp(cmp, ent->d_name, ft_strlen(cmp)) == 0)
+		if (!ft_strncmp(cmp, ent->d_name, ft_strlen(cmp)) && *ent->d_name != 46)
 		{
 			if (occur > 1)
 				free (match);
@@ -75,7 +75,7 @@ static char *find_match(DIR *dir, char *cmp)
 		}
 	}
 	closedir(dir);
-	return (occur > 1 ? NULL : match);
+	return (occur != 1 ? NULL : match);
 }
 
 static void	modify_cmd(t_cmd *cmd, char *mch, char *cmp)
@@ -115,8 +115,10 @@ void	cmd_handle_tab(t_cmd *cmd)
 	{
 		mch = find_match(opendir(pth), cmp);
 		if (mch != NULL)
+		{
 			modify_cmd(cmd, mch, cmp);
+			free(mch);
+		}
 		free(pth);
-		free(mch);
 	}
 }
