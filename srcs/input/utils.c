@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 20:31:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/28 22:34:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 13:25:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,18 @@ void	term_writen(char c, size_t len)
 		write(1, s, len);
 		free(s);
 	}
+}
+
+// Appends a '/' at the end of a string and return itself, return inchanged
+// string if failed
+char	*append_backslash(char *mch)
+{
+	char *tmp;
+
+	if ((tmp = ft_strjoin(mch, "/")))
+	{
+		free(mch);
+		return (tmp);
+	}
+	return (mch);
 }

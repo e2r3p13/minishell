@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:39:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 13:26:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void				cmd_handle_character(t_cmd *cmd, char *buf);
 t_bool				cmd_handle_ctrld(t_cmd *cmd);
 void				cmd_handle_ctrlu(t_cmd *cmd);
 t_cmd				*cmd_handle_return(t_hst *hst);
+void				cmd_handle_tab(t_cmd *cmd);
+char				*append_backslash(char *mch); // add to libft in a generic way
 
 //					lexer functions
 t_lxr				*lexer(char *str);

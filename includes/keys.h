@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 19:34:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/29 22:27:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define KEY_LEFT 68
 # define CTRL_D_KEY 4
 # define CTRL_U_KEY 21
+# define TAB_KEY 9
 
 # define CURSOR_LEFT "\033[D"
 # define CURSOR_RIGHT "\033[C"

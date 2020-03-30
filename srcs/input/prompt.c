@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 13:28:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 13:37:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,5 @@ void		prompt(char **env)
 		wait(0);
 	else
 		write(1, "\033[0;00m", 7);
+	term_enable_raw_mode();
 }

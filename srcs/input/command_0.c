@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:39:57 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 13:37:37 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_cmd	*cmd_get(char **env, t_hst **hst)
 	prompt(env);
 	if (!(hst_push_cmd(hst, cmd_new())))
 		return (NULL);
-	term_enable_raw_mode();
 	while (true)
 	{
 		ft_memset(buf, 0, 5);
@@ -38,10 +37,11 @@ t_cmd	*cmd_get(char **env, t_hst **hst)
 			break;
 		else if (*buf == CTRL_U_KEY)
 			cmd_handle_ctrlu((*hst)->cmd);
+		else if (*buf == TAB_KEY)
+			cmd_handle_tab((*hst)->cmd);
 		else
 			cmd_handle_character((*hst)->cmd, buf);
 	}
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_save);
 	return (cmd_handle_return(*hst));
 }
 
@@ -52,6 +52,7 @@ t_cmd	*cmd_handle_return(t_hst *hst)
 		hst_reuse_cmd(&hst, hst->cmd);
 	cmd_save(hst->cmd);
 	write(1, "\n", 1);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_save);
 	return (hst->cmd);
 }
 
