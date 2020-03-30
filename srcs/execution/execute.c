@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 18:16:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 19:38:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,19 +88,22 @@ void		execute(char **av, char **env)
 		g_exitcode = f(arglen(av), av, env);
 	else
 	{
-		pathes = ft_split(get_env_var("PATH=", env), ':');
-		relpath = ft_strjoin("/", av[0]);
 		pid = fork();
 		if (pid == 0)
 		{
+			pathes = ft_split(get_env_var("PATH=", env), ':');
+			relpath = ft_strjoin("/", av[0]);
 			tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_save);
 			i = 0;
 			while (pathes[i])
 			{
 				exepath = ft_strjoin(pathes[i], relpath);
 				execve(exepath, av, env);
+				free(exepath);
 				i++;
 			}
+			free(relpath);
+			ft_free_array(pathes);
 			write(1, "minishell: command not found: ", 30);
 			write(1, av[0], ft_strlen(av[0]));
 			write(1, "\n", 1);

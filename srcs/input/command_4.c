@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 17:00:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/03/30 19:55:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,12 @@ static char *find_match(DIR *dir, char *cmp)
 	struct dirent	*ent;
 	char			*match;
 
-	if (!dir)
-		return (NULL);
 	occur = 0;
 	while ((ent = readdir(dir)))
 	{
 		if (!ft_strncmp(cmp, ent->d_name, ft_strlen(cmp)) && *ent->d_name != 46)
 		{
-			if (occur > 1)
-				free (match);
-			else
+			if (occur < 1)
 			{
 				if (!(match = ft_strdup(ent->d_name)))
 					return (NULL);
@@ -72,9 +68,13 @@ static char *find_match(DIR *dir, char *cmp)
 					match = append_backslash(match);
 				occur++;
 			}
+			else
+			{
+				free (match);
+				return (NULL);
+			}
 		}
 	}
-	closedir(dir);
 	return (occur != 1 ? NULL : match);
 }
 
@@ -107,18 +107,20 @@ void	cmd_handle_tab(t_cmd *cmd)
 	char			*mch;
 	char			*pth;
 	size_t			csiz;
+	DIR				*dir;
 
 	mch = NULL;
 	if (!(cmp = find_cmp(cmd, & csiz)))
 		return ;
-	if ((pth = find_path(&cmp)))
+	if ((pth = find_path(&cmp)) && (dir = opendir(pth)))
 	{
-		mch = find_match(opendir(pth), cmp);
+		mch = find_match(dir, cmp);
 		if (mch != NULL)
 		{
 			modify_cmd(cmd, mch, cmp);
 			free(mch);
 		}
 		free(pth);
+		closedir(dir);
 	}
 }
