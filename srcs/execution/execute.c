@@ -26,6 +26,10 @@ static void	*get_builtin_func(char *exename)
 		return (&ms_echo);
 	if (ft_strncmp("env", exename, exelen) == 0)
 		return (&ms_env);
+	if (ft_strncmp("unset", exename, exelen) == 0)
+		return (&ms_unset);
+	if (ft_strncmp("export", exename, exelen) == 0)
+		return (&ms_export);
 	if (ft_strncmp("exit", exename, exelen) == 0)
 		return (&ms_exit);
 	if (ft_strncmp("pwd", exename, exelen) == 0)
