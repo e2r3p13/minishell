@@ -75,29 +75,19 @@ void	redirect_pipe(t_rdct *cur, char **env)
 	if (sizeof(cur->left) == sizeof(cur))
 		tree_exec(cur->left, env);
 	else
+	{
+		close(fd[0]);
 		execute(cur->left, env);
+	}
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd_save[1], STDOUT_FILENO);
+	close(fd[1]);
 	execute(cur->right, env);
 	dup2(fd_save[0], STDIN_FILENO);
-	close(fd[0]);
 	close(fd_save[0]);
-	close(fd[1]);
 	close(fd_save[1]);
 }
 
-/*void	tab_free(char **tab)
-{
-//	int	i;
-
-//	i = 0;
-	if (!tab)
-		return ;
-//	while (tab[i])
-//		free(tab[i++]);
-	free(tab);
-}
-*/
 void	tree_free(t_rdct *cur)
 {
 	if (cur->type == 0)
