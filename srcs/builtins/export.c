@@ -37,7 +37,7 @@ int ms_export(int ac, char **av, t_env *env)
 	int	i;
 
 	cur = env;
-	i = 0;
+	i = 1;
 	if (ac < 2)
 		return (0);
 	while (av[i])
