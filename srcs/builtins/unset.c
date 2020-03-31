@@ -13,12 +13,11 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-void	env_pop_list(t_env **env)
+static void	env_pop_list(t_env **env)
 {
 	t_env	*cur;
 	t_env	*next;
 
-	printf("in pop\n");
 	cur = *env;
 	next = cur ->next;
 	free(cur->value);
@@ -27,7 +26,6 @@ void	env_pop_list(t_env **env)
 	cur->key = next->key;
 	cur->next = next->next;
 	free(next);
-	printf("end pop\n");
 }
 
 int ms_unset(int ac, char **av, t_env *env)
@@ -42,23 +40,24 @@ int ms_unset(int ac, char **av, t_env *env)
 		return (1);
 	while (av[i])
 	{
-		printf("begin, key = %s\t%s\n", env->key, av[i]);
 		prev = env;
-		if (!(ft_strcmp(get_env_var(prev->key, env), av[i])))
-			env_pop_list(&env);
-		else if ((tmp = get_env_var(av[i], env)))
+		if ((tmp = get_env_var(av[i], env)))
 		{
-			cur = prev;
-			while (cur->next && cur->value != tmp)
-				cur = cur->next;
-			while (prev->next != cur)
-				prev = prev->next;
-			prev->next = cur->next;
-			free(cur->key);
-			free(cur->value);
-			free(cur);
+			if (tmp == prev->value)
+				env_pop_list(&env);
+			else
+			{
+				cur = prev;
+				while (cur->next && cur->value != tmp)
+					cur = cur->next;
+				while (prev->next != cur)
+					prev = prev->next;
+				prev->next = cur->next;
+				free(cur->key);
+				free(cur->value);
+				free(cur);
+			}
 		}
-		printf("end\n");
 		i++;
 	}
 	return (0);
