@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:04:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:11:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int						g_chpid;
 extern struct termios	g_save;
 int						g_exitcode;
 
+// Return the length of a (char **) array
 static int arglen(char **av)
 {
 	int i;
@@ -26,6 +27,7 @@ static int arglen(char **av)
 	return (i);
 }
 
+// Return a function pointer if exename match a builtin name, return NULL else
 static void	*get_builtin_func(char *exename)
 {
 	int exelen;
@@ -44,6 +46,7 @@ static void	*get_builtin_func(char *exename)
 	return (NULL);
 }
 
+// Turn a lexed list into an array of parameters of type (char **)
 char 		**lex_to_args(t_lxr *lst)
 {
 	char	**av;
@@ -60,6 +63,10 @@ char 		**lex_to_args(t_lxr *lst)
 	return (av);
 }
 
+// Execute the command given by av. Note that we don't know yet if the command
+// is an executable or a builtin, this function figures out itself.
+// This function also set the exitcode status with the return value of the last
+// executed command
 void		execute(char **av, char **env)
 {
 	int	pid;
@@ -84,6 +91,7 @@ void		execute(char **av, char **env)
 	}
 }
 
+// Perform the execution if the given command isn't a builtin
 void execute_binary(char **av, char **env)
 {
 	char	**pathes;
