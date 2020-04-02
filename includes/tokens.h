@@ -8,6 +8,7 @@
 # define DQUOTE 5
 # define VARIABLE 6
 # define REDIRECT 7
+# define WILDCARD 8
 
 # define PIPE 1
 # define GREAT 2

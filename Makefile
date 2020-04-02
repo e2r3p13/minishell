@@ -33,6 +33,7 @@ SRCS =	main/main.c \
 		lexer/lexer_2.c \
 		lexer/expand_0.c \
 		lexer/expand_1.c \
+		lexer/lex_wildcard.c \
 		parser/parser.c \
 		execution/execute.c \
 		execution/redirect.c \

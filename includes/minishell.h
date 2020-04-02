@@ -121,6 +121,8 @@ t_bool				expand_dquotes(t_lxr *lst, char **env);
 char				*expand_variable(char *raw, char **env);
 char				*expand_exitcode(char *raw);
 char				*expand_quoted_dollar(char *r, char *v, size_t l, char **e);
+void				expand_wildcard(t_lxr **head, t_lxr *cur);
+char				*wildcard_to_str(char *str);
 t_bool				join_unspaced_words(t_lxr *lst);
 char 				**lex_to_args(t_lxr *lst);
 

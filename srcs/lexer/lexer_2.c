@@ -59,12 +59,15 @@ int	lxr_word(char *str, t_lxr *cur)
 
     i = 0;
     while (str[i] && !ft_isinset("<>|;\n\'\" ", str[i]))
-	{
+    {
 		if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
 			return (i);
+		if (str[i] == '*')
+			cur->token = WILDCARD;
 		i++;
-	}
-    cur->token = WORD;
+    }
+    if (cur->token != WILDCARD)
+    	cur->token = WORD;
     if (!(cur->raw = ft_strndup(str, i)))
 		return (0);
     return (i);
