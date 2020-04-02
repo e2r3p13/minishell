@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 13:37:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:16:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "prompt.h"
 
-char	*g_execve_av[2] = {GDD_PATH, NULL};
+extern char	*g_execve_av[2];
 
 // Print the current working directory path, followed by a colored '>>'
 // The color code of '>>' gives us details for the git status of the cwd

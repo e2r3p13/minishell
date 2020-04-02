@@ -6,15 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:11:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:15:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int						g_chpid;
-extern struct termios	g_save;
-int						g_exitcode;
+extern int	g_chpid;
+extern int	g_exitcode;
 
 // Return the length of a (char **) array
 static int arglen(char **av)
@@ -101,7 +100,6 @@ void execute_binary(char **av, char **env)
 
 	pathes = ft_split(get_env_var("PATH=", env), ':');
 	relpath = ft_strjoin("/", av[0]);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_save);
 	i = 0;
 	while (pathes[i])
 	{

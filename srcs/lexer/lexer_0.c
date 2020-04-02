@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 19:24:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:18:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-void	*g_ascii_tokens[256] =
-{
-	['<'] = lxr_redirect,
-	['>'] = lxr_redirect,
-	['|'] = lxr_redirect,
-	['$'] = lxr_variable,
-	[';'] = lxr_newline,
-	['\n'] = lxr_newline,
-	['\''] = lxr_quote,
-	['\"'] = lxr_quote,
-};
+extern void	*g_ascii_tokens[256];
 
 // The t_lxr struct is a linked list that represents a lexed command.
 // It contains a 'raw' field (the portion of command), a 'token' field,
