@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 17:46:10 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 18:12:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 09:58:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ void	*lxr_free(t_lxr *head)
 		free(n);
 	}
 	return (NULL);
+}
+
+// Return the length of a lexer list
+int		lstsize(t_lxr *lst)
+{
+	int i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
 
 // Temporary function, printing the t_lxr array

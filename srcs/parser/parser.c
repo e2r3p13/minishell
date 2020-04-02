@@ -2,19 +2,6 @@
 #include "tokens.h"
 #include "libft.h"
 
-static int lstsize(t_lxr *lst)
-{
-        int i;
-
-        i = 0;
-        while (lst && lst->token == WORD)
-        {
-                lst = lst->next;
-                i++;
-        }
-        return (i);
-}
-
 static char            **lex_to_arg(t_lxr *lst)
 {
         char    **av;
@@ -40,7 +27,7 @@ static char	**create_simple_cmd(t_lxr **head)
 		*head = (*head)->next;
 	return (cmd);
 }
-		
+
 
 static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 {

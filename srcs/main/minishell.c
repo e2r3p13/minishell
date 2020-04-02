@@ -6,15 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 16:29:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:18:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "keys.h"
 #include "tokens.h"
-
-struct termios	g_ogterm;
 
 int	minishell(char **env, t_hst *history)
 {

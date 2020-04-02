@@ -6,39 +6,16 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 19:38:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:37:24 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int						g_chpid;
-extern struct termios	g_save;
-int						g_exitcode;
+extern int	g_chpid;
+extern int	g_exitcode;
 
-static int lstsize(t_lxr *lst)
-{
-	int i;
-
-	i = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
-
-static int arglen(char **av)
-{
-	int i;
-
-	i = 0;
-	while (av[i])
-		i++;
-	return (i);
-}
-
+// Return a function pointer if exename match a builtin name, return NULL else
 static void	*get_builtin_func(char *exename)
 {
 	int exelen;
@@ -57,6 +34,7 @@ static void	*get_builtin_func(char *exename)
 	return (NULL);
 }
 
+// Turn a lexed list into an array of parameters of type (char **)
 char 		**lex_to_args(t_lxr *lst)
 {
 	char	**av;
@@ -73,14 +51,14 @@ char 		**lex_to_args(t_lxr *lst)
 	return (av);
 }
 
+// Execute the command given by av. Note that we don't know yet if the command
+// is an executable or a builtin, this function figures out itself.
+// This function also set the exitcode status with the return value of the last
+// executed command
 void		execute(char **av, char **env)
 {
-	char	**pathes;
-	char	*relpath;
-	char	*exepath;
-	int		i;
-	int		pid;
-	int		(*f)(int ac, char **av, char **env);
+	int	pid;
+	int	(*f)(int ac, char **av, char **env);
 
 	if (av[0] == NULL)
 		return ;
@@ -90,25 +68,7 @@ void		execute(char **av, char **env)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			pathes = ft_split(get_env_var("PATH=", env), ':');
-			relpath = ft_strjoin("/", av[0]);
-			tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_save);
-			i = 0;
-			while (pathes[i])
-			{
-				exepath = ft_strjoin(pathes[i], relpath);
-				execve(exepath, av, env);
-				free(exepath);
-				i++;
-			}
-			free(relpath);
-			ft_free_array(pathes);
-			write(1, "minishell: command not found: ", 30);
-			write(1, av[0], ft_strlen(av[0]));
-			write(1, "\n", 1);
-			exit(127);
-		}
+			execute_binary(av, env);
 		else
 		{
 			g_chpid = pid;
@@ -117,4 +77,30 @@ void		execute(char **av, char **env)
         		g_exitcode = WEXITSTATUS(g_exitcode);
 		}
 	}
+}
+
+// Perform the execution if the given command isn't a builtin
+void execute_binary(char **av, char **env)
+{
+	char	**pathes;
+	char	*relpath;
+	char	*exepath;
+	int		i;
+
+	pathes = ft_split(get_env_var("PATH=", env), ':');
+	relpath = ft_strjoin("/", av[0]);
+	i = 0;
+	while (pathes[i])
+	{
+		exepath = ft_strjoin(pathes[i], relpath);
+		execve(exepath, av, env);
+		free(exepath);
+		i++;
+	}
+	free(relpath);
+	ft_free_array(pathes);
+	write(1, "minishell: command not found: ", 30);
+	write(1, av[0], ft_strlen(av[0]));
+	write(1, "\n", 1);
+	exit(127);
 }

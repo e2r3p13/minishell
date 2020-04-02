@@ -6,12 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 12:00:44 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/01/17 12:03:03 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:38:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Return the content of a given environment variable name
+// The given variable name must be trailed by '='
 char	*get_env_var(char *var_name, char **env)
 {
 	int i;
@@ -26,4 +28,15 @@ char	*get_env_var(char *var_name, char **env)
 		i++;
 	}
 	return (NULL);
+}
+
+// Return the length of a (char **) array
+int arglen(char **av)
+{
+	int i;
+
+	i = 0;
+	while (av[i])
+		i++;
+	return (i);
 }

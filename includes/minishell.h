@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 13:26:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:38:39 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int					minishell(char **env, t_hst *history);
 
 //					Generic functions
 char				*get_env_var(char *var_name, char **env);
-void				ctrlc_handler(int signal);
-char				*find_path(char **cmp);
+void				sighandler(int signal);
+int 				arglen(char **av);
 
 //					input functions
 void				prompt(char **env);
@@ -111,6 +111,7 @@ int					lxr_redirect(char *str, t_lxr *cur);
 int					lxr_word(char *str, t_lxr *cur);
 int					lxr_variable(char *str, t_lxr *cur);
 void				lxr_print(t_lxr **lst);
+int					lstsize(t_lxr *lst);
 
 //					lexer - parser transitional functions
 t_bool				expand(t_lxr *lst, char **env);
@@ -127,10 +128,11 @@ char 				**lex_to_args(t_lxr *lst);
 
 //					parser functions
 t_rdct				*parser(t_lxr *lst);
-void				execute(char **, char **env);
 
 //					exectution's functions
 void				tree_exec(t_rdct *cur, char **env);
+void				execute(char **, char **env);
+void 				execute_binary(char **av, char **env);
 
 //					Builtins functions
 int					ms_cd(int ac, char **av, char **env);
