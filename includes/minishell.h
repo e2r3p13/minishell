@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:04:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:22:42 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int					minishell(char **env, t_hst *history);
 
 //					Generic functions
 char				*get_env_var(char *var_name, char **env);
-void				ctrlc_handler(int signal);
+void				sighandler(int signal);
 
 //					input functions
 void				prompt(char **env);
