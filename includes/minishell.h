@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 09:58:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:04:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,11 @@ char 				**lex_to_args(t_lxr *lst);
 
 //					parser functions
 t_rdct				*parser(t_lxr *lst);
-void				execute(char **, char **env);
 
 //					exectution's functions
 void				tree_exec(t_rdct *cur, char **env);
+void				execute(char **, char **env);
+void 				execute_binary(char **av, char **env);
 
 //					Builtins functions
 int					ms_cd(int ac, char **av, char **env);
