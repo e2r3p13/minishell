@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:15:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 10:37:24 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,6 @@
 
 extern int	g_chpid;
 extern int	g_exitcode;
-
-// Return the length of a (char **) array
-static int arglen(char **av)
-{
-	int i;
-
-	i = 0;
-	while (av[i])
-		i++;
-	return (i);
-}
 
 // Return a function pointer if exename match a builtin name, return NULL else
 static void	*get_builtin_func(char *exename)
