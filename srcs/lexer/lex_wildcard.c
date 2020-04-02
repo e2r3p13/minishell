@@ -25,7 +25,6 @@ static int	get_match_nb(DIR *dir, char *s, char *pth)
 	char		*tmp;
 
 	i = 0;
-//	printf("pth : %s\n", pth);
 	while ((ent = readdir(dir)))
 	{
 		if (ft_strncmp(pth, "./", 3))
@@ -46,14 +45,12 @@ static void	find_wildcard_match(DIR *dir, char *s, char **tab, char *pth)
 	int		i;
 
 	i = 0;
-//	printf("s: %s\n", s);
 	while((ent = readdir(dir)))
 	{
 		if (ft_strncmp(pth, "./", 3))
 			tmp = ft_strjoin(pth, ent->d_name);
 		else
 			tmp = ft_strdup(ent->d_name);
-//		printf("tmp : %s\n", tmp);
 		if (*(ent->d_name) != '.' && wd_mch(tmp, s))
 		{
 			tab[i++] = ft_strdup(tmp);
@@ -115,7 +112,7 @@ void	expand_wildcard(t_lxr **head, t_lxr *cur)
 	char	**tab;
 	char	*tmp;
 	t_lxr	*save;
-	
+
 	save = cur->next;
 	tmp = wildcard_to_str(cur->raw);
 	tab = ft_split(tmp, ' ');
