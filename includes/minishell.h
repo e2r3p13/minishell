@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 13:26:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 09:58:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int					lxr_redirect(char *str, t_lxr *cur);
 int					lxr_word(char *str, t_lxr *cur);
 int					lxr_variable(char *str, t_lxr *cur);
 void				lxr_print(t_lxr **lst);
+int					lstsize(t_lxr *lst);
 
 //					lexer - parser transitional functions
 t_bool				expand(t_lxr *lst, char **env);
