@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 15:40:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 16:35:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*expand_variable(char *raw, t_env *env)
 
 	if (!raw)
 		return (NULL);
-	val = get_env_var(raw, env);
+	val = get_env_var(raw + 1, env);
 	val = val ? ft_strdup(val) : ft_strdup("");
 	if (!val)
 		return (NULL);
