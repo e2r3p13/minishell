@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 16:26:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 23:01:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ void execute_binary(char **av, t_env *env)
 	relpath = ft_strjoin("/", av[0]);
 	i = 0;
 	e = env_to_arr(env);
-	int j = 0;
-	while (e[j])
-		printf("%s\n", e[j++]);
 	while (pathes[i])
 	{
 		exepath = ft_strjoin(pathes[i], relpath);
