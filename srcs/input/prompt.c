@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:16:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 15:34:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ extern char	*g_execve_av[2];
 // If the script is deleted or can't be opened, '>>' will be of the same color
 // than the printed path.
 
-static void	prompt_path(char **env)
+static void	prompt_path(t_env *env)
 {
 	char	*pwd;
 	char	*tmp;
 	char	*hd;
 
 	pwd = getcwd(NULL, 0);
-	hd = get_env_var("HOME=", env);
+	hd = get_env_var("HOME", env);
 	write(1, PATH_COLOR, ft_strlen(PATH_COLOR));
 	if (pwd && hd)
 	{
@@ -46,7 +46,7 @@ static void	prompt_path(char **env)
 		write(1, pwd, ft_strlen(pwd));
 }
 
-void		prompt(char **env)
+void		prompt(t_env *env)
 {
 	int pid;
 
@@ -54,7 +54,7 @@ void		prompt(char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(g_execve_av[0], g_execve_av, env);
+		execve(g_execve_av[0], g_execve_av, NULL);
 		// Standard prompt if execve fails
 		write(1, " » \033[0;00m", 11);
 		exit(0);

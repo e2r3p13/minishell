@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 08:31:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 16:26:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ char 		**lex_to_args(t_lxr *lst)
 // is an executable or a builtin, this function figures out itself.
 // This function also set the exitcode status with the return value of the last
 // executed command
-void		execute(char **av, char **env)
+void		execute(char **av, t_env *env)
 {
 	int	pid;
-	int	(*f)(int ac, char **av, char **env);
+	int	(*f)(int ac, char **av, t_env *env);
 
 	if (av[0] == NULL)
 		return ;
@@ -81,23 +81,29 @@ void		execute(char **av, char **env)
 }
 
 // Perform the execution if the given command isn't a builtin
-void execute_binary(char **av, char **env)
+void execute_binary(char **av, t_env *env)
 {
 	char	**pathes;
 	char	*relpath;
 	char	*exepath;
 	int		i;
+	char	**e;
 
-	pathes = ft_split(get_env_var("PATH=", env), ':');
+	pathes = ft_split(get_env_var("PATH", env), ':');
 	relpath = ft_strjoin("/", av[0]);
 	i = 0;
+	e = env_to_arr(env);
+	int j = 0;
+	while (e[j])
+		printf("%s\n", e[j++]);
 	while (pathes[i])
 	{
 		exepath = ft_strjoin(pathes[i], relpath);
-		execve(exepath, av, env);
+		execve(exepath, av, e);
 		free(exepath);
 		i++;
 	}
+	ft_free_array(e);
 	free(relpath);
 	ft_free_array(pathes);
 	write(1, "minishell: command not found: ", 30);

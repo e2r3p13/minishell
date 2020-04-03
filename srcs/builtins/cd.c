@@ -6,13 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:44:15 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/31 18:39:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 15:59:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ms_cd(int ac, char **av, char **env)
+int ms_cd(int ac, char **av, t_env *env)
 {
 	char	*path;
 	t_bool	is_allocated;
@@ -20,9 +20,9 @@ int ms_cd(int ac, char **av, char **env)
 	av[ac] = NULL;
 	is_allocated = false;
 	if ((path = av[1]) == NULL)
-		path = get_env_var("HOME=", env);
+		path = get_env_var("HOME", env);
 	if (*path == '~')
-		if ((path = ft_strjoin(get_env_var("HOME=", env), path + 1)))
+		if ((path = ft_strjoin(get_env_var("HOME", env), path + 1)))
 			is_allocated = true;
 	if (path == NULL || chdir(path) == -1)
 	{

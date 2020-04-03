@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 08:34:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 15:32:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void			*g_ascii_tokens[256] =
 	['\"'] = lxr_quote,
 };
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **e)
 {
 	t_hst	*history;
+	t_env	*env;
 
 	av[ac] = NULL;
 	g_exitcode = 0;
@@ -38,5 +39,9 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, sighandler);
 	signal(SIGKILL, sighandler);
 	history = hst_get();
-	return (minishell(env, history));
+	env = env_get(e);
+	if (history && env)
+		return (minishell(env, history));
+	else
+		return (EXIT_FAILURE);
 }

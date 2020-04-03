@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "tokens.h"
 
-void	redirect_great(t_rdct *cur, char **env)
+void	redirect_great(t_rdct *cur, t_env *env)
 {
 	char	**name;
 	int	fd[2];
@@ -20,7 +20,7 @@ void	redirect_great(t_rdct *cur, char **env)
 	close(fd[1]);
 }
 
-void	redirect_dgreat(t_rdct *cur, char **env)
+void	redirect_dgreat(t_rdct *cur, t_env *env)
 {
 	char	**name;
 	int	fd[2];
@@ -44,7 +44,7 @@ void	redirect_dgreat(t_rdct *cur, char **env)
 	close(fd[1]);
 }
 
-void	redirect_less(t_rdct *cur, char **env)
+void	redirect_less(t_rdct *cur, t_env *env)
 {
 	char	**name;
 	int	fd[2];
@@ -63,7 +63,7 @@ void	redirect_less(t_rdct *cur, char **env)
 	close(fd[1]);
 }
 
-void	redirect_pipe(t_rdct *cur, char **env)
+void	redirect_pipe(t_rdct *cur, t_env *env)
 {
 	int	fd[2];
 	int	fd_save[2];
@@ -96,7 +96,7 @@ void	tree_free(t_rdct *cur)
 	free(cur);
 }
 
-void	tree_exec(t_rdct *cur, char **env)
+void	tree_exec(t_rdct *cur, t_env *env)
 {
 	if (cur->type == GREAT)
 		redirect_great(cur, env);

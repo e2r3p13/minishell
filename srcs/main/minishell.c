@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 10:45:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 15:32:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 extern t_bool	g_next;
 
-int	minishell(char **env, t_hst *hst)
+int	minishell(t_env *env, t_hst *hst)
 {
 	t_cmd	*cmd;
 	t_lxr	**lexlst;

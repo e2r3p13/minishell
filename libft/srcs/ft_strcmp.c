@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/17 12:00:44 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 15:17:22 by lfalkau          ###   ########.fr       */
+/*   Created: 2019/10/08 10:11:50 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/03 16:11:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stddef.h>
 
-// Return the length of a (char **) array
-int arglen(char **av)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
+	unsigned long i;
 
 	i = 0;
-	while (av[i])
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
-	return (i);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

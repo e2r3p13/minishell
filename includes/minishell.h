@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 21:29:34 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 16:05:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 
 # define HISTORY_PATH "/tmp/minishell_history"
 # define BUILTINS_PATH "./builtins/"
+
+typedef struct			s_env
+{
+	char				*key;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
 
 typedef struct			s_cmd
 {
@@ -63,16 +70,21 @@ typedef enum			e_dir
 }						t_dir;
 
 //					main functions
-int					minishell(char **env, t_hst *history);
+int					minishell(t_env *env, t_hst *history);
 
 //					Generic functions
-char				*get_env_var(char *var_name, char **env);
+char				*get_env_var(char *var_name, t_env *env);
 void				sighandler(int signal);
 int 				arglen(char **av);
+t_env				*env_get(char **e);
+void				env_print(t_env *env);
+void				*env_free(t_env *env);
+char				**env_to_arr(t_env *env);
+int					env_size(t_env *env);
 
 //					input functions
-void				prompt(char **env);
-t_cmd				*cmd_get(char **env, t_hst **hst);
+void				prompt(t_env *env);
+t_cmd				*cmd_get(t_env *env, t_hst **hst);
 t_cmd				*cmd_new();
 void				cmd_save(t_cmd *line);
 t_bool				cmd_push_char(char c, t_cmd *cmd);
@@ -115,13 +127,13 @@ void				lxr_print(t_lxr **lst);
 int					lstsize(t_lxr *lst);
 
 //					lexer - parser transitional functions
-t_bool				expand(t_lxr *lst, char **env);
+t_bool				expand(t_lxr *lst, t_env *env);
 char				*remove_quotes(char *raw);
 t_bool				expand_squotes(t_lxr *lst);
-t_bool				expand_dquotes(t_lxr *lst, char **env);
-char				*expand_variable(char *raw, char **env);
+t_bool				expand_dquotes(t_lxr *lst, t_env *env);
+char				*expand_variable(char *raw, t_env *env);
 char				*expand_exitcode(char *raw);
-char				*expand_quoted_dollar(char *r, char *v, size_t l, char **e);
+char				*expand_quoted_dollar(char *r, char *v, size_t l, t_env *e);
 void				expand_wildcard(t_lxr **head, t_lxr *cur);
 char				*wildcard_to_str(char *str);
 t_bool				join_unspaced_words(t_lxr *lst);
@@ -131,17 +143,17 @@ char 				**lex_to_args(t_lxr *lst);
 t_rdct				*parser(t_lxr *lst);
 
 //					exectution's functions
-void				tree_exec(t_rdct *cur, char **env);
-void				execute(char **, char **env);
-void 				execute_binary(char **av, char **env);
+void				tree_exec(t_rdct *cur, t_env *env);
+void				execute(char **, t_env *env);
+void 				execute_binary(char **av, t_env *env);
 
 //					Builtins functions
-int					ms_cd(int ac, char **av, char **env);
+int					ms_cd(int ac, char **av, t_env *env);
 int					ms_echo(int ac, char **av);
-int					ms_env(int ac, char **av, char **env);
-int					ms_exit(int ac, char **av, char **env);
+int					ms_env(int ac, char **av, t_env *env);
+int					ms_exit(int ac, char **av);
 int					ms_export(int ac, char **av);
-int					ms_pwd(int ac, char **av, char **env);
+int					ms_pwd(int ac, char **av, t_env *env);
 int					ms_unset(int ac, char **av);
 
 #endif

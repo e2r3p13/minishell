@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:39:50 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:21:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 15:40:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_bool	expand_squotes(t_lxr *lst)
 }
 
 // Expand variables or exitcode into double quotes
-char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, char **env)
+char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, t_env *env)
 {
 	size_t	len;
 	char	*tmp_1;
@@ -70,7 +70,7 @@ char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, char **env)
 }
 
 // Quite nothing to explain
-t_bool	expand_dquotes(t_lxr *lst, char **env)
+t_bool	expand_dquotes(t_lxr *lst, t_env *env)
 {
 	char	*s;
 	size_t	vlen;

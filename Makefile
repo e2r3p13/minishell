@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/03 10:01:30 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/03 16:24:42 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS =	main/main.c \
 		builtins/pwd.c \
 		builtins/exit.c \
 		signals.c \
+		env.c \
 		utils.c
 
 CC = gcc

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:20:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 15:40:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 extern int g_exitcode;
 
 // Remove quotes and replace variables when needed
-t_bool	expand(t_lxr *lst, char **env)
+t_bool	expand(t_lxr *lst, t_env *env)
 {
 	t_lxr	*save;
 
@@ -75,22 +75,17 @@ t_bool	join_unspaced_words(t_lxr *lst)
 }
 
 // Ex: '$pwd' --> '/Users/moi/Desktop/minishell'
-char	*expand_variable(char *raw, char **env)
+char	*expand_variable(char *raw, t_env *env)
 {
-	char *var;
 	char *val;
 
 	if (!raw)
 		return (NULL);
-	var = ft_strjoin(raw + 1, "=");
-	if (!var)
-		return (NULL);
-	val = get_env_var(var, env);
+	val = get_env_var(raw, env);
 	val = val ? ft_strdup(val) : ft_strdup("");
 	if (!val)
 		return (NULL);
 	free(raw);
-	free(var);
 	raw = val;
 	return (raw);
 }
