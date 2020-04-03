@@ -6,18 +6,16 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 15:57:51 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:21:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 09:59:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_chpid;
-extern int	g_exitcode;
+extern t_bool g_next;
 
 void sighandler(int signal)
 {
-	signal = 130;
-	if (getpid() == g_chpid)
-		exit(signal);
+	g_next = true;
+	signal = 0;
 }

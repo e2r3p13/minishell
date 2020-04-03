@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/30 19:55:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/02 21:40:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void	cmd_handle_tab(t_cmd *cmd)
 	size_t			csiz;
 	DIR				*dir;
 
-	mch = NULL;
 	if (!(cmp = find_cmp(cmd, & csiz)))
 		return ;
 	if (ft_strchr(cmp, '*'))

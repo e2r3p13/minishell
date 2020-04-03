@@ -6,13 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:37:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/03 08:31:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_chpid;
 extern int	g_exitcode;
 
 // Return a function pointer if exename match a builtin name, return NULL else
@@ -68,10 +67,12 @@ void		execute(char **av, char **env)
 	{
 		pid = fork();
 		if (pid == 0)
+		{
+			signal(SIGINT, SIG_DFL);
 			execute_binary(av, env);
+		}
 		else
 		{
-			g_chpid = pid;
 			waitpid(pid, &g_exitcode, 0);
 			if (WIFEXITED(g_exitcode))
         		g_exitcode = WEXITSTATUS(g_exitcode);
