@@ -39,6 +39,8 @@ SRCS =	main/main.c \
 		execution/redirect.c \
 		builtins/cd.c \
 		builtins/echo.c \
+		builtins/unset.c \
+		builtins/export.c \
 		builtins/env.c \
 		builtins/pwd.c \
 		builtins/exit.c \

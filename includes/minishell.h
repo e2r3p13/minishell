@@ -152,8 +152,8 @@ int					ms_cd(int ac, char **av, t_env *env);
 int					ms_echo(int ac, char **av);
 int					ms_env(int ac, char **av, t_env *env);
 int					ms_exit(int ac, char **av);
-int					ms_export(int ac, char **av);
+int					ms_export(int ac, char **av, t_env *env);
 int					ms_pwd(int ac, char **av, t_env *env);
-int					ms_unset(int ac, char **av);
+int					ms_unset(int ac, char **av, t_env *env);
 
 #endif
