@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:55:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:11:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 18:03:19 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	cmd_save(t_cmd *cmd)
 {
 	int	fd;
 
-	if ((fd = open(HISTORY_PATH, O_WRONLY | O_APPEND | O_CREAT, 77777)) != -1)
+	if ((fd = open(HISTORY_PATH, O_WRONLY | O_APPEND | O_CREAT, 0600)) != -1)
 	{
 		if (cmd && cmd->raw && ft_strlen(cmd->raw) > 0)
 		{

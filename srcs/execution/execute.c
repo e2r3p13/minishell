@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 09:56:00 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 18:34:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <string.h>
 
 extern int	g_exitcode;
 
@@ -84,12 +85,12 @@ void		execute_binary(char **av, t_env *env)
 	int		i;
 	char	**e;
 
-	if ((exepath = get_env_var("PATH", env)))
+	e = env_to_arr(env);
+	if ((exepath = get_env_var("PATH", env)) && *av[0] != '.')
 	{
 		pathes = ft_split(exepath, ':');
 		relpath = ft_strjoin("/", av[0]);
 		i = 0;
-		e = env_to_arr(env);
 		while (pathes[i])
 		{
 			exepath = ft_strjoin(pathes[i], relpath);
@@ -97,9 +98,10 @@ void		execute_binary(char **av, t_env *env)
 			free(exepath);
 			i++;
 		}
-		ft_free_array(e);
 		free(relpath);
 		ft_free_array(pathes);
 	}
+	execve(*av, av, e);
+	ft_free_array(e);
 	exit(cmd_not_found(av[0]));
 }
