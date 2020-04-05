@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 15:32:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/05 13:00:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **e)
 	signal(SIGKILL, sighandler);
 	history = hst_get();
 	env = env_get(e);
-	if (history && env)
+	if (env)
 		return (minishell(env, history));
 	else
 		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 15:16:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/05 11:35:26 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/05 12:13:23 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,38 @@ int		env_push_back(t_env *env, char *key, char *value)
 	env->next = new;
 	new->next = NULL;
 	return (EXIT_SUCCESS);
+}
+
+// Remove the first element by freeing
+void	env_remove_first(t_env *env)
+{
+	t_env	*tmp;
+
+	free(env->key);
+	free(env->value);
+	if ((tmp = env->next))
+	{
+		env->key = tmp->key;
+		env->value = tmp->value;
+		env->next = tmp->next;
+		free(tmp);
+	}
+	else
+		free(env);
+}
+
+// Remove a specified item from (t_env *) linked list
+void	env_remove_elm(t_env *env, t_env *elm)
+{
+	t_env	*tmp;
+
+	while (env->next != elm)
+		env = env->next;
+	tmp = elm->next;
+	free(elm->key);
+	free(elm->value);
+	free(elm);
+	env->next = tmp;
 }
 
 // Temporary function, DON'T FORGET TO REMOVE before submitting project

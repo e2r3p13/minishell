@@ -6,59 +6,33 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:14 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/25 12:12:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/05 13:03:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-static void	env_pop_list(t_env **env)
-{
-	t_env	*cur;
-	t_env	*next;
-
-	cur = *env;
-	next = cur ->next;
-	free(cur->value);
-	free(cur->key);
-	cur->value = next->value;
-	cur->key = next->key;
-	cur->next = next->next;
-	free(next);
-}
-
+// Remove the given key element from (t_env *)
 int ms_unset(int ac, char **av, t_env *env)
 {
-	t_env	*cur;
-	t_env	*prev;
-	char	*tmp;
-	int	i;
+	t_env	*tmp;
+	int		i;
 
-	i = 1;
-	if (ac < 2)
-		return (1);
-	while (av[i])
+	i = 0;
+	av[ac] = NULL;
+	while (av[++i])
 	{
-		prev = env;
-		if ((tmp = get_env_var(av[i], env)))
+		tmp = env;
+		if (get_env_var(av[i], env))
 		{
-			if (tmp == prev->value)
-				env_pop_list(&env);
+			while (ft_strcmp(tmp->key, av[i]) != 0)
+				tmp = tmp->next;
+			if (tmp == env)
+				env_remove_first(env);
 			else
-			{
-				cur = prev;
-				while (cur->next && cur->value != tmp)
-					cur = cur->next;
-				while (prev->next != cur)
-					prev = prev->next;
-				prev->next = cur->next;
-				free(cur->key);
-				free(cur->value);
-				free(cur);
-			}
+				env_remove_elm(env, tmp);
 		}
-		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
