@@ -37,6 +37,7 @@ SRCS =	main/main.c \
 		parser/parser.c \
 		execution/execute.c \
 		execution/redirect.c \
+		execution/tweak.c \
 		builtins/cd.c \
 		builtins/echo.c \
 		builtins/unset.c \

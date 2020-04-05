@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "tokens.h"
 
-void	redirect_great(t_rdct *cur, t_env *env)
+static void	redirect_great(t_rdct *cur, t_env *env)
 {
 	char	**name;
 	int	fd[2];
@@ -12,7 +12,7 @@ void	redirect_great(t_rdct *cur, t_env *env)
 	fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 77777);
 	dup2(fd[0], STDOUT_FILENO);
 	if (sizeof(cur->left) == sizeof(cur))
-		tree_exec(cur->left, env);
+		tweak_tree_exec(cur->left, env);
 	else
 		execute(cur->left, env);
 	close(fd[0]);
@@ -20,7 +20,7 @@ void	redirect_great(t_rdct *cur, t_env *env)
 	close(fd[1]);
 }
 
-void	redirect_dgreat(t_rdct *cur, t_env *env)
+static void	redirect_dgreat(t_rdct *cur, t_env *env)
 {
 	char	**name;
 	int	fd[2];
@@ -36,7 +36,7 @@ void	redirect_dgreat(t_rdct *cur, t_env *env)
 		i = read(fd[0], &c, 1);
 	dup2(fd[0], STDOUT_FILENO);
 	if (sizeof(cur->left) == sizeof(cur))
-		tree_exec(cur->left, env);
+		tweak_tree_exec(cur->left, env);
 	else
 		execute(cur->left, env);
 	close(fd[0]);
