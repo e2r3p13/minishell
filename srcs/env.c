@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 15:16:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 16:27:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/05 11:35:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Return a (t_env *) linked list based on (char **env) passed to minishell
 t_env	*env_get(char **e)
 {
 	t_env	*env;
@@ -33,7 +34,7 @@ t_env	*env_get(char **e)
 	return (env);
 }
 
-// Return the content of a given environment variable name
+// Return the value of a given environment variable key, NULL if not set
 char	*get_env_var(char *var_name, t_env *env)
 {
 	while (env)
@@ -45,6 +46,7 @@ char	*get_env_var(char *var_name, t_env *env)
 	return (NULL);
 }
 
+// Computes the length of the given t_env linked list
 int	env_size(t_env *env)
 {
 	int i;
@@ -58,6 +60,7 @@ int	env_size(t_env *env)
 	return (i);
 }
 
+// Turn back a (t_env *) to a (char **) array, useful to give argv to execve
 char **env_to_arr(t_env *e)
 {
 	int		i;
@@ -86,6 +89,26 @@ char **env_to_arr(t_env *e)
 	return (a);
 }
 
+// Push an element to the given (t_env *) linked list
+int		env_push_back(t_env *env, char *key, char *value)
+{
+	t_env	*new;
+
+	if (!(new = (t_env *)malloc(sizeof(t_env))))
+	{
+		free(key);
+		free(value);
+		return (EXIT_FAILURE);
+	}
+	new->key = key;
+	new->value = value;
+	while (env && env->next)
+		env = env->next;
+	env->next = new;
+	new->next = NULL;
+	return (EXIT_SUCCESS);
+}
+
 // Temporary function, DON'T FORGET TO REMOVE before submitting project
 void	env_print(t_env *env)
 {
@@ -96,8 +119,18 @@ void	env_print(t_env *env)
 	}
 }
 
+// Fully free env
 void	*env_free(t_env *env)
 {
-	env = NULL;
-	return (env);
+	t_env *tmp;
+
+	while (env)
+	{
+		tmp = env;
+		free(tmp->key);
+		free(tmp->value);
+		env = env->next;
+		free(tmp);
+	}
+	return (NULL);
 }

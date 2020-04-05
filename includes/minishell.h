@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 16:05:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/05 11:34:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				env_print(t_env *env);
 void				*env_free(t_env *env);
 char				**env_to_arr(t_env *env);
 int					env_size(t_env *env);
+int					env_push_back(t_env *env, char *key, char *value);
 
 //					input functions
 void				prompt(t_env *env);
