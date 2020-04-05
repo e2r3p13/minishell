@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/05 12:13:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/05 14:03:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int					ms_echo(int ac, char **av);
 int					ms_env(int ac, char **av, t_env *env);
 int					ms_exit(int ac, char **av);
 int					ms_export(int ac, char **av, t_env *env);
-int					ms_pwd(int ac, char **av, t_env *env);
+int					ms_pwd(int ac, char **av);
 int					ms_unset(int ac, char **av, t_env *env);
 
 #endif
