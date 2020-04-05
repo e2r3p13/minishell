@@ -7,7 +7,8 @@ static void    tweak_great(t_rdct *cur, t_env *env)
         int     fd[2];
 
         name = (char**)cur->right;
-        fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 77777);
+        if ((fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 77777)) < 0)
+		return ;
         if (sizeof(cur->left) == sizeof(cur))
                 tweak_tree_exec(cur->left, env);
         else
@@ -24,7 +25,8 @@ static void    tweak_dgreat(t_rdct *cur, t_env *env)
 
         i = 1;
         name = (char**)cur->right;
-        fd[0] = open(name[0], O_RDWR | O_CREAT, 77777);
+	if ((fd[0] = open_file(name[0], O_RDWR | O_CREAT, 77777)) < 0)
+		return ;
         while (i > 0)
                 i = read(fd[0], &c, 1);
         if (sizeof(cur->left) == sizeof(cur))
