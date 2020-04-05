@@ -7,6 +7,7 @@ G='\033[0;92m'
 P='\033[0;95m'
 C='\033[0;36m'
 
+rm -rf /tmp/.minishell_git_logs
 git status &> /tmp/.minishell_git_logs
 
 while read line; do
