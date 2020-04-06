@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 23:01:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/06 11:13:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,16 @@ void		execute(char **av, t_env *env)
 	}
 }
 
+static int	cmd_not_found(char *msg)
+{
+	write(1, "minishell: command not found: ", 30);
+	write(1, msg, ft_strlen(msg));
+	write(1, "\n", 1);
+	return (CMD_NOT_FOUND);
+}
+
 // Perform the execution if the given command isn't a builtin
-void execute_binary(char **av, t_env *env)
+void		execute_binary(char **av, t_env *env)
 {
 	char	**pathes;
 	char	*relpath;
@@ -93,22 +101,22 @@ void execute_binary(char **av, t_env *env)
 	int		i;
 	char	**e;
 
-	pathes = ft_split(get_env_var("PATH", env), ':');
-	relpath = ft_strjoin("/", av[0]);
-	i = 0;
-	e = env_to_arr(env);
-	while (pathes[i])
+	if ((exepath = get_env_var("PATH", env)))
 	{
-		exepath = ft_strjoin(pathes[i], relpath);
-		execve(exepath, av, e);
-		free(exepath);
-		i++;
+		pathes = ft_split(exepath, ':');
+		relpath = ft_strjoin("/", av[0]);
+		i = 0;
+		e = env_to_arr(env);
+		while (pathes[i])
+		{
+			exepath = ft_strjoin(pathes[i], relpath);
+			execve(exepath, av, e);
+			free(exepath);
+			i++;
+		}
+		ft_free_array(e);
+		free(relpath);
+		ft_free_array(pathes);
 	}
-	ft_free_array(e);
-	free(relpath);
-	ft_free_array(pathes);
-	write(1, "minishell: command not found: ", 30);
-	write(1, av[0], ft_strlen(av[0]));
-	write(1, "\n", 1);
-	exit(127);
+	exit(cmd_not_found(av[0]));
 }

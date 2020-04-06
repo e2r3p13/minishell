@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/05 14:03:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/06 11:11:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # define HISTORY_PATH "/tmp/minishell_history"
 # define BUILTINS_PATH "./builtins/"
+
+# define CMD_NOT_FOUND 127
 
 typedef struct			s_env
 {
