@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 10:18:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/06 15:18:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ t_lxr	*lexer(char *str)
 				return (lxr_free(head));
 			cur = cur->next;
 		}
-		if (*str == ' ')
-			str++;
 		if (!(f = g_ascii_tokens[(int)*str]))
 			f = lxr_word;
-		str += f(str, cur);
+		str += *str == ' ' ? 1 : f(str, cur);
 	}
 	cur = head;
 	return (lxr_check_grammar(head));
@@ -58,7 +56,7 @@ t_lxr	*lxr_check_grammar(t_lxr *head)
 {
 	int			last_token;
 	t_bool		is_cmd_valid;
-	t_lxr	*tmp;
+	t_lxr		*tmp;
 
 	last_token = NEWLINE;
 	is_cmd_valid = true;
@@ -93,8 +91,8 @@ t_lxr	**lxr_split(t_lxr *head)
 {
 	t_lxr	*cur;
 	t_lxr	**sp;
-	int			i;
-	int			j;
+	int		i;
+	int		j;
 
 	if (!(cur = head) || !(i = 1))
 		return (NULL);

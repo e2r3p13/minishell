@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 17:46:10 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 09:58:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/06 15:05:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		lstsize(t_lxr *lst)
 // Temporary function, printing the t_lxr array
 void	lxr_print(t_lxr **lst)
 {
-	int			i;
+	int		i;
 	t_lxr	*cur;
 
 	i = 0;
