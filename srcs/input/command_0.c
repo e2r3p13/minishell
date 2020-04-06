@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 15:35:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 13:52:45 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "keys.h"
 
 extern struct termios	g_save;
-extern t_bool			g_next;
 
 // Read and process stdin, return a t_cmd, pushed at the end of history
 t_cmd	*cmd_get(t_env *env, t_hst **hst)
@@ -24,7 +23,7 @@ t_cmd	*cmd_get(t_env *env, t_hst **hst)
 	prompt(env);
 	if (!(hst_push_cmd(hst, cmd_new())))
 		return (NULL);
-	while (g_next == false)
+	while (true)
 	{
 		ft_memset(buf, 0, 5);
 		read(0, &buf, 4);
