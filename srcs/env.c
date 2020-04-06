@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 15:16:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/05 12:13:23 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/06 10:54:20 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 t_env	*env_get(char **e)
 {
 	t_env	*env;
-	t_env	*tmp;
+	t_env	*t;
 	int 	i;
 
 	i = 0;
 	env = NULL;
 	while (e[i])
 	{
-		if (!(tmp = malloc(sizeof(t_env))))
+		if (!(t = malloc(sizeof(t_env))))
 			return (env_free(env));
-		tmp->next = env;
-		env = tmp;
-		tmp->value = ft_strdup(ft_strchr(e[i], '=') + 1);
-		tmp->key = ft_strndup(e[i], ft_strlen(e[i]) - ft_strlen(tmp->value) - 1);
+		t->next = env;
+		env = t;
+		t->value = ft_strdup(ft_strchr(e[i], '=') + 1);
+		t->key = ft_strndup(e[i], ft_strlen(e[i]) - ft_strlen(t->value) - 1);
 		i++;
 	}
 	return (env);
@@ -123,8 +123,6 @@ void	env_remove_first(t_env *env)
 		env->next = tmp->next;
 		free(tmp);
 	}
-	else
-		free(env);
 }
 
 // Remove a specified item from (t_env *) linked list

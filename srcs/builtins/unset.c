@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:14 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/05 13:03:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/06 10:56:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int ms_unset(int ac, char **av, t_env *env)
 	while (av[++i])
 	{
 		tmp = env;
-		if (get_env_var(av[i], env))
+		if (ft_strcmp(av[i], "_") && get_env_var(av[i], env))
 		{
 			while (ft_strcmp(tmp->key, av[i]) != 0)
 				tmp = tmp->next;
