@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 14:09:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 21:40:18 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,26 @@ t_lxr	*lxr_check_grammar(t_lxr *head)
 }
 
 // To remove trailing tokens
-static void	lxr_pop(t_lxr *head, t_lxr **cur)
+static int	lxr_pop(t_lxr *head, t_lxr **cur)
 {
-	while (head && head->next != *cur)
-		head = head->next;
-	head->next = (*cur)->next;
-	free((*cur)->raw);
-	free(*cur);
-	(*cur) = head;
+	if (head == *cur)
+	{
+		*cur = (*cur)->next;
+		free(head->raw);
+		free(head);
+		if (*cur == NULL)
+			return (-1);
+	}
+	else
+	{
+		while (head && head->next != *cur)
+			head = head->next;
+		head->next = (*cur)->next;
+		free((*cur)->raw);
+		free(*cur);
+		(*cur) = head->next;
+	}
+	return (0);
 }
 
 // Turns *t_lxr into **t_lxr, allowing us to execute each commands separately
@@ -99,11 +111,12 @@ t_lxr	**lxr_split(t_lxr *head)
 		return (NULL);
 	while (cur)
 	{
-		if (cur && cur->raw == NULL)
-			lxr_pop(head, &cur);
+		if (cur && cur->raw == NULL && lxr_pop(head, &cur) == -1)
+			return (NULL);
 		if (cur && cur->token == NEWLINE && cur->next)
 			i++;
-		cur = cur->next;
+		if (cur)
+			cur = cur->next;
 	}
 	if (!(sp = malloc(sizeof(t_lxr *) * (i + 1))))
 		return (NULL);
