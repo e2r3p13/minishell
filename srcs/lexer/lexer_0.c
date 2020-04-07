@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 15:18:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 10:25:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static void	lxr_pop(t_lxr *head, t_lxr **cur)
 	free(*cur);
 	(*cur) = head;
 }
+
 // Turns *t_lxr into **t_lxr, allowing us to execute each commands separately
 t_lxr	**lxr_split(t_lxr *head)
 {
@@ -98,7 +99,7 @@ t_lxr	**lxr_split(t_lxr *head)
 		return (NULL);
 	while (cur)
 	{
-		if (cur && cur->raw && *(cur->raw) == 0)
+		if (cur && cur->raw == NULL)
 			lxr_pop(head, &cur);
 		if (cur && cur->token == NEWLINE && cur->next)
 			i++;
@@ -111,6 +112,7 @@ t_lxr	**lxr_split(t_lxr *head)
 	j = 0;
 	while (j < i)
 		sp[j++] = lxr_get_cmd_head(&cur);
+	lxr_print(sp);
 	return (sp);
 }
 
