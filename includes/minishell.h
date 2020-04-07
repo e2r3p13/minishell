@@ -152,6 +152,10 @@ t_rdct				*parser(t_lxr *lst);
 
 //					exectution's functions
 void				tree_exec(t_rdct *cur, t_env *env);
+void				redirect_less(t_rdct *cur, t_env *env);
+void				redirect_pipe(t_rdct *cur, t_env *env);
+void				tree_free(t_rdct *cur);
+void				tweak_tree_exec(t_rdct *cur, t_env *env);
 void				execute(char **, t_env *env);
 void 				execute_binary(char **av, t_env *env);
 
