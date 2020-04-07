@@ -9,7 +9,7 @@ static void	redirect_great(t_rdct *cur, t_env *env)
 	fd[1] = dup(STDOUT_FILENO);
 	close(STDOUT_FILENO);
 	name = (char**)cur->right;
-	fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 77777);
+	fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	dup2(fd[0], STDOUT_FILENO);
 	if (sizeof(cur->left) == sizeof(cur))
 		tweak_tree_exec(cur->left, env);
@@ -31,7 +31,7 @@ static void	redirect_dgreat(t_rdct *cur, t_env *env)
 	fd[1] = dup(STDOUT_FILENO);
 	close(STDOUT_FILENO);
 	name = (char**)cur->right;
-	fd[0] = open(name[0], O_RDWR | O_CREAT, 77777);
+	fd[0] = open(name[0], O_RDWR | O_CREAT, 0644);
 	while (i > 0)
 		i = read(fd[0], &c, 1);
 	dup2(fd[0], STDOUT_FILENO);

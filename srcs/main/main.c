@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 13:42:20 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 16:06:21 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int ac, char **av, char **e)
 	t_env	*env;
 
 	av[ac] = NULL;
-	g_exitcode = 0;
 	if (!isatty(0))
 	{
 		write(1, "minishell: pipe input not allowed\n", 34);
@@ -44,8 +43,7 @@ int	main(int ac, char **av, char **e)
 	signal(SIGINT, sighandler);
 	signal(SIGKILL, sighandler);
 	history = hst_get();
-	env = env_get(e);
-	if (env)
+	if ((env = env_get(e)))
 		return (minishell(env, history));
 	else
 		return (EXIT_FAILURE);
