@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 16:35:40 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 09:55:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,29 @@ t_bool	expand(t_lxr *lst, t_env *env)
 // Needed to join unspaced args if needed, ex:
 // 'ec"ho" cou"cou" le"s co"pains' should result in:
 // '|echo| |coucou| |les copains|'
-t_bool	join_unspaced_words(t_lxr *lst)
+t_bool	join_unspaced_words(t_lxr *l)
 {
 	void	*tmp;
 
-	while (lst)
+	while (l)
 	{
-		if (lst->space == false && lst->next && lst->next->token == WORD)
+		if (!l->space && l->next && l->next->token == WORD && l->token == WORD)
 		{
-			tmp = lst->raw;
-			if (!(lst->raw = ft_strjoin(tmp, lst->next->raw)))
+			tmp = l->raw;
+			if (!(l->raw = ft_strjoin(tmp, l->next->raw)))
 			{
 				free(tmp);
 				return (failure);
 			}
 			free(tmp);
-			if (lst->next)
-				lst->space = lst->next->space;
-			tmp = lst->next;
-			lst->next = lst->next->next;
+			if (l->next)
+				l->space = l->next->space;
+			tmp = l->next;
+			l->next = l->next->next;
 			free(tmp);
 		}
 		else
-			lst = lst->next;
+			l = l->next;
 	}
 	return (success);
 }

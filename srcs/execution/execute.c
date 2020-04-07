@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 11:13:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 09:56:00 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,6 @@ static void	*get_builtin_func(char *exename)
 	if (ft_strncmp("pwd", exename, exelen) == 0)
 		return (&ms_pwd);
 	return (NULL);
-}
-
-// Turn a lexed list into an array of parameters of type (char **)
-char 		**lex_to_args(t_lxr *lst)
-{
-	char	**av;
-	int		i;
-
-	i = 0;
-	av = malloc(sizeof(char *) * (lstsize(lst) + 1));
-	while (lst && lst->token)
-	{
-	       av[i++] = lst->raw;
-	       lst = lst->next;
-	}
-	av[i] = NULL;
-	return (av);
 }
 
 // Execute the command given by av. Note that we don't know yet if the command

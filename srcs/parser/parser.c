@@ -2,32 +2,33 @@
 #include "tokens.h"
 #include "libft.h"
 
-static char            **lex_to_arg(t_lxr *lst)
+// Turn a lexed list into an array of parameters of type (char **)
+char 		**lex_to_args(t_lxr *lst)
 {
-        char    **av;
-        int             i;
+	char	**av;
+	int		i;
 
-        i = 0;
-        av = malloc(sizeof(char *) * (lstsize(lst) + 1));
-        while (lst && lst->token == WORD)
-        {
-               av[i++] = lst->raw;
-               lst = lst->next;
-        }
-        av[i] = NULL;
-        return (av);
+	i = 0;
+	if (!(av = malloc(sizeof(char *) * (lstsize(lst) + 1))))
+		return (NULL);
+	while (lst && lst->token == WORD)
+	{
+		av[i++] = lst->raw;
+		lst = lst->next;
+	}
+	av[i] = NULL;
+	return (av);
 }
 
 static char	**create_simple_cmd(t_lxr **head)
 {
 	char	**cmd;
 
-	cmd = lex_to_arg(*head);
+	cmd = lex_to_args(*head);
 	while (*head && (*head)->token == WORD)
 		*head = (*head)->next;
 	return (cmd);
 }
-
 
 static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 {
@@ -48,8 +49,6 @@ static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 		lst_head->type = PIPE;
 	else if (!ft_strncmp((*cur)->raw,"<", 2))
 		lst_head->type = LESS;
-//	else if (!ft_strncmp((*cur)->raw, "<<", 3))//useless
-//		lst_head->type = DLESS;
 	else if (!ft_strncmp((*cur)->raw, ">", 2))
 		lst_head->type = GREAT;
 	else if (!ft_strncmp((*cur)->raw, ">>", 3))

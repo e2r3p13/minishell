@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 15:57:51 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 09:59:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 09:13:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@ extern t_bool g_next;
 void sighandler(int signal)
 {
 	g_next = true;
-	signal = 0;
+	while (!signal)
+		signal++;
 }
