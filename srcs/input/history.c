@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:57:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 15:26:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_hst	*hst_get(void)
 	int		fd;
 
 	hst = NULL;
-	if ((fd = open(HISTORY_PATH, O_RDONLY)) != -1)
+	if ((fd = open_reg_file(HISTORY_PATH, O_RDONLY, 0)) != -1)
 	{
 		while (get_next_line(fd, &raw))
 		{

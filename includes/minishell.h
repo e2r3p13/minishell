@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 11:11:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 15:37:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include "libft.h"
+#include <sys/types.h>
 
 # define HISTORY_PATH "/tmp/minishell_history"
 # define BUILTINS_PATH "./builtins/"
@@ -78,6 +79,8 @@ int					minishell(t_env *env, t_hst *history);
 char				*get_env_var(char *var_name, t_env *env);
 void				sighandler(int signal);
 int 				arglen(char **av);
+int 				open_reg_file(char *path, int flags, mode_t mode);
+int 				open_file(char *path, int flags, mode_t mode);
 t_env				*env_get(char **e);
 void				env_print(t_env *env);
 void				*env_free(t_env *env);

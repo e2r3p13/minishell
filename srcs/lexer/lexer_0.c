@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 10:25:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/07 14:09:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ t_lxr	**lxr_split(t_lxr *head)
 	j = 0;
 	while (j < i)
 		sp[j++] = lxr_get_cmd_head(&cur);
-	lxr_print(sp);
 	return (sp);
 }
 
