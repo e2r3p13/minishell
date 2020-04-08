@@ -6,13 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 16:06:21 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 13:52:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool			g_next = false;
 struct termios	g_save;
 int				g_exitcode = 0;
 char			*g_execve_av[2] = {GDD_PATH, NULL};
