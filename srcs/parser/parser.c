@@ -45,13 +45,13 @@ static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 	}
 	if (!(*cur) || (*cur)->token != REDIRECT)
 		lst_head->type = 0;
-	else if (!ft_strncmp((*cur)->raw, "|", 2))
+	else if (!ft_strcmp((*cur)->raw, "|"))
 		lst_head->type = PIPE;
-	else if (!ft_strncmp((*cur)->raw,"<", 2))
+	else if (!ft_strcmp((*cur)->raw, "<") || !ft_strcmp((*cur)->raw, "<<"))
 		lst_head->type = LESS;
-	else if (!ft_strncmp((*cur)->raw, ">", 2))
+	else if (!ft_strcmp((*cur)->raw, ">"))
 		lst_head->type = GREAT;
-	else if (!ft_strncmp((*cur)->raw, ">>", 3))
+	else if (!ft_strcmp((*cur)->raw, ">>"))
 		lst_head->type = DGREAT;
 	if (*cur)
 		*cur = (*cur)->next;

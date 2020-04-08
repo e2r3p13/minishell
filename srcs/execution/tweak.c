@@ -1,5 +1,22 @@
+#include <unistd.h>
 #include "minishell.h"
 #include "tokens.h"
+
+void		redi_err(t_rdct *head, int fd, int std, char *file)
+{
+	if (std == 0)
+		dup2(fd, STDIN_FILENO);
+	else if (std == 1)
+		dup2(fd, STDOUT_FILENO);
+	close(fd);
+	ft_putstr("minishell: ");
+	if (file)
+		ft_putstr(file);
+	else
+		ft_putstr("(null)");
+	ft_putstr(": No such file or directory\n");
+	tree_free(head);
+}
 
 static void    tweak_great(t_rdct *cur, t_env *env)
 {
@@ -34,6 +51,14 @@ static void    tweak_dgreat(t_rdct *cur, t_env *env)
     else
         execute(cur->left, env);
     close(fd[0]);
+}
+
+void    tree_free(t_rdct *cur)
+{
+        if (cur->type == 0)
+                free(cur->left);
+        free(cur->right);
+        free(cur);
 }
 
 void	tweak_tree_exec(t_rdct *cur, t_env *env)

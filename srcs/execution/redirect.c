@@ -9,7 +9,8 @@ static void	redirect_great(t_rdct *cur, t_env *env)
 	fd[1] = dup(STDOUT_FILENO);
 	close(STDOUT_FILENO);
 	name = (char**)cur->right;
-	fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if ((fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
+		return (redi_err(cur->left, fd[1], STDOUT_FILENO, name[0]));
 	dup2(fd[0], STDOUT_FILENO);
 	if (sizeof(cur->left) == sizeof(cur))
 		tweak_tree_exec(cur->left, env);
@@ -31,7 +32,8 @@ static void	redirect_dgreat(t_rdct *cur, t_env *env)
 	fd[1] = dup(STDOUT_FILENO);
 	close(STDOUT_FILENO);
 	name = (char**)cur->right;
-	fd[0] = open(name[0], O_RDWR | O_CREAT, 0644);
+	if ((fd[0] = open(name[0], O_RDWR | O_CREAT, 0644)) < 0)
+		return (redi_err(cur->left, fd[1], STDOUT_FILENO, name[0]));
 	while (i > 0)
 		i = read(fd[0], &c, 1);
 	dup2(fd[0], STDOUT_FILENO);
@@ -52,7 +54,8 @@ void	redirect_less(t_rdct *cur, t_env *env)
 	fd[1] = dup(STDIN_FILENO);
 	close(STDIN_FILENO);
 	name = (char**)cur->right;
-	fd[0] = open(name[0], O_RDONLY);
+	if ((fd[0] = open(name[0], O_RDONLY)) < 0)
+		return (redi_err(cur->left, fd[1], STDIN_FILENO, name[0]));
 	dup2(fd[0], STDIN_FILENO);
 	if (sizeof(cur->left) == sizeof(cur))
 		tree_exec(cur->left, env);
@@ -86,14 +89,6 @@ void	redirect_pipe(t_rdct *cur, t_env *env)
 	dup2(fd_save[0], STDIN_FILENO);
 	close(fd_save[0]);
 	close(fd_save[1]);
-}
-
-void	tree_free(t_rdct *cur)
-{
-	if (cur->type == 0)
-		free(cur->left);
-	free(cur->right);
-	free(cur);
 }
 
 void	tree_exec(t_rdct *cur, t_env *env)
