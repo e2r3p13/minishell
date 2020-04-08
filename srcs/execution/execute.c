@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 18:34:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:45:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 extern int	g_exitcode;
 
-// Return a function pointer if exename match a builtin name, return NULL else
 static void	*get_builtin_func(char *exename)
 {
 	int exelen;
@@ -38,10 +37,6 @@ static void	*get_builtin_func(char *exename)
 	return (NULL);
 }
 
-// Execute the command given by av. Note that we don't know yet if the command
-// is an executable or a builtin, this function figures out itself.
-// This function also set the exitcode status with the return value of the last
-// executed command
 void		execute(char **av, t_env *env)
 {
 	int	pid;
@@ -63,7 +58,7 @@ void		execute(char **av, t_env *env)
 		{
 			waitpid(pid, &g_exitcode, 0);
 			if (WIFEXITED(g_exitcode))
-        		g_exitcode = WEXITSTATUS(g_exitcode);
+				g_exitcode = WEXITSTATUS(g_exitcode);
 		}
 	}
 }
@@ -76,7 +71,6 @@ static int	cmd_not_found(char *msg)
 	return (CMD_NOT_FOUND);
 }
 
-// Perform the execution if the given command isn't a builtin
 void		execute_binary(char **av, t_env *env)
 {
 	char	**pathes;

@@ -6,13 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:45:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 10:41:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:38:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ms_pwd(int ac, char **av)
+int	ms_pwd(int ac, char **av)
 {
 	char *cwd;
 

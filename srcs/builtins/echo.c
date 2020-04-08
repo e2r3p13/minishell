@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:44:50 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 13:55:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:41:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int		is_flag(char *s)
 static void		set_flag(char *arg, int *f)
 {
 	arg++;
-
 	while (*arg)
 	{
 		if (*arg == 'n')

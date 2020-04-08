@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 18:48:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 21:14:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ t_cmd				*cmd_handle_return(t_hst *hst);
 void				cmd_handle_tab(t_cmd *cmd);
 char				*append_backslash(char *mch); // add to libft in a generic way
 char				*find_path(char **cmp);
+void				modify_cmd(t_cmd *cmd, char *mch, char *cmp);
 
 //					lexer functions
 t_lxr				*lexer(char *str);
@@ -134,6 +135,7 @@ int					lxr_word(char *str, t_lxr *cur);
 int					lxr_variable(char *str, t_lxr *cur);
 void				lxr_print(t_lxr **lst);
 int					lstsize(t_lxr *lst);
+void				expand_wildcard_from_tab(char *mch, char *cmp, t_cmd *cmd);
 
 //					lexer - parser transitional functions
 t_bool				expand(t_lxr *lst, t_env *env);

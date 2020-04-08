@@ -6,20 +6,21 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 18:31:02 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:21:40 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:30:34 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// The t_cmd structure is a dynamic array, including a 'char * raw' that wrap
-// the command itself, a 'size_t len' that contains the cmd length,
-// a 'size_t capacity' that indicates how many bytes have been allocated,
-// that is also the max length cmd can be and a 'size_t pos' showing us
-// the cursor position is the raw, vefry useful for command editing.
+/*
+** The t_cmd structure is a dynamic array, including a 'char * raw' that wrap
+** the command itself, a 'size_t len' that contains the cmd length,
+** a 'size_t capacity' that indicates how many bytes have been allocated,
+** that is also the max length cmd can be and a 'size_t pos' showing us
+** the cursor position is the raw, vefry useful for command editing.
+*/
 
-// Return an initialized command struct
-t_cmd	*cmd_new()
+t_cmd	*cmd_new(void)
 {
 	t_cmd *cmd;
 
@@ -34,7 +35,6 @@ t_cmd	*cmd_new()
 	return (cmd);
 }
 
-// Realloc the command struct with two times more space
 t_bool	cmd_stretch(t_cmd *cmd)
 {
 	char	*new_raw;
@@ -52,7 +52,6 @@ t_bool	cmd_stretch(t_cmd *cmd)
 	return (success);
 }
 
-// Delete the command's content, without freeing it as we can reuse it later
 void	cmd_erase(t_cmd *cmd)
 {
 	if (cmd && cmd->raw)
@@ -63,7 +62,6 @@ void	cmd_erase(t_cmd *cmd)
 	}
 }
 
-// Free the command
 void	*cmd_free(t_cmd *cmd)
 {
 	if (cmd && cmd->raw)

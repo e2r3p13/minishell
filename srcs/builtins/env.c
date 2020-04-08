@@ -6,13 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:32 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 16:03:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:38:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ms_env(int ac, char **av, t_env *env)
+int	ms_env(int ac, char **av, t_env *env)
 {
 	av[ac] = NULL;
 	while (env)

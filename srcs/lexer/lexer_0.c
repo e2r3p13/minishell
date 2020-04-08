@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 21:40:18 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:56:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@
 
 extern void	*g_ascii_tokens[256];
 
-// The t_lxr struct is a linked list that represents a lexed command.
-// It contains a 'raw' field (the portion of command), a 'token' field,
-// (the kind of that portion) and a 'space' field that indicates weither the
-// portion of command was separated of the next portion of command by a space.
-// 'next' is the next element of the list.
+/*
+** The t_lxr struct is a linked list that represents a lexed command.
+** It contains a 'raw' field (the portion of command), a 'token' field,
+** (the kind of that portion) and a 'space' field that indicates weither the
+** portion of command was separated of the next portion of command by a space.
+** 'next' is the next element of the list.
+*/
 
-// Main loop of the lexer, return the head of the list
-t_lxr	*lexer(char *str)
+t_lxr		*lexer(char *str)
 {
 	t_lxr	*head;
 	t_lxr	*cur;
@@ -51,8 +52,7 @@ t_lxr	*lexer(char *str)
 	return (lxr_check_grammar(head));
 }
 
-// Check the grammar of the lexed command, before spliting it
-t_lxr	*lxr_check_grammar(t_lxr *head)
+t_lxr		*lxr_check_grammar(t_lxr *head)
 {
 	int			last_token;
 	t_bool		is_cmd_valid;
@@ -65,7 +65,7 @@ t_lxr	*lxr_check_grammar(t_lxr *head)
 	{
 		if ((tmp->token == NEWLINE || tmp->token == REDIRECT) &&
 			(last_token == NEWLINE || last_token == REDIRECT))
-				is_cmd_valid = false;
+			is_cmd_valid = false;
 		last_token = tmp->token;
 		tmp = tmp->next;
 	}
@@ -76,7 +76,6 @@ t_lxr	*lxr_check_grammar(t_lxr *head)
 	return (NULL);
 }
 
-// To remove trailing tokens
 static int	lxr_pop(t_lxr *head, t_lxr **cur)
 {
 	if (head == *cur)
@@ -99,15 +98,15 @@ static int	lxr_pop(t_lxr *head, t_lxr **cur)
 	return (0);
 }
 
-// Turns *t_lxr into **t_lxr, allowing us to execute each commands separately
-t_lxr	**lxr_split(t_lxr *head)
+t_lxr		**lxr_split(t_lxr *head)
 {
 	t_lxr	*cur;
 	t_lxr	**sp;
 	int		i;
 	int		j;
 
-	if (!(cur = head) || !(i = 1))
+	i = 1;
+	if (!(cur = head))
 		return (NULL);
 	while (cur)
 	{
@@ -128,8 +127,7 @@ t_lxr	**lxr_split(t_lxr *head)
 	return (sp);
 }
 
-// Utils for lxr_split()
-t_lxr	*lxr_get_cmd_head(t_lxr **head)
+t_lxr		*lxr_get_cmd_head(t_lxr **head)
 {
 	t_lxr	*head_save;
 	t_lxr	*cmd_end;

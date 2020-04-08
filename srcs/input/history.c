@@ -6,18 +6,18 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 15:26:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:12:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// The t_hst struct is a double linked list that contains all commands of the
-// minishell_history at the beginning of the program.
-// Note that edit history commands will NOT modify them in the history file.
+/*
+** The t_hst struct is a double linked list that contains all commands of the
+** minishell_history at the beginning of the program.
+** Note that edit history commands will NOT modify them in the history file.
+*/
 
-// Get the whole minishell's command history from HISTORY_PATH
-// And turns it into a double linked list
 t_hst	*hst_get(void)
 {
 	char	*raw;
@@ -45,7 +45,6 @@ t_hst	*hst_get(void)
 	return (NULL);
 }
 
-// Push a given t_cmd at the end of the history list
 t_bool	hst_push_cmd(t_hst **hst, t_cmd *cmd)
 {
 	t_hst	*new;
@@ -75,7 +74,6 @@ t_bool	hst_push_cmd(t_hst **hst, t_cmd *cmd)
 	return (success);
 }
 
-// Remove the last element of the history list
 void	hst_pop_cmd(t_hst **hst)
 {
 	if (*hst)
@@ -97,7 +95,6 @@ void	hst_pop_cmd(t_hst **hst)
 	}
 }
 
-// Replace the last command of the history list by a given command
 t_bool	hst_reuse_cmd(t_hst **hst, t_cmd *cmd)
 {
 	if (!(*hst) || !cmd)
@@ -113,14 +110,13 @@ t_bool	hst_reuse_cmd(t_hst **hst, t_cmd *cmd)
 	return (success);
 }
 
-// Free the whole history list
 void	*hst_free(t_hst *hst)
 {
 	if (hst)
 	{
 		while (hst->next)
 			hst = hst->next;
-		while(hst->prev)
+		while (hst->prev)
 		{
 			cmd_free(hst->cmd);
 			hst = hst->prev;

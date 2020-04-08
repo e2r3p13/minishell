@@ -6,19 +6,21 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/02 21:40:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 21:15:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <dirent.h>
 
-// Following functions are used to handle autocompletion
-// If the user press TAB_KEY and the cursor is at the end of the command,
-// the last typed word will be completed if there is a matching file
-// If there is not OR there are several, last word will not be completed
+/*
+** Following functions are used to handle autocompletion
+** If the user press TAB_KEY and the cursor is at the end of the command,
+** the last typed word will be completed if there is a matching file
+** If there is not OR there are several, last word will not be completed
+*/
 
-static char *find_cmp(t_cmd *cmd, size_t *size)
+static char	*find_cmp(t_cmd *cmd, size_t *size)
 {
 	char	*cmp;
 	char	*tmp;
@@ -32,7 +34,7 @@ static char *find_cmp(t_cmd *cmd, size_t *size)
 	return (cmp);
 }
 
-char *find_path(char **cmp)
+char		*find_path(char **cmp)
 {
 	char	*path;
 	char	*tmp;
@@ -49,7 +51,7 @@ char *find_path(char **cmp)
 	return (ft_strdup("./"));
 }
 
-static char *find_match(DIR *dir, char *cmp)
+static char	*find_match(DIR *dir, char *cmp)
 {
 	int				occur;
 	struct dirent	*ent;
@@ -70,7 +72,7 @@ static char *find_match(DIR *dir, char *cmp)
 			}
 			else
 			{
-				free (match);
+				free(match);
 				return (NULL);
 			}
 		}
@@ -78,7 +80,7 @@ static char *find_match(DIR *dir, char *cmp)
 	return (occur != 1 ? NULL : match);
 }
 
-static void	modify_cmd(t_cmd *cmd, char *mch, char *cmp)
+void	modify_cmd(t_cmd *cmd, char *mch, char *cmp)
 {
 	size_t	clen;
 	char	*tmp;
@@ -101,7 +103,7 @@ static void	modify_cmd(t_cmd *cmd, char *mch, char *cmp)
 	return ;
 }
 
-void	cmd_handle_tab(t_cmd *cmd)
+void		cmd_handle_tab(t_cmd *cmd)
 {
 	char			*cmp;
 	char			*mch;
@@ -109,23 +111,23 @@ void	cmd_handle_tab(t_cmd *cmd)
 	size_t			csiz;
 	DIR				*dir;
 
-	if (!(cmp = find_cmp(cmd, & csiz)))
+	if (!(cmp = find_cmp(cmd, &csiz)))
 		return ;
+	mch = NULL;
 	if (ft_strchr(cmp, '*'))
+		expand_wildcard_from_tab(mch, cmp, cmd);
+	if ((pth = find_path(&cmp)))
 	{
-			mch = wildcard_to_str(cmp);
-			modify_cmd(cmd, mch, cmp);
-			free(mch);
-	}
-	if ((pth = find_path(&cmp)) && (dir = opendir(pth)))
-	{
-		mch = find_match(dir, cmp);
-		if (mch != NULL)
+		if ((dir = opendir(pth)))
 		{
-			modify_cmd(cmd, mch, cmp);
-			free(mch);
+			mch = find_match(dir, cmp);
+			if (mch != NULL)
+			{
+				modify_cmd(cmd, mch, cmp);
+				free(mch);
+			}
+			closedir(dir);
 		}
 		free(pth);
-		closedir(dir);
 	}
 }

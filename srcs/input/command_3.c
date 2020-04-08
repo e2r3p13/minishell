@@ -6,19 +6,20 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:55:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 18:03:19 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:13:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// The t_cms structure is a dynamic array, including a 'char * raw' that wrap
-// the command itself, a 'size_t len' that contains the cmd length,
-// a 'size_t capacity' that indicates how many bytes have been allocated,
-// that is also the max length cmd can be and a 'size_t pos' showing us
-// the cursor position is the raw, vefry useful for command editing.
+/*
+** The t_cms structure is a dynamic array, including a 'char * raw' that wrap
+** the command itself, a 'size_t len' that contains the cmd length,
+** a 'size_t capacity' that indicates how many bytes have been allocated,
+** that is also the max length cmd can be and a 'size_t pos' showing us
+** the cursor position is the raw, vefry useful for command editing.
+*/
 
-// Insert a character at the cursor position
 t_bool	cmd_push_char(char c, t_cmd *cmd)
 {
 	size_t len;
@@ -39,7 +40,6 @@ t_bool	cmd_push_char(char c, t_cmd *cmd)
 	return (success);
 }
 
-// Remove a character at the cursor position
 t_bool	cmd_pop_char(t_cmd *cmd)
 {
 	size_t pos;
@@ -62,7 +62,6 @@ t_bool	cmd_pop_char(t_cmd *cmd)
 	return (failure);
 }
 
-// Try to move the cursor in the struct and return weither it succeeds or not
 t_bool	cmd_can_move_cursor(t_cmd *cmd, t_dir dir)
 {
 	if (!cmd)
@@ -80,7 +79,6 @@ t_bool	cmd_can_move_cursor(t_cmd *cmd, t_dir dir)
 	return (false);
 }
 
-// Append history file with the command's raw
 void	cmd_save(t_cmd *cmd)
 {
 	int	fd;

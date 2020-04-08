@@ -6,14 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/28 22:46:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 13:24:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:29:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "keys.h"
 
-// Move terminal cursor inside the command
 static void	cmd_move_cursor(t_hst *hst, char key)
 {
 	if (key == KEY_RIGHT)
@@ -24,8 +23,7 @@ static void	cmd_move_cursor(t_hst *hst, char key)
 			write(1, CURSOR_LEFT, 3);
 }
 
-// Allows us to scroll history and execute old commands
-static void cmd_scroll_history(t_hst **hst, char key)
+static void	cmd_scroll_history(t_hst **hst, char key)
 {
 	size_t	len;
 	size_t	pos;
@@ -36,21 +34,19 @@ static void cmd_scroll_history(t_hst **hst, char key)
 	term_move_cursor(left, pos);
 	term_writen(' ', len);
 	term_move_cursor(left, len);
-	write(1,(*hst)->cmd->raw, (*hst)->cmd->len);
+	write(1, (*hst)->cmd->raw, (*hst)->cmd->len);
 	(*hst)->cmd->pos = (*hst)->cmd->len;
 }
 
-// Handle arrows, del, and other input leaded by '^]]..'
-void	cmd_esc_seq(t_hst **hst, char *buf)
+void		cmd_esc_seq(t_hst **hst, char *buf)
 {
 	if (*buf == KEY_LEFT || *buf == KEY_RIGHT)
 		cmd_move_cursor(*hst, *buf);
 	if ((*buf == KEY_UP && (*hst)->prev) || (*buf == KEY_DOWN && (*hst)->next))
-			cmd_scroll_history(hst, *buf);
+		cmd_scroll_history(hst, *buf);
 }
 
-// Delete the character just before the cursor, if there's some
-void	cmd_handle_backspace(t_cmd *cmd)
+void		cmd_handle_backspace(t_cmd *cmd)
 {
 	int pos_diff;
 

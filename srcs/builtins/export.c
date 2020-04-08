@@ -6,17 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 11:01:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:41:00 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-// Check weither or not the given assignment is legal
-// Assignment musy contain at least a key and a '='
-// The key can't be empty and can only contain 'A-z' '0-9' '_' characters
-static t_bool is_valid_assignment(char *s)
+static t_bool	is_valid_assignment(char *s)
 {
 	int i;
 
@@ -28,13 +25,12 @@ static t_bool is_valid_assignment(char *s)
 		write(1, "export: bad assignment: ", 24);
 		write(1, s, ft_strlen(s));
 		write(1, "\n", 1);
-		return false;
+		return (false);
 	}
 	return (true);
 }
 
-// Takes the raw assignment and perform it, returns EXIT_FAILURE if it fails
-static int	make_assignment(t_env *env, char *a)
+static int		make_assignment(t_env *env, char *a)
 {
 	t_env	*tmp;
 	char	*key;
@@ -55,14 +51,14 @@ static int	make_assignment(t_env *env, char *a)
 		free(key);
 	}
 	else
+	{
 		if (!(env_push_back(env, key, val)))
 			return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
-// Export builtin, for each argument, check if is legal and perform it
-// If one of the assignment is illegal, EXIT_FAILURE is returned
-int			ms_export(int ac, char **av, t_env *env)
+int				ms_export(int ac, char **av, t_env *env)
 {
 	int	i;
 	int	r_val;

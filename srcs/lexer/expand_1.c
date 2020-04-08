@@ -6,13 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:39:50 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 15:40:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:53:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Do I really have to explain this one ?
 char	*remove_quotes(char *raw)
 {
 	char	len;
@@ -31,7 +30,6 @@ char	*remove_quotes(char *raw)
 	return (NULL);
 }
 
-// Samething here
 t_bool	expand_squotes(t_lxr *lst)
 {
 	if (!(lst->raw = remove_quotes(lst->raw)))
@@ -39,7 +37,6 @@ t_bool	expand_squotes(t_lxr *lst)
 	return (success);
 }
 
-// Expand variables or exitcode into double quotes
 char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, t_env *env)
 {
 	size_t	len;
@@ -69,7 +66,6 @@ char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, t_env *env)
 	return (tmp_2);
 }
 
-// Quite nothing to explain
 t_bool	expand_dquotes(t_lxr *lst, t_env *env)
 {
 	char	*s;

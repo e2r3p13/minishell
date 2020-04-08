@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 00:35:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 13:52:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:26:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 extern struct termios	g_save;
 
-// Read and process stdin, return a t_cmd, pushed at the end of history
 t_cmd	*cmd_get(t_env *env, t_hst **hst)
 {
 	char	buf[5];
@@ -30,11 +29,11 @@ t_cmd	*cmd_get(t_env *env, t_hst **hst)
 		if (*buf == ESCAPE_KEY && *(buf + 1) == '[')
 			cmd_esc_seq(hst, buf + 2);
 		else if (*buf == RETURN_KEY)
-			break;
+			break ;
 		else if (*buf == BACKSPACE_KEY)
 			cmd_handle_backspace((*hst)->cmd);
 		else if (*buf == CTRL_D_KEY && cmd_handle_ctrld((*hst)->cmd))
-			break;
+			break ;
 		else if (*buf == CTRL_U_KEY)
 			cmd_handle_ctrlu((*hst)->cmd);
 		else if (*buf == TAB_KEY)
@@ -45,7 +44,6 @@ t_cmd	*cmd_get(t_env *env, t_hst **hst)
 	return (cmd_handle_return(*hst));
 }
 
-// Can either return the command or start the multiline command process
 t_cmd	*cmd_handle_return(t_hst *hst)
 {
 	if (hst->next)
@@ -56,7 +54,6 @@ t_cmd	*cmd_handle_return(t_hst *hst)
 	return (hst->cmd);
 }
 
-// Handle all printable characters, adding them at the good position in the cmd
 void	cmd_handle_character(t_cmd *cmd, char *buf)
 {
 	int		pos_diff;
@@ -71,8 +68,6 @@ void	cmd_handle_character(t_cmd *cmd, char *buf)
 	}
 }
 
-// Bash style Ctrl-D, exit shell if empty command, DEL's behaviour otherwise
-// Return true if minishell have to exit, false else
 t_bool	cmd_handle_ctrld(t_cmd *cmd)
 {
 	if (cmd->len == 0)
@@ -92,7 +87,6 @@ t_bool	cmd_handle_ctrld(t_cmd *cmd)
 	return (false);
 }
 
-// Bash style Ctrl-U should erase the command
 void	cmd_handle_ctrlu(t_cmd *cmd)
 {
 	term_move_cursor(left, cmd->pos);

@@ -6,34 +6,34 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 17:46:10 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 09:45:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 21:05:19 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
 
-// The t_lxr struct is a linked list that represents a lexed command.
-// It contains a 'raw' field (the portion of command), a 'token' field,
-// (the kind of that portion) and a 'space' field that indicates weither the
-// portion of command was separated of the next portion of command by a space.
-// 'next' is the next element of the list.
+/*
+** The t_lxr struct is a linked list that represents a lexed command.
+** It contains a 'raw' field (the portion of command), a 'token' field,
+** (the kind of that portion) and a 'space' field that indicates weither the
+** portion of command was separated of the next portion of command by a space.
+** 'next' is the next element of the list.
+*/
 
-// Return an initialized t_lxr element
-t_lxr 	*lxr_lstnew(void)
+t_lxr	*lxr_lstnew(void)
 {
-    t_lxr	*lst;
+	t_lxr	*lst;
 
-    if (!(lst = malloc(sizeof(t_lxr))))
+	if (!(lst = malloc(sizeof(t_lxr))))
 		return (NULL);
-    lst->raw = NULL;
-    lst->token = 0;
-    lst->next = NULL;
+	lst->raw = NULL;
+	lst->token = 0;
+	lst->next = NULL;
 	lst->space = false;
-    return (lst);
+	return (lst);
 }
 
-// Free the lexed list, from head to the last element
 void	*lxr_free(t_lxr *head)
 {
 	t_lxr *n;
@@ -49,7 +49,6 @@ void	*lxr_free(t_lxr *head)
 	return (NULL);
 }
 
-// Return the length of a lexer list
 int		lstsize(t_lxr *lst)
 {
 	int i;
@@ -63,7 +62,6 @@ int		lstsize(t_lxr *lst)
 	return (i);
 }
 
-// Temporary function, printing the t_lxr array
 void	lxr_print(t_lxr **lst)
 {
 	int		i;

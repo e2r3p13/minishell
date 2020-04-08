@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/03 15:34:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:28:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 extern char	*g_execve_av[2];
 
-// Print the current working directory path, followed by a colored '>>'
-// The color code of '>>' gives us details for the git status of the cwd
-// If the script is deleted or can't be opened, '>>' will be of the same color
-// than the printed path.
+/*
+** Print the current working directory path, followed by a colored '>>'
+** The color code of '>>' gives us details for the git status of the cwd
+** If the script is deleted or can't be opened, '>>' will be of the same color
+** than the printed path.
+*/
 
 static void	prompt_path(t_env *env)
 {
@@ -55,7 +57,6 @@ void		prompt(t_env *env)
 	if (pid == 0)
 	{
 		execve(g_execve_av[0], g_execve_av, NULL);
-		// Standard prompt if execve fails
 		write(1, " » \033[0;00m", 11);
 		exit(0);
 	}

@@ -6,15 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:14 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/06 10:56:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:40:25 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-// Remove the given key element from (t_env *)
-int ms_unset(int ac, char **av, t_env *env)
+int	ms_unset(int ac, char **av, t_env *env)
 {
 	t_env	*tmp;
 	int		i;

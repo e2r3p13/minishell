@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lex_wildcard.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/08 21:05:56 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/08 21:13:58 by lfalkau          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokens.h"
 #include "libft.h"
@@ -21,8 +33,8 @@ static int	wd_mch(char *s1, char *s2)
 static int	get_match_nb(DIR *dir, char *s, char *pth)
 {
 	struct dirent	*ent;
-	int		i;
-	char		*tmp;
+	int				i;
+	char			*tmp;
 
 	i = 0;
 	while ((ent = readdir(dir)))
@@ -41,11 +53,11 @@ static int	get_match_nb(DIR *dir, char *s, char *pth)
 static void	find_wildcard_match(DIR *dir, char *s, char **tab, char *pth)
 {
 	struct dirent	*ent;
-	char		*tmp;
-	int		i;
+	char			*tmp;
+	int				i;
 
 	i = 0;
-	while((ent = readdir(dir)))
+	while ((ent = readdir(dir)))
 	{
 		if (ft_strncmp(pth, "./", 3))
 			tmp = ft_strjoin(pth, ent->d_name);
@@ -64,30 +76,33 @@ static char	**match_wildcard(char *s)
 {
 	char	**tab;
 	char	*pth;
-	DIR	*dir;
+	DIR		*dir;
 	char	*tmp;
 
 	tmp = s;
-	if (!((pth = find_path(&tmp)) && (dir = opendir(pth))))
-		return (NULL);
-	tmp = (pth[ft_strlen(pth) - 1] == '/') ? ft_strjoin(pth, "") : ft_strjoin(pth, "/");
-	if (!(tab = (char **)malloc(sizeof(char *) * (get_match_nb(dir, s, tmp) + 1))))
-		return (NULL);
-	closedir(dir);
-	dir = opendir(pth);
-	find_wildcard_match(dir, s, tab, tmp);
-	free(pth);
-	free(tmp);
-	closedir(dir);
-	return (tab);
+	if ((pth = find_path(&tmp)))
+	{
+		if ((dir = opendir(pth)))
+		{
+			tmp = (pth[ft_strlen(pth) - 1] == '/') ? ft_strjoin(pth, "") : ft_strjoin(pth, "/");
+			if (!(tab = malloc(sizeof(char *) * (get_match_nb(dir, s, tmp) + 1))))
+				return (NULL);
+			find_wildcard_match(dir, s, tab, tmp);
+			free(pth);
+			free(tmp);
+			closedir(dir);
+			return (tab);
+		}
+	}
+	return (NULL);
 }
 
-char	*wildcard_to_str(char *str)
+char		*wildcard_to_str(char *str)
 {
 	char	**tab;
 	char	*s1;
 	char	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	s1 = NULL;
@@ -106,7 +121,7 @@ char	*wildcard_to_str(char *str)
 	return (s1);
 }
 
-void	expand_wildcard(t_lxr **head, t_lxr *cur)
+void		expand_wildcard(t_lxr **head, t_lxr *cur)
 {
 	int	i;
 	char	**tab;
@@ -133,4 +148,11 @@ void	expand_wildcard(t_lxr **head, t_lxr *cur)
 	cur->next = save;
 	*head = cur;
 	ft_free_array(tab);
+}
+
+void		expand_wildcard_from_tab(char *mch, char *cmp, t_cmd *cmd)
+{
+	mch = wildcard_to_str(cmp);
+	modify_cmd(cmd, mch, cmp);
+	free(mch);
 }

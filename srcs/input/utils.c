@@ -6,14 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 20:31:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 14:09:40 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 20:31:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Switch terminal to canocical mode
-void	term_enable_raw_mode()
+void	term_enable_raw_mode(void)
 {
 	struct termios raw;
 
@@ -23,7 +22,6 @@ void	term_enable_raw_mode()
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
-// Move the printed cursor by 'x' in 'dir' direction
 void	term_move_cursor(t_dir dir, int x)
 {
 	if (x > 0)
@@ -37,7 +35,6 @@ void	term_move_cursor(t_dir dir, int x)
 	}
 }
 
-// Write 'len' times the 'c' char, trying to do as less write calls as possible
 void	term_writen(char c, size_t len)
 {
 	char *s;
@@ -50,8 +47,6 @@ void	term_writen(char c, size_t len)
 	}
 }
 
-// Appends a '/' at the end of a string and return itself, return inchanged
-// string if failed
 char	*append_backslash(char *mch)
 {
 	char *tmp;
