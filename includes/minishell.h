@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 15:37:40 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 18:48:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include "libft.h"
 #include <sys/types.h>
+#include <sys/stat.h>
 
 # define HISTORY_PATH "/tmp/minishell_history"
 # define BUILTINS_PATH "./builtins/"

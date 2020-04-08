@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 13:52:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/08 18:47:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ void			*g_ascii_tokens[256] =
 
 int	main(int ac, char **av, char **e)
 {
-	t_hst	*history;
-	t_env	*env;
+	t_hst		*history;
+	t_env		*env;
+	struct stat	st;
+
 
 	av[ac] = NULL;
-	if (!isatty(0))
+	fstat(0, &st);
+	if (!S_ISCHR(st.st_mode))
 	{
 		write(1, "minishell: pipe input not allowed\n", 34);
 		return (EXIT_FAILURE);
