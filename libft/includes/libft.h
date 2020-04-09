@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:57:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 12:08:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/09 20:52:52 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 # define LIBFT_H
 
 # include <stddef.h>
+# include <sys/stat.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
+# endif
+
+# ifndef DYNSTR_START_SIZE
+#  define DYNSTR_START_SIZE 32
 # endif
 
 typedef struct	s_ls
@@ -32,14 +37,20 @@ typedef struct	s_lf
 	struct s_lf	*next;
 }				t_lf;
 
+typedef struct	s_dynstr
+{
+	char		*str;
+	size_t		len;
+	size_t		capacity;
+}				t_dynstr;
+
 typedef enum	e_bool
 {
 	false = 0,
-	failure = 0,
 	true = 1,
-	success = 1,
 }				t_bool;
 
+int				argvlen(char **av);
 size_t			ft_strlen(const char *s);
 size_t			ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
@@ -54,6 +65,7 @@ t_bool			ft_isinset(char const *set, char c);
 t_bool			ft_isrgb(char **array);
 t_bool			ft_isstrdigit(char *str);
 int				ft_atoi(const char *str);
+int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -82,6 +94,7 @@ char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char			*ft_bit_cctwo(char *oct);
 char			*ft_bit_itoc(char nb);
 char			*ft_remove_spaces(char *str);
+char			*ft_strpush(char *str, char c);
 char			**ft_split(char const *s, char c);
 void			ft_bzero(void *s, size_t n);
 void			ft_putchar_fd(char c, int fd);
@@ -109,5 +122,17 @@ t_ls			*ft_lstlast(t_ls *lst);
 t_ls			*ft_lstnew(void *content);
 t_ls			*ft_lstmap(t_ls *lst, void *(*f)(void *), void (*dl)(void *));
 int				get_next_line(int fd, char **line);
+t_dynstr		*dynstr_new(void);
+t_dynstr		*dynstr_from_str(char *s);
+int				dynstr_push(t_dynstr *dstr, char c);
+int				dynstr_pop(t_dynstr *dstr);
+int				dynstr_insert_at(size_t index, t_dynstr *dstr, char c);
+int				dynstr_remove_at(size_t index, t_dynstr *dstr);
+t_dynstr		*dynstr_join(t_dynstr *dstr_1, t_dynstr *dstr_2);
+int				dynstr_realloc(t_dynstr *dstr);
+void			dynstr_clear(t_dynstr *dstr);
+void			dynstr_free(t_dynstr *dstr);
+int				open_reg_file(char *path, int flags, mode_t mode);
+int				open_file(char *path, int flags, mode_t mode);
 
 #endif

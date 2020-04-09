@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   open_reg_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 16:25:08 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/09 20:27:44 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/09 20:53:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-# define ESCAPE_KEY 27
-# define RETURN_KEY 10
-# define BACKSPACE_KEY 127
-# define KEY_UP 65
-# define KEY_DOWN 66
-# define KEY_RIGHT 67
-# define KEY_LEFT 68
-# define EOI 4
-# define CTRL_U_KEY 21
-# define TAB_KEY 9
+int	open_reg_file(char *path, int flags, mode_t mode)
+{
+	int			fd;
+	struct stat	st;
 
-# define CURSOR_LEFT "\033[D"
-# define CURSOR_RIGHT "\033[C"
-
-
-#endif
+	fd = mode ? open(path, flags, mode) : open(path, flags);
+	if (fd == -1 || fstat(fd, &st) == -1 || (st.st_mode & S_IFMT) != S_IFREG)
+	{
+		if (fd != -1)
+			close(fd);
+		return (-1);
+	}
+	return (fd);
+}

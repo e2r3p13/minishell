@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:28:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/09 17:48:18 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "prompt.h"
 
-extern char	*g_execve_av[2];
+char	*g_execve_av[2] = {GDD_PATH, NULL};
 
 /*
 ** Print the current working directory path, followed by a colored '>>'
@@ -64,5 +64,4 @@ void		prompt(t_env *env)
 		wait(0);
 	else
 		write(1, "\033[0;00m", 7);
-	term_enable_raw_mode();
 }

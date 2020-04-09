@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   ft_strpush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 16:25:08 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/09 20:39:02 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/09 20:55:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include "libft.h"
+#include <stdlib.h>
 
-# define ESCAPE_KEY 27
-# define RETURN_KEY 10
-# define BACKSPACE_KEY 127
-# define KEY_UP 65
-# define KEY_DOWN 66
-# define KEY_RIGHT 67
-# define KEY_LEFT 68
-# define EOI 4
-# define CTRL_U_KEY 21
-# define TAB_KEY 9
+char	*ft_strpush(char *str, char c)
+{
+	char	*tmp;
+	int		len;
 
-# define CURSOR_LEFT "\033[D"
-# define CURSOR_RIGHT "\033[C"
-
-
-#endif
+	len = ft_strlen(str);
+	if (!(tmp = malloc(sizeof(char) * (len + 2))))
+		return (str);
+	ft_memcpy(tmp, str, len);
+	tmp[len] = c;
+	tmp[len + 1] = 0;
+	free(str);
+	return (tmp);
+}

@@ -1,44 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   dynstr_push.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 20:17:27 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/08 21:45:21 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/08 22:45:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
-t_hst	*g_hst = NULL;
-
-int	main(int ac, char **av, char **e)
+int	dynstr_push(t_dynstr *dstr, char c)
 {
-	struct stat	st;
-	t_env		*env;
-
-	av[ac] = NULL;
-	signal(SIGINT, sighandler);
-	signal(SIGKILL, sighandler);
-	if (!(env = env_get(e)))
+	if (dstr->len == dstr->capacity && dynstr_realloc(dstr) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	fstat(0, &st);
-	if (S_ISCHR(st.st_mode))
-	{
-		//g_hst = hst_get();
-		minishell(env, true);
-		//hst_free(g_hst);
-	}
-	else
-	{
-		minishell(env, false);
-	}
+	dstr->str[dstr->len] = c;
+	dstr->len++;
 	return (EXIT_SUCCESS);
-}
-
-void sighandler(int sig)
-{
-	signal(sig, SIG_IGN);
 }

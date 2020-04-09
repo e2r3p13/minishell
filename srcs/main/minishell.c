@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 13:53:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/09 20:04:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 #include "keys.h"
 #include "tokens.h"
 
-int	minishell(t_env *env, t_hst *hst)
+int	minishell(t_env *env, t_bool it)
 {
-	t_cmd	*cmd;
+	char	*cmd;
 	t_lxr	**lexlst;
 	int		i;
 
 	while (true)
 	{
-		cmd = cmd_get(env, &hst);
-		if (cmd && cmd->raw && ft_strlen(cmd->raw) &&
-			(lexlst = lxr_split(lexer(cmd->raw))))
+		prompt(env);
+		if (!(cmd = it ? get_it_cmd() : get_cmd()) || !ft_strlen(cmd))
+			continue ;
+		if (*cmd == EOI || ft_strcmp(cmd, "exit") == 0)
+			break ;
+		if ((lexlst = lxr_split(lexer(cmd))))
 		{
 			i = 0;
 			while (lexlst[i] && expand(lexlst[i], env))
@@ -34,8 +37,6 @@ int	minishell(t_env *env, t_hst *hst)
 			}
 			free(lexlst);
 		}
-		else if (cmd)
-			hst_pop_cmd(&hst);
 	}
 	return (0);
 }

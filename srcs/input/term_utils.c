@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   term_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 20:31:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:31:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/09 20:43:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	term_enable_raw_mode(void)
-{
-	struct termios raw;
+struct termios	g_oldterm;
 
-	tcgetattr(STDIN_FILENO, &raw);
-	raw.c_lflag &= ~(ICANON);
-	raw.c_lflag &= ~(ECHO);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+void	enable_raw_mode(void)
+{
+	struct termios newterm;
+
+	tcgetattr(STDIN_FILENO, &g_oldterm);
+	tcgetattr(STDIN_FILENO, &newterm);
+	newterm.c_lflag &= ~(ICANON);
+	newterm.c_lflag &= ~(ECHO);
+	newterm.c_cc[VINTR] = 0;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &newterm);
 }
 
-void	term_move_cursor(t_dir dir, int x)
+void	disable_raw_mode(void)
+{
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_oldterm);
+}
+
+void	move_cursor(t_dir dir, int x)
 {
 	if (x > 0)
 	{
@@ -35,26 +44,16 @@ void	term_move_cursor(t_dir dir, int x)
 	}
 }
 
-void	term_writen(char c, size_t len)
+int		writen(char c, size_t l)
 {
 	char *s;
 
-	if ((s = malloc(sizeof(char) * len)))
+	if ((s = malloc(sizeof(char) * l)))
 	{
-		ft_memset(s, c, len);
-		write(1, s, len);
+		ft_memset(s, c, l);
+		write(1, s, l);
 		free(s);
+		return (EXIT_SUCCESS);
 	}
-}
-
-char	*append_backslash(char *mch)
-{
-	char *tmp;
-
-	if ((tmp = ft_strjoin(mch, "/")))
-	{
-		free(mch);
-		return (tmp);
-	}
-	return (mch);
+	return (EXIT_FAILURE);
 }

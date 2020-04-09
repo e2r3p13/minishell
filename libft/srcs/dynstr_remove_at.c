@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   dynstr_remove_at.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/19 15:57:51 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 13:53:52 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/08 21:45:55 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/09 11:18:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
-extern t_bool g_next;
-
-void sighandler(int sig)
+int	dynstr_remove_at(size_t i, t_dynstr *dstr)
 {
-	signal(sig, SIG_IGN);
+	if (dstr->len < 1 || i > dstr->len)
+		return (EXIT_FAILURE);
+	while (i <= dstr->len)
+	{
+		dstr->str[i] = dstr->str[i + 1];
+		i++;
+	}
+	dstr->len--;
+	return (EXIT_SUCCESS);
 }

@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   dynstr_clear.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 16:25:08 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/08 21:44:56 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/08 22:48:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include "libft.h"
 
-# define ESCAPE_KEY 27
-# define RETURN_KEY 10
-# define BACKSPACE_KEY 127
-# define KEY_UP 65
-# define KEY_DOWN 66
-# define KEY_RIGHT 67
-# define KEY_LEFT 68
-# define EOI 4
-# define CTRL_U_KEY 21
-# define TAB_KEY 9
-
-# define CURSOR_LEFT "\033[D"
-# define CURSOR_RIGHT "\033[C"
-
-
-#endif
+void	dynstr_clear(t_dynstr *dstr)
+{
+	ft_memset(dstr->str, 0, sizeof(char) * dstr->len);
+	dstr->len = 0;
+}

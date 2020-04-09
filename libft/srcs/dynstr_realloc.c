@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   dynstr_realloc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/08 21:24:16 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 20:56:12 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/08 21:45:10 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/08 22:48:34 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strndup(const char *s, size_t n)
+int	dynstr_realloc(t_dynstr *dstr)
 {
-	size_t	len;
-	char	*sd;
+	char	*new_str;
+	size_t	new_capacity;
 
-	len = ft_strlen(s) > n ? n : ft_strlen(s);
-	if (!(sd = malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	ft_memcpy(sd, s, len);
-	sd[len] = 0;
-	return (sd);
+	new_capacity = dstr->capacity * 2;
+	if ((new_str = malloc(sizeof(char) * (new_capacity + 1))))
+	{
+		ft_memset(new_str, 0, sizeof(char) * (new_capacity + 1));
+		ft_memcpy(new_str, dstr->str, dstr->len);
+		free(dstr->str);
+		dstr->str = new_str;
+		dstr->capacity = new_capacity;
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }

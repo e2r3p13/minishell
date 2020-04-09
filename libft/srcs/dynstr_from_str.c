@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   dynstr_from_str.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 16:25:08 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/08 23:02:04 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/08 23:04:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include "libft.h"
 
-# define ESCAPE_KEY 27
-# define RETURN_KEY 10
-# define BACKSPACE_KEY 127
-# define KEY_UP 65
-# define KEY_DOWN 66
-# define KEY_RIGHT 67
-# define KEY_LEFT 68
-# define EOI 4
-# define CTRL_U_KEY 21
-# define TAB_KEY 9
+t_dynstr	*dynstr_from_str(char *s)
+{
+	t_dynstr	*dstr;
 
-# define CURSOR_LEFT "\033[D"
-# define CURSOR_RIGHT "\033[C"
-
-
-#endif
+	if ((dstr = dynstr_new()))
+	{
+		while (*s)
+			dynstr_push(dstr, *s++);
+		return (dstr);
+	}
+	return (NULL);
+}

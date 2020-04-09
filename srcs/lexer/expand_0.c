@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/07 09:55:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/09 17:48:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
 
-extern int g_exitcode;
+int				g_exitcode = 0;
 
 // Remove quotes and replace variables when needed
 t_bool	expand(t_lxr *lst, t_env *env)

@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   argvlen.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 16:25:08 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/09 20:28:08 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/09 20:54:37 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+int	arglen(char **av)
+{
+	int i;
 
-# define ESCAPE_KEY 27
-# define RETURN_KEY 10
-# define BACKSPACE_KEY 127
-# define KEY_UP 65
-# define KEY_DOWN 66
-# define KEY_RIGHT 67
-# define KEY_LEFT 68
-# define EOI 4
-# define CTRL_U_KEY 21
-# define TAB_KEY 9
-
-# define CURSOR_LEFT "\033[D"
-# define CURSOR_RIGHT "\033[C"
-
-
-#endif
+	i = 0;
+	while (av[i])
+		i++;
+	return (i);
+}

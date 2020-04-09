@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 11:56:25 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/03 16:09:38 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/09 21:02:03 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS =			ft_atoi.c \
 				ft_itoa.c \
 				ft_substr.c \
 				ft_strjoin.c \
+				ft_strpush.c \
 				ft_strtrim.c \
 				ft_calloc.c \
 				ft_strmapi.c \
@@ -77,6 +78,19 @@ SRCS =			ft_atoi.c \
 				ft_isrgb.c \
 				ft_free_array.c \
 				ft_color_from_rgb.c \
+				dynstr_new.c \
+				dynstr_from_str.c \
+				dynstr_push.c \
+				dynstr_pop.c \
+				dynstr_insert_at.c \
+				dynstr_remove_at.c \
+				dynstr_join.c \
+				dynstr_realloc.c \
+				dynstr_clear.c \
+				dynstr_free.c \
+				argvlen.c \
+				open_file.c \
+				open_reg_file.c \
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror

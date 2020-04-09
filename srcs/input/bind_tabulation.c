@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_4.c                                        :+:      :+:    :+:   */
+/*   bind_tabulation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 21:15:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/09 20:44:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 ** If there is not OR there are several, last word will not be completed
 */
 
-static char	*find_cmp(t_cmd *cmd, size_t *size)
+static char	*find_cmp(t_dynstr *cmd, size_t *size, size_t *pos)
 {
 	char	*cmp;
 	char	*tmp;
 
-	if (cmd->pos != cmd->len)
+	if (*pos != cmd->len)
 		return (NULL);
-	cmp = cmd->raw;
+	cmp = cmd->str;
 	if ((tmp = ft_strrchr(cmp, ' ')))
 		cmp = tmp + 1;
 	*size = ft_strlen(cmp);
@@ -67,7 +67,7 @@ static char	*find_match(DIR *dir, char *cmp)
 				if (!(match = ft_strdup(ent->d_name)))
 					return (NULL);
 				if (ent->d_type == DT_DIR)
-					match = append_backslash(match);
+					match = ft_strpush(match, '\\');
 				occur++;
 			}
 			else
@@ -80,42 +80,43 @@ static char	*find_match(DIR *dir, char *cmp)
 	return (occur != 1 ? NULL : match);
 }
 
-void	modify_cmd(t_cmd *cmd, char *mch, char *cmp)
+void		autocomplete(t_dynstr *cmd, char *mch, char *cmp, size_t *pos)
 {
 	size_t	clen;
 	char	*tmp;
 
 	clen = ft_strlen(cmp);
-	term_move_cursor(left, clen);
-	term_writen(' ', clen);
-	term_move_cursor(left, clen);
+	move_cursor(left, clen);
+	writen(' ', clen);
+	move_cursor(left, clen);
 	while (clen--)
-		cmd_pop_char(cmd);
-	if ((tmp = ft_strjoin(cmd->raw, mch)))
+		dynstr_pop(cmd);
+	if ((tmp = ft_strjoin(cmd->str, mch)))
 	{
-		free(cmd->raw);
-		cmd->raw = tmp;
+		free(cmd->str);
+		cmd->str = tmp;
 		cmd->len += ft_strlen(mch);
-		cmd->pos = cmd->len;
+		*pos = cmd->len;
 		cmd->capacity = cmd->len;
 		write(1, mch, ft_strlen(mch));
 	}
 	return ;
 }
 
-void		cmd_handle_tab(t_cmd *cmd)
+int			handle_tab(char *buf, size_t *pos, t_dynstr *cmd)
 {
-	char			*cmp;
-	char			*mch;
-	char			*pth;
-	size_t			csiz;
-	DIR				*dir;
+	char	*cmp;
+	char	*mch;
+	char	*pth;
+	size_t	csiz;
+	DIR		*dir;
 
-	if (!(cmp = find_cmp(cmd, &csiz)))
-		return ;
 	mch = NULL;
+	buf = NULL;
+	if (!(cmp = find_cmp(cmd, &csiz, pos)))
+		return (0);
 	if (ft_strchr(cmp, '*'))
-		expand_wildcard_from_tab(mch, cmp, cmd);
+		expand_wildcard_ft(mch, cmp, cmd, pos);
 	if ((pth = find_path(&cmp)))
 	{
 		if ((dir = opendir(pth)))
@@ -123,11 +124,12 @@ void		cmd_handle_tab(t_cmd *cmd)
 			mch = find_match(dir, cmp);
 			if (mch != NULL)
 			{
-				modify_cmd(cmd, mch, cmp);
+				autocomplete(cmd, mch, cmp, pos);
 				free(mch);
 			}
 			closedir(dir);
 		}
 		free(pth);
 	}
+	return (0);
 }

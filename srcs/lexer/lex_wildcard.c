@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 21:05:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 21:13:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/09 18:09:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ void		expand_wildcard(t_lxr **head, t_lxr *cur)
 	ft_free_array(tab);
 }
 
-void		expand_wildcard_from_tab(char *mch, char *cmp, t_cmd *cmd)
+void		expand_wildcard_ft(char *mch, char *cmp, t_dynstr *cmd, size_t *pos)
 {
 	mch = wildcard_to_str(cmp);
-	modify_cmd(cmd, mch, cmp);
+	autocomplete(cmd, mch, cmp, pos);
 	free(mch);
 }

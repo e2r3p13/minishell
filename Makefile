@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/07 09:17:32 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/09 21:02:28 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,12 @@ BTNS_PATH = ./builtins/
 SRCS =	main/main.c \
 		main/minishell.c \
 		input/prompt.c \
-		input/command_0.c \
-		input/command_1.c \
-		input/command_2.c \
-		input/command_3.c \
-		input/command_4.c \
-		input/history.c \
-		input/utils.c \
+		input/get_input.c \
+		input/bind_spe.c \
+		input/bind_arrows.c \
+		input/bind_ctrl.c \
+		input/term_utils.c \
+		input/bind_tabulation.c \
 		lexer/lexer_0.c \
 		lexer/lexer_1.c \
 		lexer/lexer_2.c \
@@ -44,10 +43,7 @@ SRCS =	main/main.c \
 		builtins/export.c \
 		builtins/env.c \
 		builtins/pwd.c \
-		builtins/exit.c \
-		signals.c \
 		env.c \
-		utils.c
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
