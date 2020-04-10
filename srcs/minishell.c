@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 20:04:09 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 10:18:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	minishell(t_env *env, t_bool it)
 		if ((lexlst = lxr_split(lexer(cmd))))
 		{
 			i = 0;
-			while (lexlst[i] && expand(lexlst[i], env))
+			while (lexlst[i] && expand(lexlst[i], env) == EXIT_SUCCESS)
 			{
 				tree_exec(parser(lexlst[i]), env);
 				lxr_free(lexlst[i++]);
