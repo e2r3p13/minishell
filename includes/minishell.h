@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 12:25:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 14:02:24 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,10 @@ int			expand(t_lxr *lst, t_env *env);
 char		*remove_quotes(char *raw);
 int			expand_squotes(t_lxr *lst);
 int			expand_dquotes(t_lxr *lst, t_env *env);
+int			expand_wildcard(t_lxr **head, t_lxr *cur);
 char		*expand_variable(char *raw, t_env *env);
 char		*expand_exitcode(char *raw);
 char		*expand_quoted_dollar(char *r, char *v, size_t l, t_env *e);
-void		expand_wildcard(t_lxr **head, t_lxr *cur);
 char		*wildcard_to_str(char *str);
 int			join_unspaced_words(t_lxr *lst);
 char		**lex_to_args(t_lxr *lst);
