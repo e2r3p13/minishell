@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:04:47 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 20:49:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 21:06:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
 
 int	handle_arrow(t_dynstr *dstr, size_t *cpos, t_dir dir)
 {
@@ -75,23 +76,16 @@ int	handle_optright(t_dynstr *dstr, size_t *cpos)
 
 int	handle_history(t_dynstr *dstr, size_t *cpos, t_hst **hst, t_dir dir)
 {
-	cpos = NULL;
-	dstr = NULL;
-	hst = NULL;
-	dir = up;
+	if ((dir == up && !(*hst)->prev) || (dir == down && !(*hst)->next))
+		return (0);
+	move_cursor(left, *cpos);
+	writen(' ', dstr->len);
+	move_cursor(left, dstr->len);
+	*hst = (dir == up ? (*hst)->prev : (*hst)->next);
+	dstr->str = (*hst)->cmd;
+	dstr->len = ft_strlen(dstr->str);
+	dstr->capacity = dstr->len;
+	write(1, dstr->str, dstr->len);
+	*cpos = dstr->len;
 	return (0);
 }
-
-/*
-** size_t	len;
-** size_t	pos;
-**
-** len = (*hst)->cmd->len;
-** pos = (*hst)->cmd->pos;
-** *hst = key == KEY_UP ? (*hst)->prev : (*hst)->next;
-** term_move_cursor(left, pos);
-** term_writen(' ', len);
-** term_move_cursor(left, len);
-** write(1, (*hst)->cmd->raw, (*hst)->cmd->len);
-** (*hst)->cmd->pos = (*hst)->cmd->len;
-*/

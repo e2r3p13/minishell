@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:54:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 20:40:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 21:08:15 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			*g_bind_ascii[128] =
 **	[24] = &handle_ctrlx,
 */
 
-char	*get_it_cmd(t_hst **hst)
+char		*get_it_cmd(t_hst **hst)
 {
 	t_dynstr	*dstr;
 	char		*raw;
@@ -78,7 +78,7 @@ char	*get_it_cmd(t_hst **hst)
 	return (raw);
 }
 
-char	*get_cmd(void)
+char		*get_cmd(void)
 {
 	char *str;
 
