@@ -6,15 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:04:47 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:27:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:49:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		handle_arrow(char *buf, size_t *cpos, t_dynstr *dstr, t_dir dir)
+int	handle_arrow(t_dynstr *dstr, size_t *cpos, t_dir dir)
 {
-	buf = NULL;
 	dstr = NULL;
 	if (dir == left)
 	{
@@ -29,9 +28,8 @@ int		handle_arrow(char *buf, size_t *cpos, t_dynstr *dstr, t_dir dir)
 	return (0);
 }
 
-int		handle_fnarrow(char *buf, size_t *cpos, t_dynstr *dstr, t_dir dir)
+int	handle_fnarrow(t_dynstr *dstr, size_t *cpos, t_dir dir)
 {
-	buf = NULL;
 	if (dir == left)
 	{
 		move_cursor(left, *cpos);
@@ -45,9 +43,8 @@ int		handle_fnarrow(char *buf, size_t *cpos, t_dynstr *dstr, t_dir dir)
 	return (0);
 }
 
-int		handle_optleft(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_optleft(t_dynstr *dstr, size_t *cpos)
 {
-	buf = NULL;
 	while (*cpos && dstr->str[*cpos - 1] == ' ')
 	{
 		move_cursor(left, 1);
@@ -61,9 +58,8 @@ int		handle_optleft(char *buf, size_t *cpos, t_dynstr *dstr)
 	return (0);
 }
 
-int		handle_optright(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_optright(t_dynstr *dstr, size_t *cpos)
 {
-	buf = NULL;
 	while (dstr->str[*cpos] && dstr->str[*cpos] != ' ')
 	{
 		move_cursor(right, 1);
@@ -77,11 +73,11 @@ int		handle_optright(char *buf, size_t *cpos, t_dynstr *dstr)
 	return (0);
 }
 
-int		handle_history(char *buf, size_t *cpos, t_dynstr *dstr, t_dir dir)
+int	handle_history(t_dynstr *dstr, size_t *cpos, t_hst **hst, t_dir dir)
 {
-	buf = NULL;
 	cpos = NULL;
 	dstr = NULL;
+	hst = NULL;
 	dir = up;
 	return (0);
 }

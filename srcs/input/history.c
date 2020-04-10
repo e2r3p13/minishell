@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:32:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:04:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,20 @@ void	hst_free(t_hst *hst)
 		free(hst->cmd);
 		free(hst);
 	}
+}
+
+void	hst_print(t_hst *hst)
+{
+	printf("-----\n");
+	if (hst)
+	{
+		while (hst->next)
+			hst = hst->next;
+		while (hst)
+		{
+			printf("%s\n", hst->cmd);
+			hst = hst->prev;
+		}
+	}
+	printf("-----\n");
 }

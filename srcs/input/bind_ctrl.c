@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:57:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:27:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:47:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int		handle_ctrld(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_ctrld(t_dynstr *dstr, size_t *cpos)
 {
 	if (*cpos == 0 && dstr->len == 0 && dynstr_push(dstr, EOI) == EXIT_SUCCESS)
 	{
@@ -23,22 +23,19 @@ int		handle_ctrld(char *buf, size_t *cpos, t_dynstr *dstr)
 		return (1);
 	}
 	else if (*cpos < dstr->len)
-		return (handle_del(buf, cpos, dstr));
+		return (handle_del(dstr, cpos));
 	return (0);
 }
 
-int		handle_ctrlc(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_ctrlc(t_dynstr *dstr)
 {
-	buf = NULL;
-	cpos = NULL;
 	dynstr_clear(dstr);
 	write(1, "\n", 1);
 	return (1);
 }
 
-int		handle_ctrlu(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_ctrlu(t_dynstr *dstr, size_t *cpos)
 {
-	buf = NULL;
 	move_cursor(left, *cpos);
 	if (writen(' ', dstr->len) == EXIT_SUCCESS)
 	{
@@ -51,16 +48,16 @@ int		handle_ctrlu(char *buf, size_t *cpos, t_dynstr *dstr)
 	return (0);
 }
 
-int		handle_ctrlk(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_ctrlk(t_dynstr *dstr, size_t *cpos)
 {
 	while (*cpos < dstr->len)
-		handle_del(buf, cpos, dstr);
+		handle_del(dstr, cpos);
 	return (0);
 }
 
-int		handle_ctrlh(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_ctrlh(t_dynstr *dstr, size_t *cpos)
 {
 	while (*cpos)
-		handle_backspace(buf, cpos, dstr);
+		handle_backspace(dstr, cpos);
 	return (0);
 }

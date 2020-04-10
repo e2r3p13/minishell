@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:33:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:48:18 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <dirent.h>
+# include <stdio.h>
 
 # define SCRIPT_PATH "/tmp/git_prompt.sh"
 # define HISTORY_PATH "/tmp/minishell_history"
@@ -100,7 +101,7 @@ enum		e_dir
 **----------------**
 */
 
-int			minishell(t_env *env, t_hst *hst, t_bool it);
+int			minishell(t_env *env, t_hst **hst, t_bool it);
 
 /*
 **-------------------------------**
@@ -115,29 +116,29 @@ int			minishell(t_env *env, t_hst *hst, t_bool it);
 */
 
 void		prompt(t_env *env);
-char		*get_it_cmd(void);
+char		*get_it_cmd(t_hst **hst);
 char		*get_cmd(void);
 
 /*
 ** Characters handling for interactive user input in command line
 */
 
-int			handle_printable_char(char *b, size_t *c, t_dynstr *d);
-int			handle_backspace(char *b, size_t *c, t_dynstr *d);
-int			handle_del(char *b, size_t *c, t_dynstr *d);
-int			handle_return(char *b, size_t *c, t_dynstr *d);
-int			handle_escape(char *b, size_t *c, t_dynstr *d);
-int			handle_arrow(char *b, size_t *c, t_dynstr *d, t_dir dir);
-int			handle_fnarrow(char *b, size_t *c, t_dynstr *d, t_dir dir);
-int			handle_optleft(char *b, size_t *c, t_dynstr *d);
-int			handle_optright(char *b, size_t *c, t_dynstr *d);
-int			handle_history(char *b, size_t *c, t_dynstr *d, t_dir dir);
-int			handle_ctrld(char *b, size_t *c, t_dynstr *d);
-int			handle_ctrlu(char *b, size_t *c, t_dynstr *d);
-int			handle_ctrlk(char *b, size_t *c, t_dynstr *d);
-int			handle_ctrlh(char *b, size_t *c, t_dynstr *d);
-int			handle_ctrlc(char *buf, size_t *cpos, t_dynstr *dstr);
-int			handle_tab(char *b, size_t *c, t_dynstr *d);
+int			handle_printable_char(t_dynstr *d, size_t *c, char *b, t_hst **hst);
+int			handle_backspace(t_dynstr *d, size_t *c);
+int			handle_del(t_dynstr *d, size_t *c);
+int			handle_return(void);
+int			handle_escape(t_dynstr *d, size_t *c, char *b, t_hst **hst);
+int			handle_arrow(t_dynstr *d, size_t *c, t_dir dir);
+int			handle_fnarrow(t_dynstr *d, size_t *c, t_dir dir);
+int			handle_optleft(t_dynstr *d, size_t *c);
+int			handle_optright(t_dynstr *d, size_t *c);
+int			handle_history(t_dynstr *d, size_t *c, t_hst **hst, t_dir dir);
+int			handle_ctrld(t_dynstr *d, size_t *c);
+int			handle_ctrlu(t_dynstr *d, size_t *c);
+int			handle_ctrlk(t_dynstr *d, size_t *c);
+int			handle_ctrlh(t_dynstr *d, size_t *c);
+int			handle_ctrlc(t_dynstr *d);
+int			handle_tab(t_dynstr *d, size_t *c);
 
 char		*find_match(DIR *dir, char *word, t_ent *ent);
 char		*find_all_matches(DIR *dir, char *word, char *path, t_ent *ent);
@@ -150,6 +151,7 @@ t_hst		*hst_get(void);
 int			hst_push(t_hst **hst, char *cmd);
 void		hst_pop(t_hst **hst);
 void		hst_free(t_hst *hst);
+void		hst_print(t_hst *hst);
 
 /*
 ** Input utils, often terminal sequences writing

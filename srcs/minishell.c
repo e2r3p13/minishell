@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:23:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:13:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,17 @@
 ** Runs until EOI is reached (ctrl-D).
 */
 
-int	minishell(t_env *env, t_hst *hst, t_bool it)
+int	minishell(t_env *env, t_hst **hst, t_bool it)
 {
 	char	*cmd;
 	t_lxr	**lexlst;
 	int		i;
 
-	hst = NULL;
 	while (true)
 	{
 		if (it)
 			prompt(env);
-		if (!(cmd = it ? get_it_cmd() : get_cmd()))
+		if (!(cmd = it ? get_it_cmd(hst) : get_cmd()))
 			continue ;
 		if (*cmd == EOI || ft_strcmp(cmd, "exit") == 0)
 			break ;

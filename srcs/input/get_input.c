@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:54:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:26:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:40:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,17 @@ void			*g_bind_ascii[128] =
 **	[24] = &handle_ctrlx,
 */
 
-char	*get_it_cmd(void)
+char	*get_it_cmd(t_hst **hst)
 {
 	t_dynstr	*dstr;
 	char		*raw;
 	size_t		cpos;
 	char		buf[5];
-	int			(*bindf)(char *buf, size_t *cpos, t_dynstr *dstr);
+	int			(*bindf)(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst);
 
 	if (!(dstr = dynstr_new()))
 		return (NULL);
+	hst_push(hst, dstr->str);
 	cpos = 0;
 	enable_raw_mode();
 	while (true)
@@ -67,8 +68,9 @@ char	*get_it_cmd(void)
 			continue ;
 		if (!(bindf = g_bind_ascii[(int)*buf]))
 			bindf = &handle_printable_char;
-		if (bindf(buf, &cpos, dstr) == 1)
+		if (bindf(dstr, &cpos, buf, hst) == 1)
 			break ;
+		(*hst)->cmd = dstr->str;
 	}
 	disable_raw_mode();
 	raw = dstr->str;

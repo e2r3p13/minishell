@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:07:08 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:26:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 20:45:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int		handle_printable_char(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_printable_char(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
 {
+	hst = NULL;
 	while (ft_isprint(*buf) &&
 		dynstr_insert_at(*cpos, dstr, *buf) == EXIT_SUCCESS)
 	{
@@ -31,11 +32,10 @@ int		handle_printable_char(char *buf, size_t *cpos, t_dynstr *dstr)
 	return (0);
 }
 
-int		handle_backspace(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_backspace(t_dynstr *dstr, size_t *cpos)
 {
 	size_t cpl;
 
-	buf = NULL;
 	if (dynstr_remove_at(*cpos - 1, dstr) == EXIT_SUCCESS)
 	{
 		move_cursor(left, 1);
@@ -48,43 +48,40 @@ int		handle_backspace(char *buf, size_t *cpos, t_dynstr *dstr)
 	return (0);
 }
 
-int		handle_del(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_del(t_dynstr *dstr, size_t *cpos)
 {
 	move_cursor(right, 1);
 	*cpos += 1;
-	handle_backspace(buf, cpos, dstr);
+	handle_backspace(dstr, cpos);
 	return (0);
 }
 
-int		handle_return(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_return(void)
 {
-	buf = NULL;
-	cpos = NULL;
-	dstr = NULL;
 	write(1, "\n", 1);
 	return (1);
 }
 
-int		handle_escape(char *buf, size_t *cpos, t_dynstr *dstr)
+int	handle_escape(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
 {
 	buf++;
 	if (ft_strcmp(buf, "[D") == 0 && *cpos > 0)
-		return (handle_arrow(buf, cpos, dstr, left));
+		return (handle_arrow(NULL, cpos, left));
 	if (ft_strcmp(buf, "[C") == 0 && *cpos < dstr->len)
-		return (handle_arrow(buf, cpos, dstr, right));
+		return (handle_arrow(dstr, cpos, right));
 	if (ft_strcmp(buf, "[A") == 0)
-		return (handle_history(buf, cpos, dstr, up));
+		return (handle_history(dstr, cpos, hst, up));
 	if (ft_strcmp(buf, "[B") == 0)
-		return (handle_history(buf, cpos, dstr, down));
+		return (handle_history(dstr, cpos, hst, down));
 	if (ft_strcmp(buf, "OH") == 0 || ft_strcmp(buf, "[H") == 0)
-		return (handle_fnarrow(buf, cpos, dstr, left));
+		return (handle_fnarrow(dstr, cpos, left));
 	if (ft_strcmp(buf, "OF") == 0 || ft_strcmp(buf, "[F") == 0)
-		return (handle_fnarrow(buf, cpos, dstr, right));
+		return (handle_fnarrow(dstr, cpos, right));
 	if (ft_strcmp(buf, "b") == 0 || ft_strcmp(buf, "\033[D") == 0)
-		return (handle_optleft(buf, cpos, dstr));
+		return (handle_optleft(dstr, cpos));
 	if (ft_strcmp(buf, "f") == 0 || ft_strcmp(buf, "\033[C") == 0)
-		return (handle_optright(buf, cpos, dstr));
+		return (handle_optright(dstr, cpos));
 	if (ft_strcmp(buf, "[3~") == 0 && *cpos < dstr->len)
-		handle_del(buf, cpos, dstr);
+		handle_del(dstr, cpos);
 	return (0);
 }
