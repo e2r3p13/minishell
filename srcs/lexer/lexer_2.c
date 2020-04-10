@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 10:07:23 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 13:55:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	lxr_word(char *str, t_lxr *cur)
     int	i;
 
     i = 0;
-    while (str[i] && !ft_isinset("<>|;\n\'\" ", str[i]))
+	cur->token = WORD;
+	while (str[i] && !ft_isinset("<>|;\n\'\" ", str[i]))
     {
 		if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
 			return (i);
@@ -68,8 +69,6 @@ int	lxr_word(char *str, t_lxr *cur)
 			cur->token = WILDCARD;
 		i++;
     }
-    if (cur->token != WILDCARD)
-    	cur->token = WORD;
     if (!(cur->raw = ft_strndup(str, i)))
 		return (0);
     return (i);
