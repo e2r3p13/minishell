@@ -1,43 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env_1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 14:58:25 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/10 14:55:27 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/10 14:59:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		main(int ac, char **av, char **e)
+char	*get_env_var(char *var_name, t_env *env)
 {
-	struct stat	stat;
-	t_env		*env;
-	t_hst		*hst;
-
-	av[ac] = NULL;
-	signal(SIGINT, sighandler);
-	signal(SIGKILL, sighandler);
-	if (!(env = env_get(e)))
-		return (EXIT_FAILURE);
-	fstat(0, &stat);
-	if (S_ISCHR(stat.st_mode))
+	while (env)
 	{
-		hst = hst_get();
-		minishell(env, hst, true);
-		hst_free(hst);
+		if (ft_strcmp(var_name, env->key) == 0)
+			return (env->value);
+		env = env->next;
 	}
-	else
-	{
-		minishell(env, NULL, false);
-	}
-	return (EXIT_SUCCESS);
+	return (NULL);
 }
 
-void	sighandler(int sig)
+int		env_size(t_env *env)
 {
-	signal(sig, SIG_IGN);
+	int i;
+
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
+void	*env_free(t_env *env)
+{
+	t_env *tmp;
+
+	while (env)
+	{
+		tmp = env;
+		free(tmp->key);
+		free(tmp->value);
+		env = env->next;
+		free(tmp);
+	}
+	return (NULL);
 }

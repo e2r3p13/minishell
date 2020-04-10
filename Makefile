@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/10 14:44:35 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/10 14:57:33 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ BTNS_PATH = ./builtins/
 
 SRCS =	main.c \
 		minishell.c \
+		env_0.c \
+		env_1.c \
 		input/prompt.c \
 		input/get_input.c \
 		input/bind_spe.c \
@@ -44,7 +46,6 @@ SRCS =	main.c \
 		builtins/export.c \
 		builtins/env.c \
 		builtins/pwd.c \
-		env.c \
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
