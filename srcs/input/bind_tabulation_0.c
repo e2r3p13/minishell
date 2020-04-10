@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bind_tabulation.c                                  :+:      :+:    :+:   */
+/*   bind_tabulation_0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 14:52:39 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:20:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,60 +19,6 @@
 ** the last typed word will be completed if there is a matching file
 ** If there is not OR there are several, last word will not be completed
 */
-
-static char	*find_match(DIR *dir, char *word)
-{
-	int				occur;
-	struct dirent	*ent;
-	char			*match;
-
-	occur = 0;
-	while ((ent = readdir(dir)))
-	{
-		if (!ft_strncmp(word, ent->d_name, ft_strlen(word)) &&
-			*ent->d_name != '.')
-		{
-			if (occur)
-			{
-				free(match);
-				return (NULL);
-			}
-			if (!(match = ft_strdup(ent->d_name)))
-				return (NULL);
-			if (ent->d_type == DT_DIR)
-				match = ft_strpush(match, '/');
-			occur++;
-		}
-	}
-	return (occur != 1 ? NULL : match);
-}
-
-static char	*find_all_matches(DIR *dir, char *word, char *path)
-{
-	struct dirent	*ent;
-	char			*match;
-	char			*tmp;
-	char			*tmp2;
-
-	match = NULL;
-	tmp2 = NULL;
-	while ((ent = readdir(dir)))
-	{
-		if (!ft_strncmp(word, ent->d_name, ft_strlen(word) - 1) && *ent->d_name != '.')
-		{
-			if (match && ft_strcmp(path, "./") && !(tmp2 = ft_strcjoin(path, ent->d_name, '/')))
-				return (match);
-			if (!(tmp = tmp2 ? ft_strcjoin(match, tmp2, ' ') : ft_strcjoin(match, ent->d_name, ' ')))
-				return (match);
-			if (tmp2)
-				free(tmp2);
-			if (match)
-				free(match);
-			match = tmp;
-		}
-	}
-	return (match);
-}
 
 static void	autocomplete(t_dynstr *cmd, char *match, char *word, size_t *pos)
 {
@@ -133,9 +79,11 @@ int			handle_tab(char *buf, size_t *pos, t_dynstr *cmd)
 	char	*path;
 	char	*match;
 	DIR		*dir;
+	t_ent	*e;
 
 	match = NULL;
 	buf = NULL;
+	e = NULL;
 	if (!(word = get_word(cmd, pos)))
 		return (0);
 	if ((path = find_path(&word)))
@@ -143,7 +91,7 @@ int			handle_tab(char *buf, size_t *pos, t_dynstr *cmd)
 		if ((dir = opendir(path)) && *pos > 0)
 		{
 			match = cmd->str[*pos - 1] == '*' ?
-				find_all_matches(dir, word, path) : find_match(dir, word);
+				find_all_matches(dir, word, path, e) : find_match(dir, word, e);
 			if (match)
 				autocomplete(cmd, match, word, pos);
 			closedir(dir);

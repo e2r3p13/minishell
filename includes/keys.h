@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 16:25:08 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:21:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@
 
 # define CURSOR_LEFT "\033[D"
 # define CURSOR_RIGHT "\033[C"
-
 
 #endif

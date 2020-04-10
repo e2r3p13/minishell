@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:08:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:21:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include "keys.h"
+# include <dirent.h>
 
 # define SCRIPT_PATH "/tmp/git_prompt.sh"
 # define HISTORY_PATH "/tmp/minishell_history"
@@ -35,6 +36,7 @@ typedef struct s_env	t_env;
 typedef struct s_hst	t_hst;
 typedef struct s_lxr	t_lxr;
 typedef struct s_psr	t_psr;
+typedef struct dirent	t_ent;
 typedef enum e_dir		t_dir;
 
 struct		s_env
@@ -120,6 +122,9 @@ int			handle_ctrlk(char *b, size_t *c, t_dynstr *d);
 int			handle_ctrlh(char *b, size_t *c, t_dynstr *d);
 int			handle_ctrlc(char *buf, size_t *cpos, t_dynstr *dstr);
 int			handle_tab(char *b, size_t *c, t_dynstr *d);
+
+char		*find_match(DIR *dir, char *word, t_ent *ent);
+char		*find_all_matches(DIR *dir, char *word, char *path, t_ent *ent);
 
 /*
 ** History functions
