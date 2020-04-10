@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/09 21:02:28 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/10 10:28:11 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ RSCS_PATH = /tmp/
 GDDS_NAME = /git_prompt.sh
 BTNS_PATH = ./builtins/
 
-SRCS =	main/main.c \
-		main/minishell.c \
+SRCS =	main.c \
+		minishell.c \
 		input/prompt.c \
 		input/get_input.c \
 		input/bind_spe.c \
@@ -65,7 +65,6 @@ $(NAME): $(OBJS)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
 	@mkdir -p $(OBJS_PATH)
-	@mkdir -p ./objs/main
 	@mkdir -p ./objs/input
 	@mkdir -p ./objs/lexer
 	@mkdir -p ./objs/parser
