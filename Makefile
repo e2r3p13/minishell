@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/10 10:28:11 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/10 11:03:57 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS =	main.c \
 		input/bind_ctrl.c \
 		input/term_utils.c \
 		input/bind_tabulation.c \
+		input/history.c \
 		lexer/lexer_0.c \
 		lexer/lexer_1.c \
 		lexer/lexer_2.c \

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:12:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 11:06:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,97 +20,66 @@
 
 t_hst	*hst_get(void)
 {
-	char	*raw;
-	t_cmd	*cmd;
+	char	*cmd;
 	t_hst	*hst;
 	int		fd;
 
 	hst = NULL;
 	if ((fd = open_reg_file(HISTORY_PATH, O_RDONLY, 0)) != -1)
 	{
-		while (get_next_line(fd, &raw))
+		while (get_next_line(fd, &cmd))
 		{
-			if (!(cmd = malloc(sizeof(t_cmd))))
-				return (NULL);
-			cmd->raw = raw;
-			cmd->len = ft_strlen(cmd->raw);
-			cmd->capacity = cmd->len;
-			if (!hst_push_cmd(&hst, cmd))
-				return (hst_free(hst));
+			if (hst_push(&hst, cmd) == EXIT_FAILURE)
+				break ;
 		}
 		close(fd);
-		free(raw);
+		free(cmd);
 		return (hst);
 	}
 	return (NULL);
 }
 
-t_bool	hst_push_cmd(t_hst **hst, t_cmd *cmd)
+int		hst_push(t_hst **hst, char *cmd)
 {
 	t_hst	*new;
 
-	if (!cmd)
-		return (failure);
 	if (*hst)
 	{
 		while ((*hst)->next)
 			*hst = (*hst)->next;
-		if (!(new = malloc(sizeof(t_hst))))
-			return ((t_bool)cmd_free(cmd));
+	}
+	if (!(new = malloc(sizeof(t_hst))))
+		return (EXIT_FAILURE);
+	if (*hst)
 		(*hst)->next = new;
-		new->cmd = cmd;
-		new->prev = *hst;
-		new->next = NULL;
-		(*hst) = new;
+	new->cmd = cmd;
+	new->prev = *hst;
+	new->next = NULL;
+	(*hst) = new;
+	return (EXIT_SUCCESS);
+}
+
+void	hst_pop(t_hst **hst)
+{
+	if (!*hst)
+		return ;
+	while ((*hst)->next)
+		*hst = (*hst)->next;
+	free((*hst)->cmd);
+	if ((*hst)->prev)
+	{
+		*hst = (*hst)->prev;
+		free((*hst)->next);
+		(*hst)->next = NULL;
 	}
 	else
 	{
-		if (!(*hst = malloc(sizeof(t_hst))))
-			return ((t_bool)cmd_free(cmd));
-		(*hst)->cmd = cmd;
-		(*hst)->prev = NULL;
-		(*hst)->next = NULL;
-	}
-	return (success);
-}
-
-void	hst_pop_cmd(t_hst **hst)
-{
-	if (*hst)
-	{
-		while ((*hst)->next)
-			*hst = (*hst)->next;
-		cmd_free((*hst)->cmd);
-		if ((*hst)->prev)
-		{
-			*hst = (*hst)->prev;
-			free((*hst)->next);
-			(*hst)->next = NULL;
-		}
-		else
-		{
-			free(*hst);
-			*hst = NULL;
-		}
+		free(*hst);
+		*hst = NULL;
 	}
 }
 
-t_bool	hst_reuse_cmd(t_hst **hst, t_cmd *cmd)
-{
-	if (!(*hst) || !cmd)
-		return (failure);
-	while ((*hst)->next)
-		*hst = (*hst)->next;
-	free((*hst)->cmd->raw);
-	if (!((*hst)->cmd->raw = ft_strdup(cmd->raw)))
-		return (failure);
-	(*hst)->cmd->len = cmd->len;
-	(*hst)->cmd->capacity = (*hst)->cmd->len;
-	(*hst)->cmd->pos = (*hst)->cmd->len;
-	return (success);
-}
-
-void	*hst_free(t_hst *hst)
+void	hst_free(t_hst *hst)
 {
 	if (hst)
 	{
@@ -118,12 +87,28 @@ void	*hst_free(t_hst *hst)
 			hst = hst->next;
 		while (hst->prev)
 		{
-			cmd_free(hst->cmd);
+			free(hst->cmd);
 			hst = hst->prev;
 			free(hst->next);
 		}
 		free(hst->cmd);
 		free(hst);
 	}
-	return (NULL);
 }
+
+/*
+**t_bool	hst_reuse_cmd(t_hst **hst, t_cmd *cmd)
+**{
+**	if (!(*hst) || !cmd)
+**		return (failure);
+**	while ((*hst)->next)
+**		*hst = (*hst)->next;
+**	free((*hst)->cmd->raw);
+**	if (!((*hst)->cmd->raw = ft_strdup(cmd->raw)))
+**		return (failure);
+**	(*hst)->cmd->len = cmd->len;
+**	(*hst)->cmd->capacity = (*hst)->cmd->len;
+**	(*hst)->cmd->pos = (*hst)->cmd->len;
+**	return (success);
+**}
+*/
