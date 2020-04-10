@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 20:44:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 10:03:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void		autocomplete(t_dynstr *cmd, char *mch, char *cmp, size_t *pos)
 		cmd->capacity = cmd->len;
 		write(1, mch, ft_strlen(mch));
 	}
+	free(mch);
 	return ;
 }
 
@@ -121,12 +122,8 @@ int			handle_tab(char *buf, size_t *pos, t_dynstr *cmd)
 	{
 		if ((dir = opendir(pth)))
 		{
-			mch = find_match(dir, cmp);
-			if (mch != NULL)
-			{
+			if ((mch = find_match(dir, cmp)))
 				autocomplete(cmd, mch, cmp, pos);
-				free(mch);
-			}
 			closedir(dir);
 		}
 		free(pth);
