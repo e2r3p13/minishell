@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:08:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:20:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	minishell(t_env *env, t_hst *hst, t_bool it)
 	hst = NULL;
 	while (true)
 	{
-		prompt(env);
+		if (it)
+			prompt(env);
 		if (!(cmd = it ? get_it_cmd() : get_cmd()))
 			continue ;
 		if (*cmd == EOI || ft_strcmp(cmd, "exit") == 0)
