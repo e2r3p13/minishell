@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/10 14:57:33 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/10 15:19:11 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRCS =	main.c \
 		lexer/lexer_2.c \
 		lexer/expand_0.c \
 		lexer/expand_1.c \
-		lexer/expand_wildcard.c \
+		lexer/expand_wcard.c \
 		parser/parser.c \
 		execution/execute.c \
 		execution/redirect.c \

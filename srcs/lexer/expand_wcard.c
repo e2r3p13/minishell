@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_wildcard.c                                     :+:      :+:    :+:   */
+/*   expand_wcard.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 21:05:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 14:16:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 15:17:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include <dirent.h>
 
-static char		*find_path(char **word)
+static char	*find_path(char **word)
 {
 	char	*path;
 	char	*tmp;
@@ -101,7 +101,7 @@ static char	**match_wildcard(char *s)
 	{
 		if ((dir = opendir(pth)))
 		{
-			tmp = (pth[ft_strlen(pth) - 1] == '/') ? ft_strjoin(pth, "") : ft_strjoin(pth, "/"); // append backslash remallocing
+			tmp = (pth[ft_strlen(pth) - 1] == '/') ? ft_strjoin(pth, "") : ft_strjoin(pth, "/");
 			if (!(tab = malloc(sizeof(char *) * (get_match_nb(dir, s, tmp) + 1))))
 				return (NULL);
 			closedir(dir);
@@ -142,7 +142,7 @@ char		*wildcard_to_str(char *str)
 	return (s1);
 }
 
-int		expand_wildcard(t_lxr **head, t_lxr *cur)
+int			expand_wcard(t_lxr **head, t_lxr *cur)
 {
 	int		i;
 	char	**tab;

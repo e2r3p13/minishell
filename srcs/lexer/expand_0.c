@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 14:01:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 15:13:21 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int		expand(t_lxr *lst, t_env *env)
 			return (EXIT_FAILURE);
 		if (lst->token == SQUOTE && expand_squotes(lst) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (lst->token == WILDCARD && expand_wildcard(&lst, lst) == EXIT_FAILURE)
+		if (lst->token == WILDCARD && expand_wcard(&lst, lst) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (lst->token == VARIABLE)
 			lst->raw = expand_variable(lst->raw, env);
 		if (lst->token == EXITCODE)
- 			lst->raw = expand_exitcode(lst->raw);
+			lst->raw = expand_exitcode(lst->raw);
 		if (lst->token != REDIRECT && lst->token != NEWLINE)
 			lst->token = WORD;
 		if (!lst->raw)
