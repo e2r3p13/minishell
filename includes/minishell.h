@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 15:58:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:08:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 typedef struct s_env	t_env;
 typedef struct s_hst	t_hst;
 typedef struct s_lxr	t_lxr;
-typedef struct s_rdct	t_rdct;
+typedef struct s_psr	t_psr;
 typedef enum e_dir		t_dir;
 
 struct		s_env
@@ -59,7 +59,7 @@ struct		s_lxr
 	t_lxr	*next;
 };
 
-struct		s_rdct
+struct		s_psr
 {
 	int		type;
 	void	*left;
@@ -194,7 +194,7 @@ char		**lex_to_args(t_lxr *lst);
 **-------------**
 */
 
-t_rdct		*parser(t_lxr *lst);
+t_psr		*parser(t_lxr *lst);
 
 /*
 **------------------------------------**
@@ -204,12 +204,12 @@ t_rdct		*parser(t_lxr *lst);
 **------------------------------------**
 */
 
-void		tree_exec(t_rdct *cur, t_env *env);
-void		redirect_less(t_rdct *cur, t_env *env);
-void		redirect_pipe(t_rdct *cur, t_env *env);
-void		redi_err(t_rdct *head, int fd, int std, char *file);
-void		tree_free(t_rdct *cur);
-void		tweak_tree_exec(t_rdct *cur, t_env *env);
+void		tree_exec(t_psr *cur, t_env *env);
+void		redirect_less(t_psr *cur, t_env *env);
+void		redirect_pipe(t_psr *cur, t_env *env);
+void		redi_err(t_psr *head, int fd, int std, char *file);
+void		tree_free(t_psr *cur);
+void		tweak_tree_exec(t_psr *cur, t_env *env);
 void		execute(char **argv, t_env *env);
 void		execute_binary(char **av, t_env *env);
 

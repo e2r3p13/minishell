@@ -6,14 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 20:49:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:50:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:08:57 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
 
-static void	redirect_great(t_rdct *cur, t_env *env)
+static void	redirect_great(t_psr *cur, t_env *env)
 {
 	char	**name;
 	int		fd[2];
@@ -33,7 +33,7 @@ static void	redirect_great(t_rdct *cur, t_env *env)
 	close(fd[1]);
 }
 
-static void	redirect_dgreat(t_rdct *cur, t_env *env)
+static void	redirect_dgreat(t_psr *cur, t_env *env)
 {
 	char	**name;
 	int		fd[2];
@@ -58,7 +58,7 @@ static void	redirect_dgreat(t_rdct *cur, t_env *env)
 	close(fd[1]);
 }
 
-void		redirect_less(t_rdct *cur, t_env *env)
+void		redirect_less(t_psr *cur, t_env *env)
 {
 	char	**name;
 	int		fd[2];
@@ -78,7 +78,7 @@ void		redirect_less(t_rdct *cur, t_env *env)
 	close(fd[1]);
 }
 
-void		redirect_pipe(t_rdct *cur, t_env *env)
+void		redirect_pipe(t_psr *cur, t_env *env)
 {
 	int	fd[2];
 	int	fd_save[2];
@@ -103,7 +103,7 @@ void		redirect_pipe(t_rdct *cur, t_env *env)
 	close(fd_save[1]);
 }
 
-void		tree_exec(t_rdct *cur, t_env *env)
+void		tree_exec(t_psr *cur, t_env *env)
 {
 	if (cur->type == GREAT)
 		redirect_great(cur, env);

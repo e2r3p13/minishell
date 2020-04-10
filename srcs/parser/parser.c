@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:03:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:04:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:08:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ static char		**create_simple_cmd(t_lxr **head)
 	return (cmd);
 }
 
-static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
+static t_psr	*create_redirect_cmd(void *left, t_lxr **cur)
 {
-	t_rdct	*lst_head;
+	t_psr	*lst_head;
 
-	if (!(lst_head = (t_rdct *)malloc(sizeof(t_rdct))))
+	if (!(lst_head = (t_psr *)malloc(sizeof(t_psr))))
 		return (NULL);
 	lst_head->left = left;
 	if (!cur)
@@ -70,7 +70,7 @@ static t_rdct	*create_redirect_cmd(void *left, t_lxr **cur)
 	return (lst_head);
 }
 
-t_rdct			*parser(t_lxr *cur)
+t_psr			*parser(t_lxr *cur)
 {
 	void		*prs_head;
 	char		**cmd;

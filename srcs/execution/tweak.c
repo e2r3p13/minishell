@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 20:45:30 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:49:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:08:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include "tokens.h"
 
-void		redi_err(t_rdct *head, int fd, int std, char *file)
+void		redi_err(t_psr *head, int fd, int std, char *file)
 {
 	if (std == 0)
 		dup2(fd, STDIN_FILENO);
@@ -30,7 +30,7 @@ void		redi_err(t_rdct *head, int fd, int std, char *file)
 	tree_free(head);
 }
 
-static void	tweak_great(t_rdct *cur, t_env *env)
+static void	tweak_great(t_psr *cur, t_env *env)
 {
 	char	**name;
 	int		fd[2];
@@ -45,7 +45,7 @@ static void	tweak_great(t_rdct *cur, t_env *env)
 	close(fd[0]);
 }
 
-static void	tweak_dgreat(t_rdct *cur, t_env *env)
+static void	tweak_dgreat(t_psr *cur, t_env *env)
 {
 	char	**name;
 	int		fd[2];
@@ -65,7 +65,7 @@ static void	tweak_dgreat(t_rdct *cur, t_env *env)
 	close(fd[0]);
 }
 
-void		tree_free(t_rdct *cur)
+void		tree_free(t_psr *cur)
 {
 	if (cur->type == 0)
 		free(cur->left);
@@ -73,7 +73,7 @@ void		tree_free(t_rdct *cur)
 	free(cur);
 }
 
-void		tweak_tree_exec(t_rdct *cur, t_env *env)
+void		tweak_tree_exec(t_psr *cur, t_env *env)
 {
 	if (cur->type == GREAT)
 		tweak_great(cur, env);
