@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 11:57:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 20:52:52 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 09:48:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef enum	e_bool
 {
 	false = 0,
 	true = 1,
+	failure = 0,
+	success = 1,
 }				t_bool;
 
 int				argvlen(char **av);

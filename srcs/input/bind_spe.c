@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:07:08 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 19:50:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 09:47:42 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ int		handle_escape(char *buf, size_t *cpos, t_dynstr *dstr)
 		return (handle_history(buf, cpos, dstr, up));
 	if (ft_strcmp(buf, "[B") == 0)
 		return (handle_history(buf, cpos, dstr, down));
-	if (ft_strcmp(buf, "OH") == 0)
+	if (ft_strcmp(buf, "OH") == 0 || ft_strcmp(buf, "[H") == 0)
 		return (handle_fnarrow(buf, cpos, dstr, left));
-	if (ft_strcmp(buf, "OF") == 0)
+	if (ft_strcmp(buf, "OF") == 0 || ft_strcmp(buf, "[F") == 0)
 		return (handle_fnarrow(buf, cpos, dstr, right));
-	if (ft_strcmp(buf, "b") == 0)
+	if (ft_strcmp(buf, "b") == 0 || ft_strcmp(buf, "\033[D") == 0)
 		return (handle_optleft(buf, cpos, dstr));
-	if (ft_strcmp(buf, "f") == 0)
+	if (ft_strcmp(buf, "f") == 0 || ft_strcmp(buf, "\033[C") == 0)
 		return (handle_optright(buf, cpos, dstr));
 	if (ft_strcmp(buf, "[3~") == 0 && *cpos < dstr->len)
 		handle_del(buf, cpos, dstr);
