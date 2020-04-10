@@ -6,13 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:03:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:08:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:36:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
-#include "libft.h"
+#include <stdlib.h>
 
 char			**lex_to_args(t_lxr *lst)
 {

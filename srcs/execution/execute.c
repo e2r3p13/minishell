@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:51:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:37:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 extern int	g_exitcode;
 

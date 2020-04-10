@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:44:50 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:41:28 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:41:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
 
 static int		is_flag(char *s)
 {

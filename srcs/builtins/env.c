@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:32 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:38:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:42:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
 
 int	ms_env(int ac, char **av, t_env *env)
 {

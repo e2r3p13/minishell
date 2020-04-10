@@ -6,11 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:39:50 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 15:20:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:35:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 char	*remove_quotes(char *raw)
 {

@@ -6,11 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:44:15 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/05 13:54:42 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:41:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 static char	*set_path_with_home(char *arg, t_env *env, t_bool *allocated)
 {

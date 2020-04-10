@@ -6,13 +6,15 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 20:45:30 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:08:54 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:40:39 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "minishell.h"
 #include "tokens.h"
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 void		redi_err(t_psr *head, int fd, int std, char *file)
 {

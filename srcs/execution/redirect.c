@@ -6,12 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 20:49:57 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:08:57 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:39:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 static void	redirect_great(t_psr *cur, t_env *env)
 {

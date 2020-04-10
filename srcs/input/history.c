@@ -6,11 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 13:45:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:32:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 /*
 ** The t_hst struct is a double linked list that contains all commands of the

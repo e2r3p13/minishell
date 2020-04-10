@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:55:27 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 14:59:54 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:24:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 char	*get_env_var(char *var_name, t_env *env)
 {

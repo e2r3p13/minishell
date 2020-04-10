@@ -6,11 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:12:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:23:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
+#include <stdlib.h>
 
 /*
 ** Our main remap some signals, set the environment t_env list, and then

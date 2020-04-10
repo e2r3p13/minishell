@@ -6,12 +6,11 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:04:47 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 19:57:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:27:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
 
 int		handle_arrow(char *buf, size_t *cpos, t_dynstr *dstr, t_dir dir)
 {

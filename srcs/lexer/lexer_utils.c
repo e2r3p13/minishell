@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_1.c                                          :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 17:46:10 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 21:05:19 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:34:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "tokens.h"
+#include <stdlib.h>
 
 /*
 ** The t_lxr struct is a linked list that represents a lexed command.
@@ -60,25 +60,4 @@ int		lstsize(t_lxr *lst)
 		i++;
 	}
 	return (i);
-}
-
-void	lxr_print(t_lxr **lst)
-{
-	int		i;
-	t_lxr	*cur;
-
-	i = 0;
-	while (lst[i])
-	{
-		cur = lst[i];
-		printf("Cmd n° %d:\n", i + 1);
-		while (cur)
-		{
-			printf("token: %d | raw: %s | spaced: %d | next: %p\n",
-			cur->token, cur->raw, cur->space, cur->next);
-			cur = cur->next;
-		}
-		printf("-------------\n");
-		i++;
-	}
 }

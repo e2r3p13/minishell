@@ -6,12 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:57:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 19:00:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:27:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
+#include "keys.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 int		handle_ctrld(char *buf, size_t *cpos, t_dynstr *dstr)
 {

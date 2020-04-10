@@ -6,11 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:00:52 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:25:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 char	*g_execve_av[2] = {SCRIPT_PATH, NULL};
 

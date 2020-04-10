@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:20:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:29:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <dirent.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /*
 ** Following functions are used to handle autocompletion

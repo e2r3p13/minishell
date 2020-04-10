@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:12:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:20:10 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:30:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 char	*find_match(DIR *dir, char *word, t_ent *ent)
 {

@@ -6,12 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:07:08 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 09:59:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:26:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 int		handle_printable_char(char *buf, size_t *cpos, t_dynstr *dstr)
 {

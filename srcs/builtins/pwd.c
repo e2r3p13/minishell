@@ -6,11 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:45:43 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:38:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:43:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 int	ms_pwd(int ac, char **av)
 {

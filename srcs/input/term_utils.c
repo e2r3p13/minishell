@@ -6,11 +6,15 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 20:31:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 20:43:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:29:00 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <termios.h>
 
 struct termios	g_oldterm;
 

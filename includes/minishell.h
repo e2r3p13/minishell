@@ -6,25 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:01:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:33:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <termios.h>
-# include <sys/wait.h>
-# include <errno.h>
 # include "libft.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include "keys.h"
 # include <dirent.h>
 
 # define SCRIPT_PATH "/tmp/git_prompt.sh"
@@ -190,7 +179,6 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head);
 t_lxr		*lxr_lstnew(void);
 void		*lxr_free(t_lxr *head);
 int			lstsize(t_lxr *lst);
-void		lxr_print(t_lxr **lst);
 
 /*
 ** Helper functions to lex each part of cmd into tokens

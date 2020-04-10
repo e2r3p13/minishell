@@ -6,13 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:20:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:23:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "keys.h"
-#include "tokens.h"
+#include <stdlib.h>
 
 /*
 ** Here's minishell, far from a real shell, but close of our hearts
