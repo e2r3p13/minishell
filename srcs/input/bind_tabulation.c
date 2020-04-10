@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 10:03:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 10:23:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	*find_match(DIR *dir, char *cmp)
 				if (!(match = ft_strdup(ent->d_name)))
 					return (NULL);
 				if (ent->d_type == DT_DIR)
-					match = ft_strpush(match, '\\');
+					match = ft_strpush(match, '/');
 				occur++;
 			}
 			else
