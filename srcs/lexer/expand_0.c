@@ -6,27 +6,26 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 17:48:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 10:15:52 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
 
-int				g_exitcode = 0;
+int		g_exitcode = 0;
 
-// Remove quotes and replace variables when needed
-t_bool	expand(t_lxr *lst, t_env *env)
+int		expand(t_lxr *lst, t_env *env)
 {
 	t_lxr	*save;
 
 	save = lst;
 	while (lst)
 	{
-		if (lst->token == DQUOTE && !expand_dquotes(lst, env))
-			return (failure);
-		if (lst->token == SQUOTE && !expand_squotes(lst))
-			return (failure);
+		if (lst->token == DQUOTE && expand_dquotes(lst, env) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (lst->token == SQUOTE && expand_squotes(lst) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		if (lst->token == VARIABLE)
 			 lst->raw = expand_variable(lst->raw, env);
 		if (lst->token == WILDCARD)
@@ -36,18 +35,15 @@ t_bool	expand(t_lxr *lst, t_env *env)
 		if (lst->token != REDIRECT && lst->token != NEWLINE)
 			lst->token = WORD;
 		if (!lst->raw)
-			return (failure);
+			return (EXIT_FAILURE);
 		lst = lst->next;
 	}
-	if (!(join_unspaced_words(save)))
-		return (failure);
-	return (success);
+	if ((join_unspaced_words(save)) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-// Needed to join unspaced args if needed, ex:
-// 'ec"ho" cou"cou" le"s co"pains' should result in:
-// '|echo| |coucou| |les copains|'
-t_bool	join_unspaced_words(t_lxr *l)
+int		join_unspaced_words(t_lxr *l)
 {
 	void	*tmp;
 
@@ -59,7 +55,7 @@ t_bool	join_unspaced_words(t_lxr *l)
 			if (!(l->raw = ft_strjoin(tmp, l->next->raw)))
 			{
 				free(tmp);
-				return (failure);
+				return (EXIT_FAILURE);
 			}
 			free(tmp);
 			if (l->next)
@@ -71,10 +67,9 @@ t_bool	join_unspaced_words(t_lxr *l)
 		else
 			l = l->next;
 	}
-	return (success);
+	return (EXIT_SUCCESS);
 }
 
-// Ex: '$pwd' --> '/Users/moi/Desktop/minishell'
 char	*expand_variable(char *raw, t_env *env)
 {
 	char *val;
@@ -90,7 +85,6 @@ char	*expand_variable(char *raw, t_env *env)
 	return (raw);
 }
 
-// Ex: '$?' --> '0' (Using exit status of the last executed command)
 char	*expand_exitcode(char *raw)
 {
 	char	*i;

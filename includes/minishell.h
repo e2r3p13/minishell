@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 18:17:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 09:56:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,17 @@ int					lxr_quote(char *str, t_lxr *cur);
 int					lxr_word(char *str, t_lxr *cur);
 int					lxr_variable(char *str, t_lxr *cur);
 
-t_bool				expand(t_lxr *lst, t_env *env);
+int					expand(t_lxr *lst, t_env *env);
 char				*remove_quotes(char *raw);
-t_bool				expand_squotes(t_lxr *lst);
-t_bool				expand_dquotes(t_lxr *lst, t_env *env);
+int					expand_squotes(t_lxr *lst);
+int					expand_dquotes(t_lxr *lst, t_env *env);
 char				*expand_variable(char *raw, t_env *env);
 char				*expand_exitcode(char *raw);
 char				*expand_quoted_dollar(char *r, char *v, size_t l, t_env *e);
 void				expand_wildcard(t_lxr **head, t_lxr *cur);
 void				expand_wildcard_ft(char *m, char *c, t_dynstr *s, size_t *p);
 char				*wildcard_to_str(char *str);
-t_bool				join_unspaced_words(t_lxr *lst);
+int					join_unspaced_words(t_lxr *lst);
 char				**lex_to_args(t_lxr *lst);
 
 /*

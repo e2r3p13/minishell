@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 19:39:50 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/08 20:53:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 10:17:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char	*remove_quotes(char *raw)
 	return (NULL);
 }
 
-t_bool	expand_squotes(t_lxr *lst)
+int		expand_squotes(t_lxr *lst)
 {
 	if (!(lst->raw = remove_quotes(lst->raw)))
-		return (failure);
-	return (success);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, t_env *env)
@@ -66,13 +66,13 @@ char	*expand_quoted_dollar(char *raw, char *var, size_t vlen, t_env *env)
 	return (tmp_2);
 }
 
-t_bool	expand_dquotes(t_lxr *lst, t_env *env)
+int		expand_dquotes(t_lxr *lst, t_env *env)
 {
 	char	*s;
 	size_t	vlen;
 
 	if (!(lst->raw = remove_quotes(lst->raw)))
-		return (failure);
+		return (EXIT_FAILURE);
 	s = lst->raw;
 	while (*s)
 	{
@@ -83,11 +83,11 @@ t_bool	expand_dquotes(t_lxr *lst, t_env *env)
 				vlen++;
 			vlen = *(s + 1) == '?' ? 2 : vlen;
 			if (!(lst->raw = expand_quoted_dollar(lst->raw, s, vlen, env)))
-				return (failure);
+				return (EXIT_FAILURE);
 			s = lst->raw;
 		}
 		else
 			s++;
 	}
-	return (success);
+	return (EXIT_SUCCESS);
 }

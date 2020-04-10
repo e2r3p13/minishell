@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 14:43:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 10:11:52 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-void			*g_ascii_tokens[256] =
+void	*g_ascii_tokens[256] =
 {
 	['<'] = lxr_redirect,
 	['>'] = lxr_redirect,
@@ -26,14 +26,6 @@ void			*g_ascii_tokens[256] =
 	['\''] = lxr_quote,
 	['\"'] = lxr_quote,
 };
-
-/*
-** The t_lxr struct is a linked list that represents a lexed command.
-** It contains a 'raw' field (the portion of command), a 'token' field,
-** (the kind of that portion) and a 'space' field that indicates weither the
-** portion of command was separated of the next portion of command by a space.
-** 'next' is the next element of the list.
-*/
 
 t_lxr		*lexer(char *str)
 {
@@ -94,7 +86,7 @@ static int	lxr_pop(t_lxr *head, t_lxr **cur)
 		free(head->raw);
 		free(head);
 		if (*cur == NULL)
-			return (-1);
+			return (EXIT_FAILURE);
 	}
 	else
 	{
@@ -105,7 +97,7 @@ static int	lxr_pop(t_lxr *head, t_lxr **cur)
 		free(*cur);
 		(*cur) = head->next;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 t_lxr		**lxr_split(t_lxr *head)
@@ -120,7 +112,7 @@ t_lxr		**lxr_split(t_lxr *head)
 		return (NULL);
 	while (cur)
 	{
-		if (cur && cur->raw == NULL && lxr_pop(head, &cur) == -1)
+		if (cur && cur->raw == NULL && lxr_pop(head, &cur) == EXIT_FAILURE)
 			return (NULL);
 		if (cur && cur->token == NEWLINE && cur->next)
 			i++;

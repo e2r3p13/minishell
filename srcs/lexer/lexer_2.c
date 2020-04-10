@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/03/29 20:30:07 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 10:07:23 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 #include "libft.h"
 #include "tokens.h"
 
-// All those functions just dup he part of the command that belongs to the
-// token, sets the token field to its kind and returns the length of the 'raw'
-// field (or 0 in case of failure)
+/*
+** All those functions just dup he part of the command that belongs to the
+** token, sets the token field to its kind and returns the length of the 'raw'
+** field (or 0 in case of failure)
+*/
 
 int	lxr_newline(char *str, t_lxr *cur)
 {
