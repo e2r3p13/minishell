@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 20:48:18 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 23:29:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ char		*get_cmd(void);
 int			handle_printable_char(t_dynstr *d, size_t *c, char *b, t_hst **hst);
 int			handle_backspace(t_dynstr *d, size_t *c);
 int			handle_del(t_dynstr *d, size_t *c);
-int			handle_return(void);
+int			handle_return(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst);
 int			handle_escape(t_dynstr *d, size_t *c, char *b, t_hst **hst);
 int			handle_arrow(t_dynstr *d, size_t *c, t_dir dir);
 int			handle_fnarrow(t_dynstr *d, size_t *c, t_dir dir);
@@ -152,6 +152,9 @@ int			hst_push(t_hst **hst, char *cmd);
 void		hst_pop(t_hst **hst);
 void		hst_free(t_hst *hst);
 void		hst_print(t_hst *hst);
+void		hst_remove_elm(t_hst **hst, t_hst *elm);
+void		hst_replace_last(t_hst **hst);
+void		hst_save(char *cmd);
 
 /*
 ** Input utils, often terminal sequences writing

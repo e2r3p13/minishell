@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:07:08 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 20:45:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 23:26:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,16 @@ int	handle_del(t_dynstr *dstr, size_t *cpos)
 	return (0);
 }
 
-int	handle_return(void)
+int	handle_return(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
 {
+	buf = NULL;
+	cpos = NULL;
+	if (!dstr->len)
+		hst_remove_elm(hst, *hst);
+	else if ((*hst)->next)
+		hst_replace_last(hst);
+	if (dstr->len)
+		hst_save(dstr->str);
 	write(1, "\n", 1);
 	return (1);
 }
