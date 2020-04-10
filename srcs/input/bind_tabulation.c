@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 14:43:29 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 14:52:39 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,11 @@ static char	*find_all_matches(DIR *dir, char *word, char *path)
 	tmp2 = NULL;
 	while ((ent = readdir(dir)))
 	{
-		if (!ft_strncmp(word, ent->d_name, ft_strlen(word) - 1) &&
-			*ent->d_name != '.')
+		if (!ft_strncmp(word, ent->d_name, ft_strlen(word) - 1) && *ent->d_name != '.')
 		{
-			if (match && !(tmp2 = ft_strcjoin(path, ent->d_name, '/')))
+			if (match && ft_strcmp(path, "./") && !(tmp2 = ft_strcjoin(path, ent->d_name, '/')))
 				return (match);
-			if (!(tmp = tmp2 ? ft_strcjoin(match, tmp2, ' ') :
-				ft_strcjoin(match, ent->d_name, ' ')))
+			if (!(tmp = tmp2 ? ft_strcjoin(match, tmp2, ' ') : ft_strcjoin(match, ent->d_name, ' ')))
 				return (match);
 			if (tmp2)
 				free(tmp2);
