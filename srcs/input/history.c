@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 11:06:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 13:45:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,3 @@ void	hst_free(t_hst *hst)
 		free(hst);
 	}
 }
-
-/*
-**t_bool	hst_reuse_cmd(t_hst **hst, t_cmd *cmd)
-**{
-**	if (!(*hst) || !cmd)
-**		return (failure);
-**	while ((*hst)->next)
-**		*hst = (*hst)->next;
-**	free((*hst)->cmd->raw);
-**	if (!((*hst)->cmd->raw = ft_strdup(cmd->raw)))
-**		return (failure);
-**	(*hst)->cmd->len = cmd->len;
-**	(*hst)->cmd->capacity = (*hst)->cmd->len;
-**	(*hst)->cmd->pos = (*hst)->cmd->len;
-**	return (success);
-**}
-*/
