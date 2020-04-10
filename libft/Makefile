@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 11:56:25 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/09 21:02:03 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/10 15:39:16 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,14 +100,14 @@ OBJS = $(addprefix $(OBJS_PATH),$(TMP))
 
 NAME = libft.a
 
-all: aff_b $(NAME)
+all: $(NAME)
 
-$(NAME): $(OBJS) aff_e
-	@ar rc $@ $(OBJS)
+$(NAME): $(OBJS)
+	ar rc $@ $(OBJS)
 
-$(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/libft.h
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(INCS_PATH)/libft.h
 	@mkdir -p $(OBJS_PATH)
-	@$(CC) $(CFLAGS) -I$(INCS_PATH) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INCS_PATH) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS_PATH)
@@ -116,9 +116,3 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
-aff_b:
-	@printf "● Libft "
-
-aff_e:
-	@printf "\033[32m✓\033[0m\n"

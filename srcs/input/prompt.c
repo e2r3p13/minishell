@@ -6,14 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 17:48:18 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:00:52 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "prompt.h"
 
-char	*g_execve_av[2] = {GDD_PATH, NULL};
+char	*g_execve_av[2] = {SCRIPT_PATH, NULL};
 
 /*
 ** Print the current working directory path, followed by a colored '>>'
@@ -30,7 +29,7 @@ static void	prompt_path(t_env *env)
 
 	pwd = getcwd(NULL, 0);
 	hd = get_env_var("HOME", env);
-	write(1, PATH_COLOR, ft_strlen(PATH_COLOR));
+	write(1, "\033[36m", 5);
 	if (pwd && hd)
 	{
 		if (ft_strncmp(pwd, hd, ft_strlen(hd)) == 0)
