@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 21:05:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 12:10:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 14:16:28 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,11 @@ static char	**match_wildcard(char *s)
 	{
 		if ((dir = opendir(pth)))
 		{
-			tmp = (pth[ft_strlen(pth) - 1] == '/') ? ft_strjoin(pth, "") : ft_strjoin(pth, "/");
+			tmp = (pth[ft_strlen(pth) - 1] == '/') ? ft_strjoin(pth, "") : ft_strjoin(pth, "/"); // append backslash remallocing
 			if (!(tab = malloc(sizeof(char *) * (get_match_nb(dir, s, tmp) + 1))))
 				return (NULL);
+			closedir(dir);
+			dir = opendir(pth);
 			find_wildcard_match(dir, s, tab, tmp);
 			free(pth);
 			free(tmp);
@@ -125,7 +127,9 @@ char		*wildcard_to_str(char *str)
 	s1 = NULL;
 	tab = match_wildcard(str);
 	if (!tab || !tab[i])
+	{
 		return (ft_strdup(str));
+	}
 	s1 = ft_strdup(tab[i++]);
 	while (tab[i])
 	{
@@ -138,9 +142,9 @@ char		*wildcard_to_str(char *str)
 	return (s1);
 }
 
-void		expand_wildcard(t_lxr **head, t_lxr *cur)
+int		expand_wildcard(t_lxr **head, t_lxr *cur)
 {
-	int	i;
+	int		i;
 	char	**tab;
 	char	*tmp;
 	t_lxr	*save;
@@ -165,4 +169,5 @@ void		expand_wildcard(t_lxr **head, t_lxr *cur)
 	cur->next = save;
 	*head = cur;
 	ft_free_array(tab);
+	return (EXIT_SUCCESS);
 }
