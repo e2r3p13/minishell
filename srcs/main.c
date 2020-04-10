@@ -6,11 +6,19 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 14:58:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:12:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+** Our main remap some signals, set the environment t_env list, and then
+** execute minishell.
+** If minishell receive its input from a pipe, it's runned in non-interactive
+** mode (just some get_next_line calls). Else, history is loaded and minishell
+** starts in intreractive mode.
+*/
 
 int		main(int ac, char **av, char **e)
 {
@@ -31,9 +39,7 @@ int		main(int ac, char **av, char **e)
 		hst_free(hst);
 	}
 	else
-	{
 		minishell(env, NULL, false);
-	}
 	return (EXIT_SUCCESS);
 }
 

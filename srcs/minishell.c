@@ -6,13 +6,23 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 11:36:34 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:08:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "keys.h"
 #include "tokens.h"
+
+/*
+** Here's minishell, far from a real shell, but close of our hearts
+** It can be run as interactive or not.
+** minishell first waits for input, then lexes it into a token list, in order
+** to check the grammar first.
+** Once it have be done, for each incoming command, minishell transform the
+** token list into an execution tree (parser job) and execute it.
+** Runs until EOI is reached (ctrl-D).
+*/
 
 int	minishell(t_env *env, t_hst *hst, t_bool it)
 {

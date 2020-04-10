@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:21:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 17:01:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@
 # define SCRIPT_PATH "/tmp/git_prompt.sh"
 # define HISTORY_PATH "/tmp/minishell_history"
 
-# define CMD_NOT_FOUND 127
-
 typedef struct s_env	t_env;
 typedef struct s_hst	t_hst;
 typedef struct s_lxr	t_lxr;
 typedef struct s_psr	t_psr;
 typedef struct dirent	t_ent;
 typedef enum e_dir		t_dir;
+
+/*
+** s_env stores environment variables in a linked list, to make it easier to
+** export / unset variables env argument of program main argument is never used
+** once s_env has been set
+*/
 
 struct		s_env
 {
@@ -46,12 +50,25 @@ struct		s_env
 	t_env	*next;
 };
 
+/*
+** s_hst is a double linked list where all lines from minishell_history file
+** are stored as an element, history is set at the beginning of the program and
+** new elements are added each time user enter a command
+*/
+
 struct		s_hst
 {
 	char	*cmd;
 	t_hst	*next;
 	t_hst	*prev;
 };
+
+/*
+** s_lxr stores tokens in a linked list. Each token have a token value,
+** a raw that have been allocated then copied from a portion of command,
+** and a space field, indicating weither the token is followed by a space or
+** not in the command, useful to join tokens later if necessary
+*/
 
 struct		s_lxr
 {
@@ -61,12 +78,22 @@ struct		s_lxr
 	t_lxr	*next;
 };
 
+/*
+** s_psr is a linked list with two 'next' elements, which is used to build
+** an execution tree. The then execution's functions just have to follow the
+** tree from root to leafs
+*/
+
 struct		s_psr
 {
 	int		type;
 	void	*left;
 	void	*right;
 };
+
+/*
+** r_dir enum is used for some functions that needs more informations to work
+*/
 
 enum		e_dir
 {

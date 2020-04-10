@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 17:42:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 16:51:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	cmd_not_found(char *msg)
 	write(1, "minishell: command not found: ", 30);
 	write(1, msg, ft_strlen(msg));
 	write(1, "\n", 1);
-	return (CMD_NOT_FOUND);
+	return (127);
 }
 
 void		execute_binary(char **av, t_env *env)
