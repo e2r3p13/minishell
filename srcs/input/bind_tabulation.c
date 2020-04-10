@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/30 11:32:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 10:23:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 12:23:57 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,7 @@
 ** If there is not OR there are several, last word will not be completed
 */
 
-static char	*find_cmp(t_dynstr *cmd, size_t *size, size_t *pos)
-{
-	char	*cmp;
-	char	*tmp;
-
-	if (*pos != cmd->len)
-		return (NULL);
-	cmp = cmd->str;
-	if ((tmp = ft_strrchr(cmp, ' ')))
-		cmp = tmp + 1;
-	*size = ft_strlen(cmp);
-	return (cmp);
-}
-
-char		*find_path(char **cmp)
-{
-	char	*path;
-	char	*tmp;
-
-	if ((tmp = ft_strrchr(*cmp, '/')))
-	{
-		if (tmp == *cmp)
-			path = ft_strdup("/");
-		else
-			path = ft_strndup(*cmp, ft_strlen(*cmp) - ft_strlen(tmp));
-		*cmp = tmp + 1;
-		return (path);
-	}
-	return (ft_strdup("./"));
-}
-
-static char	*find_match(DIR *dir, char *cmp)
+static char	*find_match(DIR *dir, char *word)
 {
 	int				occur;
 	struct dirent	*ent;
@@ -60,73 +29,122 @@ static char	*find_match(DIR *dir, char *cmp)
 	occur = 0;
 	while ((ent = readdir(dir)))
 	{
-		if (!ft_strncmp(cmp, ent->d_name, ft_strlen(cmp)) && *ent->d_name != 46)
+		if (!ft_strncmp(word, ent->d_name, ft_strlen(word)) &&
+			*ent->d_name != '.')
 		{
-			if (occur < 1)
-			{
-				if (!(match = ft_strdup(ent->d_name)))
-					return (NULL);
-				if (ent->d_type == DT_DIR)
-					match = ft_strpush(match, '/');
-				occur++;
-			}
-			else
+			if (occur)
 			{
 				free(match);
 				return (NULL);
 			}
+			if (!(match = ft_strdup(ent->d_name)))
+				return (NULL);
+			if (ent->d_type == DT_DIR)
+				match = ft_strpush(match, '/');
+			occur++;
 		}
 	}
 	return (occur != 1 ? NULL : match);
 }
 
-void		autocomplete(t_dynstr *cmd, char *mch, char *cmp, size_t *pos)
+static char	*find_all_matches(DIR *dir, char *word)
 {
-	size_t	clen;
+	struct dirent	*ent;
+	char			*match;
+	char			*tmp;
+
+	match = NULL;
+	while ((ent = readdir(dir)))
+	{
+		if (!ft_strncmp(word, ent->d_name, ft_strlen(word) - 1) &&
+			*ent->d_name != '.')
+		{
+			if (!(tmp = ft_strcjoin(match, ent->d_name, ' ')))
+				return (match);
+			if (match)
+				free(match);
+			match = tmp;
+		}
+	}
+	return (match);
+}
+
+static void	autocomplete(t_dynstr *cmd, char *match, char *word, size_t *pos)
+{
+	size_t	wlen;
 	char	*tmp;
 
-	clen = ft_strlen(cmp);
-	move_cursor(left, clen);
-	writen(' ', clen);
-	move_cursor(left, clen);
-	while (clen--)
+	wlen = ft_strlen(word);
+	move_cursor(left, wlen);
+	writen(' ', wlen);
+	move_cursor(left, wlen);
+	while (wlen--)
 		dynstr_pop(cmd);
-	if ((tmp = ft_strjoin(cmd->str, mch)))
+	if ((tmp = ft_strjoin(cmd->str, match)))
 	{
 		free(cmd->str);
 		cmd->str = tmp;
-		cmd->len += ft_strlen(mch);
+		cmd->len += ft_strlen(match);
 		*pos = cmd->len;
 		cmd->capacity = cmd->len;
-		write(1, mch, ft_strlen(mch));
+		write(1, match, ft_strlen(match));
 	}
-	free(mch);
+	free(match);
 	return ;
+}
+
+static char		*find_path(char **word)
+{
+	char	*path;
+	char	*tmp;
+
+	if ((tmp = ft_strrchr(*word, '/')))
+	{
+		if (tmp == *word)
+			path = ft_strdup("/");
+		else
+			path = ft_strndup(*word, ft_strlen(*word) - ft_strlen(tmp));
+		*word = tmp + 1;
+		return (path);
+	}
+	return (ft_strdup("./"));
+}
+
+static char	*get_word(t_dynstr *cmd, size_t *pos)
+{
+	char	*word;
+	char	*tmp;
+
+	if (*pos != cmd->len)
+		return (NULL);
+	word = cmd->str;
+	if ((tmp = ft_strrchr(word, ' ')))
+		word = tmp + 1;
+	return (word);
 }
 
 int			handle_tab(char *buf, size_t *pos, t_dynstr *cmd)
 {
-	char	*cmp;
-	char	*mch;
-	char	*pth;
-	size_t	csiz;
+	char	*word;
+	char	*path;
+	char	*match;
 	DIR		*dir;
 
-	mch = NULL;
+	match = NULL;
 	buf = NULL;
-	if (!(cmp = find_cmp(cmd, &csiz, pos)))
+	if (!(word = get_word(cmd, pos)))
 		return (0);
-	if (ft_strchr(cmp, '*'))
-		expand_wildcard_ft(mch, cmp, cmd, pos);
-	if ((pth = find_path(&cmp)))
+	if ((path = find_path(&word)))
 	{
-		if ((dir = opendir(pth)))
+		if ((dir = opendir(path)) && *pos > 0)
 		{
-			if ((mch = find_match(dir, cmp)))
-				autocomplete(cmd, mch, cmp, pos);
+			match = cmd->str[*pos - 1] == '*' ?
+				find_all_matches(dir, word) : find_match(dir, word);
+			if (match)
+				autocomplete(cmd, match, word, pos);
 			closedir(dir);
 		}
-		free(pth);
+		free(path);
 	}
 	return (0);
 }

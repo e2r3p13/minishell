@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 11:35:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 12:25:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,6 @@ void		hst_pop(t_hst **hst);
 void		hst_free(t_hst *hst);
 
 /*
-** Autocompletion helpers
-*/
-
-char		*find_path(char **cmp);
-void		autocomplete(t_dynstr *c, char *m, char *cmp, size_t *p);
-
-/*
 ** Input utils, often terminal sequences writing
 */
 
@@ -188,7 +181,6 @@ char		*expand_variable(char *raw, t_env *env);
 char		*expand_exitcode(char *raw);
 char		*expand_quoted_dollar(char *r, char *v, size_t l, t_env *e);
 void		expand_wildcard(t_lxr **head, t_lxr *cur);
-void		expand_wildcard_ft(char *m, char *c, t_dynstr *s, size_t *p);
 char		*wildcard_to_str(char *str);
 int			join_unspaced_words(t_lxr *lst);
 char		**lex_to_args(t_lxr *lst);

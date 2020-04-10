@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 21:05:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/09 18:09:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/10 12:10:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 #include "tokens.h"
 #include "libft.h"
 #include <dirent.h>
+
+static char		*find_path(char **word)
+{
+	char	*path;
+	char	*tmp;
+
+	if ((tmp = ft_strrchr(*word, '/')))
+	{
+		if (tmp == *word)
+			path = ft_strdup("/");
+		else
+			path = ft_strndup(*word, ft_strlen(*word) - ft_strlen(tmp));
+		*word = tmp + 1;
+		return (path);
+	}
+	return (ft_strdup("./"));
+}
 
 static int	wd_mch(char *s1, char *s2)
 {
@@ -148,11 +165,4 @@ void		expand_wildcard(t_lxr **head, t_lxr *cur)
 	cur->next = save;
 	*head = cur;
 	ft_free_array(tab);
-}
-
-void		expand_wildcard_ft(char *mch, char *cmp, t_dynstr *cmd, size_t *pos)
-{
-	mch = wildcard_to_str(cmp);
-	autocomplete(cmd, mch, cmp, pos);
-	free(mch);
 }
