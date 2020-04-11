@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 23:29:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 10:48:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,9 @@ char		*find_all_matches(DIR *dir, char *word, char *path, t_ent *ent);
 
 t_hst		*hst_get(void);
 int			hst_push(t_hst **hst, char *cmd);
-void		hst_pop(t_hst **hst);
 void		hst_free(t_hst *hst);
 void		hst_print(t_hst *hst);
-void		hst_remove_elm(t_hst **hst, t_hst *elm);
+void		hst_pop(t_hst **hst);
 void		hst_replace_last(t_hst **hst);
 void		hst_save(char *cmd);
 

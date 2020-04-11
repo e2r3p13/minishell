@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 20:13:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 10:46:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 			continue ;
 		if (*cmd == EOI || ft_strcmp(cmd, "exit") == 0)
 			break ;
+		ft_strlen(cmd) ? 1 : hst_pop(hst);
 		if ((lexlst = lxr_split(lexer(cmd))))
 		{
 			i = 0;

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:03:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 09:51:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 10:48:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-
-void	hst_remove_elm(t_hst **hst, t_hst *elm)
-{
-	hst = NULL;
-	elm = NULL;
-}
 
 void	hst_replace_last(t_hst **hst)
 {
