@@ -80,10 +80,8 @@ char		*wildcard_to_str(char *str)
 	if (!tab || !tab[i])
 		return (ft_strdup(str));
 	s1 = ft_strdup(tab[i++]);
-	printf("s1 : %s\n", s1);
 	while (tab[i])
 	{
-		printf("tab : %s\n", tab[i]);
 		tmp = ft_strjoin(s1, " ");
 		free(s1);
 		s1 = ft_strjoin(tmp, tab[i++]);
