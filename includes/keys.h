@@ -6,23 +6,36 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 23:23:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:21:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 10:18:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEYS_H
 # define KEYS_H
 
-# define ESCAPE_KEY 27
-# define RETURN_KEY 10
-# define BACKSPACE_KEY 127
-# define KEY_UP 65
-# define KEY_DOWN 66
-# define KEY_RIGHT 67
-# define KEY_LEFT 68
 # define EOI 4
-# define CTRL_U_KEY 21
-# define TAB_KEY 9
+# define TAB 9
+# define RETURN 10
+# define ESCAPE 27
+# define BACKSPACE 127
+
+# define CTRLA 1
+# define CTRLB 2
+# define CTRLC 3
+# define CTRLD 4
+# define CTRLE 5
+# define CTRLF 6
+# define CTRLG 7
+# define CTRLH 8
+# define CTRLK 11
+# define CTRLL 12
+# define CTRLN 14
+# define CTRLP 16
+# define CTRLR 18
+# define CTRLT 20
+# define CTRLU 21
+# define CTRLW 23
+# define CTRLX 24
 
 # define CURSOR_LEFT "\033[D"
 # define CURSOR_RIGHT "\033[C"
