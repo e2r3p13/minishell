@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:54:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 10:18:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 17:09:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void			*g_bind_ascii[128] =
 	[TAB] = &handle_tab,
 	[RETURN] = &handle_return,
 	[CTRLK] = &handle_ctrlk,
+	[CTRLN] = &handle_ctrln,
+	[CTRLP] = &handle_ctrlp,
 	[CTRLU] = &handle_ctrlu,
 	[ESCAPE] = &handle_escape,
 	[BACKSPACE] = &handle_backspace,

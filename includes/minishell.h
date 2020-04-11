@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 11:08:54 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 17:12:24 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,17 +123,19 @@ char		*get_cmd(void);
 ** Characters handling for interactive user input in command line
 */
 
-int			handle_printable_char(t_dynstr *d, size_t *c, char *b, t_hst **hst);
+int			handle_printable_char(t_dynstr *d, size_t *c, char *b, t_hst **h);
 int			handle_backspace(t_dynstr *d, size_t *c);
 int			handle_del(t_dynstr *d, size_t *c);
-int			handle_return(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst);
-int			handle_escape(t_dynstr *d, size_t *c, char *b, t_hst **hst);
+int			handle_return(t_dynstr *d, size_t *c, char *b, t_hst **h);
+int			handle_escape(t_dynstr *d, size_t *c, char *b, t_hst **h);
 int			handle_arrow(t_dynstr *d, size_t *c, t_dir dir);
 int			handle_fnarrow(t_dynstr *d, size_t *c, t_dir dir);
 int			handle_optleft(t_dynstr *d, size_t *c);
 int			handle_optright(t_dynstr *d, size_t *c);
-int			handle_history(t_dynstr *d, size_t *c, t_hst **hst, t_dir dir);
+int			handle_history(t_dynstr *d, size_t *c, t_hst **h, t_dir dir);
 int			handle_ctrld(t_dynstr *d, size_t *c);
+int			handle_ctrlp(t_dynstr *d, size_t *c, char *b, t_hst **h);
+int			handle_ctrln(t_dynstr *d, size_t *c, char *b, t_hst **h);
 int			handle_ctrlu(t_dynstr *d, size_t *c);
 int			handle_ctrlk(t_dynstr *d, size_t *c);
 int			handle_ctrlh(t_dynstr *d, size_t *c);
