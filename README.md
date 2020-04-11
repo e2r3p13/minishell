@@ -9,7 +9,10 @@ As good students, we did a little bit more:
 - Wildcards
 - Dynamic git prompt
 - 'Assistant' builtin that brings you coffe (Ok, maybe not)
+- 
+## Demo
 
+![Dynamic git prompt](https://zupimages.net/up/20/15/5tnk.png)![Alt Text](https://media.giphy.com/media/QyhN7QQVeSiYxVFI30/giphy.gif)
 ## Shortcuts
 
  - `ctrl-u` erase command
