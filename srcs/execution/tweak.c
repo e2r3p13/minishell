@@ -40,10 +40,7 @@ static void	tweak_great(t_psr *cur, t_env *env)
 	name = (char**)cur->right;
 	if ((fd[0] = open(name[0], O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
 		return ;
-	if (sizeof(cur->left) == sizeof(cur))
-		tweak_tree_exec(cur->left, env);
-	else
-		execute(cur->left, env);
+	tweak_tree_exec(cur->left, env);
 	close(fd[0]);
 }
 
@@ -60,10 +57,7 @@ static void	tweak_dgreat(t_psr *cur, t_env *env)
 		return ;
 	while (i > 0)
 		i = read(fd[0], &c, 1);
-	if (sizeof(cur->left) == sizeof(cur))
-		tweak_tree_exec(cur->left, env);
-	else
-		execute(cur->left, env);
+	tweak_tree_exec(cur->left, env);
 	close(fd[0]);
 }
 
