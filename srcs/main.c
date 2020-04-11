@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 16:54:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 18:00:53 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int			main(int ac, char **av, char **e)
 	}
 	else
 		minishell(env, NULL, false);
+	env_free(env);
 	return (EXIT_SUCCESS);
 }

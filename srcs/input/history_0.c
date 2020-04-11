@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 09:38:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 18:00:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_hst	*hst_get(void)
 				break ;
 			}
 		}
+		free(cmd);
 		close(fd);
 		return (hst);
 	}
@@ -96,6 +97,7 @@ void	hst_free(t_hst *hst)
 			hst = hst->prev;
 			free(hst->next);
 		}
+		free(hst->cmd);
 		free(hst);
 	}
 }
