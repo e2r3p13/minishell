@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 14:06:40 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 16:54:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 ** starts in intreractive mode.
 */
 
-static void	sighandler(void)
+static void	sighandler(int sig)
 {
-	write(1, "\n", 1);
+	sig == 2 ? write(1, "\n", 1) : 1;
 }
 
 int			main(int ac, char **av, char **e)
