@@ -34,6 +34,12 @@ t_lxr	*lxr_lstnew(void)
 	return (lst);
 }
 
+void	lxr_append(t_lxr **tail)
+{
+	(*tail)->next = lxr_lstnew();
+	*tail = (*tail)->next;
+}
+
 void	*lxr_free(t_lxr *head)
 {
 	t_lxr *n;

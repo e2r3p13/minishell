@@ -183,6 +183,7 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head);
 t_lxr		*lxr_lstnew(void);
 void		*lxr_free(t_lxr *head);
 int			lstsize(t_lxr *lst);
+void			lxr_append(t_lxr **end);
 
 /*
 ** Helper functions to lex each part of cmd into tokens
@@ -207,6 +208,9 @@ char		*expand_variable(char *raw, t_env *env);
 char		*expand_exitcode(char *raw);
 char		*expand_quoted_dollar(char *r, char *v, size_t l, t_env *e);
 char		*wildcard_to_str(char *str);
+char		*find_path(char **word);
+int		wd_mch(char *s1, char *s2);
+int		match_nb(DIR *dir, char *s, char *pth);
 int			join_unspaced_words(t_lxr *lst);
 char		**lex_to_args(t_lxr *lst);
 

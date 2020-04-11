@@ -36,6 +36,7 @@ SRCS =	main.c \
 		lexer/expand.c \
 		lexer/expand_quote.c \
 		lexer/expand_wcard.c \
+		lexer/wcard_utils.c \
 		parser/parser.c \
 		execution/execute.c \
 		execution/redirect.c \

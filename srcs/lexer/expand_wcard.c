@@ -14,58 +14,6 @@
 #include "tokens.h"
 #include <stdlib.h>
 
-static char	*find_path(char **word)
-{
-	char	*path;
-	char	*tmp;
-
-	if ((tmp = ft_strrchr(*word, '/')))
-	{
-		if (tmp == *word)
-			path = ft_strdup("/");
-		else
-			path = ft_strndup(*word, ft_strlen(*word) - ft_strlen(tmp));
-		*word = tmp + 1;
-		return (path);
-	}
-	return (ft_strdup("./"));
-}
-
-static int	wd_mch(char *s1, char *s2)
-{
-	if (*s2 == 0)
-		return (*s1 == 0);
-	while (*s2 == '*' && *(s2 + 1) == '*')
-		s2++;
-	if (*s1 == 0 && *s2 == '*')
-		return (wd_mch(s1, s2 + 1));
-	if (*s1 == *s2)
-		return (wd_mch(s1 + 1, s2 + 1));
-	if (*s1 != *s2)
-		return ((*s2 == '*') ? (wd_mch(s1 + 1, s2) || wd_mch(s1, s2 + 1)) : 0);
-	return (1);
-}
-
-static int	get_match_nb(DIR *dir, char *s, char *pth)
-{
-	struct dirent	*ent;
-	int				i;
-	char			*tmp;
-
-	i = 0;
-	while ((ent = readdir(dir)))
-	{
-		if (ft_strncmp(pth, "./", 3))
-			tmp = ft_strjoin(pth, ent->d_name);
-		else
-			tmp = ft_strdup(ent->d_name);
-		if (*(ent->d_name) != '.' && wd_mch(tmp, s))
-			i++;
-		free(tmp);
-	}
-	return (i);
-}
-
 static void	find_wildcard_match(DIR *dir, char *s, char **tab, char *pth)
 {
 	struct dirent	*ent;
@@ -80,12 +28,18 @@ static void	find_wildcard_match(DIR *dir, char *s, char **tab, char *pth)
 		else
 			tmp = ft_strdup(ent->d_name);
 		if (*(ent->d_name) != '.' && wd_mch(tmp, s))
-		{
 			tab[i++] = ft_strdup(tmp);
-		}
 		free(tmp);
 	}
 	tab[i] = NULL;
+}
+
+static char	*check_slash(char *pth)
+{
+	if (pth[ft_strlen(pth) - 1] == '/')
+		return (ft_strdup(pth));
+	else
+		return (ft_strjoin(pth, "/"));
 }
 
 static char	**match_wildcard(char *s)
@@ -96,23 +50,21 @@ static char	**match_wildcard(char *s)
 	char	*tmp;
 
 	tmp = s;
-	if ((pth = find_path(&tmp)))
-	{
-		if ((dir = opendir(pth)))
-		{
-			tmp = (pth[ft_strlen(pth) - 1] == '/') ? ft_strjoin(pth, "") : ft_strjoin(pth, "/");
-			if (!(tab = malloc(sizeof(char *) * (get_match_nb(dir, s, tmp) + 1))))
-				return (NULL);
-			closedir(dir);
-			dir = opendir(pth);
-			find_wildcard_match(dir, s, tab, tmp);
-			free(pth);
-			free(tmp);
-			closedir(dir);
-			return (tab);
-		}
-	}
-	return (NULL);
+	if (!(pth = find_path(&tmp)))
+		return (NULL);
+	if (!(dir = opendir(pth)))
+		return (NULL);
+	if (!(tmp = check_slash(pth)))
+		return (NULL);
+	if (!(tab = malloc(sizeof(char *) * (match_nb(dir, s, tmp) + 1))))
+		return (NULL);
+	closedir(dir);
+	dir = opendir(pth);
+	find_wildcard_match(dir, s, tab, tmp);
+	free(pth);
+	free(tmp);
+	closedir(dir);
+	return (tab);
 }
 
 char		*wildcard_to_str(char *str)
@@ -126,12 +78,12 @@ char		*wildcard_to_str(char *str)
 	s1 = NULL;
 	tab = match_wildcard(str);
 	if (!tab || !tab[i])
-	{
 		return (ft_strdup(str));
-	}
 	s1 = ft_strdup(tab[i++]);
+	printf("s1 : %s\n", s1);
 	while (tab[i])
 	{
+		printf("tab : %s\n", tab[i]);
 		tmp = ft_strjoin(s1, " ");
 		free(s1);
 		s1 = ft_strjoin(tmp, tab[i++]);
@@ -160,10 +112,7 @@ int			expand_wcard(t_lxr **head, t_lxr *cur)
 		cur->raw = ft_strdup(tab[i++]);
 		cur->space = 1;
 		if (tab[i])
-		{
-			cur->next = lxr_lstnew();
-			cur = cur->next;
-		}
+			lxr_append(&cur);
 	}
 	cur->next = save;
 	*head = cur;

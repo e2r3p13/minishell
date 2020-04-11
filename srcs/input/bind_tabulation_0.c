@@ -44,7 +44,7 @@ static void	autocomplete(t_dynstr *dstr, char *match, char *word, size_t *cpos)
 	free(match);
 }
 
-static char	*find_path(char **word)
+char		*find_path(char **word)
 {
 	char	*path;
 	char	*tmp;
