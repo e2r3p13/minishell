@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:54:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 21:08:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 10:03:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void			*g_bind_ascii[128] =
 char		*get_it_cmd(t_hst **hst)
 {
 	t_dynstr	*dstr;
-	char		*raw;
 	size_t		cpos;
 	char		buf[5];
 	int			(*bindf)(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst);
@@ -73,9 +72,8 @@ char		*get_it_cmd(t_hst **hst)
 		(*hst)->cmd = dstr->str;
 	}
 	disable_raw_mode();
-	raw = dstr->str;
 	free(dstr);
-	return (raw);
+	return ((*hst)->cmd);
 }
 
 char		*get_cmd(void)

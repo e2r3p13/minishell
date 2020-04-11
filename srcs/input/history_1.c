@@ -6,13 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:03:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 00:11:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 09:51:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 void	hst_remove_elm(t_hst **hst, t_hst *elm)
 {
@@ -22,7 +23,14 @@ void	hst_remove_elm(t_hst **hst, t_hst *elm)
 
 void	hst_replace_last(t_hst **hst)
 {
-	hst = NULL;
+	char	*cmd;
+
+	if (!(cmd = ft_strdup((*hst)->cmd)))
+		return ;
+	while ((*hst)->next)
+		*hst = (*hst)->next;
+	free((*hst)->cmd);
+	(*hst)->cmd = cmd;
 }
 
 void	hst_save(char *cmd)
