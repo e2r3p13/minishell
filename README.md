@@ -12,7 +12,7 @@ As good students, we did a little bit more:
 - 
 ## Demo
 
-![Dynamic git prompt](https://zupimages.net/up/20/15/5tnk.png)![Alt Text](https://media.giphy.com/media/QyhN7QQVeSiYxVFI30/giphy.gif)
+![Alt Text](https://media.giphy.com/media/QyhN7QQVeSiYxVFI30/giphy.gif)
 ## Shortcuts
 
  - `ctrl-u` erase command
@@ -23,7 +23,7 @@ As good students, we did a little bit more:
  - `❮ / ❯` move cursor left / right
  - `optn + ❮ / ❯` move cursor left / right word by word
  - `fn +  ❮ / ❯` move cursor at the beginning / end of the line
- - 
+ 
 
 # Installation & execution
 
