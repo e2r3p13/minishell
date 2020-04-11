@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 10:57:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 11:08:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,6 @@ int			ms_unset(int ac, char **av, t_env *env);
 */
 
 char		*get_env_var(char *var_name, t_env *env);
-void		sighandler(int signal);
 int			arglen(char **av);
 int			open_reg_file(char *path, int flags, mode_t mode);
 int			open_file(char *path, int flags, mode_t mode);
