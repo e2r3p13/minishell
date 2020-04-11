@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:04:47 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 22:28:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 10:56:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	handle_arrow(t_dynstr *dstr, size_t *cpos, t_dir dir)
 {
-	dstr = NULL;
+	dstr += 0;
 	if (dir == left)
 	{
 		move_cursor(left, 1);

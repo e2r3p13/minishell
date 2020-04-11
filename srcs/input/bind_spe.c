@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:07:08 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 10:46:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 10:57:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	handle_printable_char(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
 {
-	hst = NULL;
+	hst += 0;
 	while (ft_isprint(*buf) &&
 		dynstr_insert_at(*cpos, dstr, *buf) == EXIT_SUCCESS)
 	{
@@ -58,9 +58,7 @@ int	handle_del(t_dynstr *dstr, size_t *cpos)
 
 int	handle_return(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
 {
-	buf = NULL;
-	cpos = NULL;
-
+	*cpos += (size_t)buf;
 	if ((*hst)->next)
 		hst_replace_last(hst);
 	if (dstr->len)
