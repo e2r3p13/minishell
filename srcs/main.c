@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 11:13:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 14:06:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,19 @@
 ** starts in intreractive mode.
 */
 
-int		main(int ac, char **av, char **e)
+static void	sighandler(void)
+{
+	write(1, "\n", 1);
+}
+
+int			main(int ac, char **av, char **e)
 {
 	struct stat	stat;
 	t_env		*env;
 	t_hst		*hst;
 
 	av[ac] = NULL;
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, sighandler);
 	if (!(env = env_get(e)))
 		return (EXIT_FAILURE);
 	fstat(0, &stat);

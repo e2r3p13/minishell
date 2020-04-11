@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 21:05:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:36:09 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 13:32:07 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 static void	find_wildcard_match(DIR *dir, char *s, char **tab, char *pth)
 {
-	struct dirent	*ent;
-	char			*tmp;
-	int				i;
+	t_ent	*ent;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	while ((ent = readdir(dir)))
