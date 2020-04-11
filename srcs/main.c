@@ -6,13 +6,14 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 20:13:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/11 11:13:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <signal.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /*
 ** Our main remap some signals, set the environment t_env list, and then
@@ -29,8 +30,7 @@ int		main(int ac, char **av, char **e)
 	t_hst		*hst;
 
 	av[ac] = NULL;
-	signal(SIGINT, sighandler);
-	signal(SIGKILL, sighandler);
+	signal(SIGINT, SIG_IGN);
 	if (!(env = env_get(e)))
 		return (EXIT_FAILURE);
 	fstat(0, &stat);
@@ -43,9 +43,4 @@ int		main(int ac, char **av, char **e)
 	else
 		minishell(env, NULL, false);
 	return (EXIT_SUCCESS);
-}
-
-void	sighandler(int sig)
-{
-	signal(sig, SIG_IGN);
 }
