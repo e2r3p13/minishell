@@ -54,10 +54,8 @@ int	lxr_word(char *str, t_lxr *cur)
 
 	i = 0;
 	cur->token = WORD;
-	while (str[i] && !ft_isinset("<>|;\n\'\" ", str[i]))
+	while (str[i] && !ft_isinset("$<>|;\n\'\" ", str[i]))
 	{
-		if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
-			return (i);
 		if (str[i] == '*')
 			cur->token = WILDCARD;
 		i++;
