@@ -18,11 +18,11 @@ As good students, we did a little bit more:
  - `ctrl-u` erase command
  - `ctrl-k` erase command after cursor
  - `ctrl-h` erase command before cursor
- - `ctrl-p / ⬆` scroll up  history
- - `ctrl-n / ⬇` scroll down history
- - `⬅ / ➡` move cursor left / right
- - `optn + ⬅ / ➡` move cursor left / right word by word
- - `fn +  ⬅ / ➡` move cursor at the beginning / end of the line
+ - `ctrl-p / ▲` scroll up  history
+ - `ctrl-n / ▼` scroll down history
+ - `◀ / ▶` move cursor left / right
+ - `optn + ◀ / ▶` move cursor left / right word by word
+ - `fn +  ◀ / ▶` move cursor at the beginning / end of the line
 
 # Installation & execution
 
