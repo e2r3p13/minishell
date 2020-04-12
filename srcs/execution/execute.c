@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 11:12:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 14:21:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ static void	*get_builtin_func(char *exename)
 		return (&ms_export);
 	if (ft_strncmp("pwd", exename, exelen) == 0)
 		return (&ms_pwd);
+	if (ft_strncmp("alias", exename, exelen) == 0)
+		return (&ms_alias);
+	if (ft_strncmp("unalias", exename, exelen) == 0)
+		return (&ms_unalias);
 	return (NULL);
 }
 

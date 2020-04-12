@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 12:05:06 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 14:14:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 14:40:18 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_als	*als_get(void)
 	char	*raw;
 
 	als = NULL;
+	if (als_push(&als, ft_strdup("minishell=./minishell")) == EXIT_FAILURE)
+		return (NULL);
 	if ((fd = open_reg_file(ALIASES_PATH, O_RDONLY, 0)) != -1)
 	{
 		while (get_next_line(fd, &raw))
@@ -34,13 +36,15 @@ t_als	*als_get(void)
 		close(fd);
 		return (als);
 	}
-	return (NULL);
+	return (als);
 }
 
 int		als_push(t_als **als, char *raw)
 {
 	t_als	*n;
 
+	if (!raw)
+		return (EXIT_FAILURE);
 	if (!(n = malloc(sizeof(t_als))))
 		return (EXIT_FAILURE);
 	if (!(n->value = ft_strdup(ft_strchr(raw, '=') + 1)))

@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/12 14:06:51 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/12 14:22:03 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,8 @@ SRCS =	main.c \
 		builtins/export.c \
 		builtins/env.c \
 		builtins/pwd.c \
+		builtins/alias.c \
+		builtins/unalias.c \
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
