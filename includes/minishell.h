@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 14:19:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 14:46:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head);
 t_lxr		*lxr_lstnew(void);
 void		*lxr_free(t_lxr *head);
 int			lstsize(t_lxr *lst);
-void			lxr_append(t_lxr **end);
+void		lxr_append(t_lxr **end);
 
 /*
 ** Helper functions to lex each part of cmd into tokens
@@ -263,7 +263,6 @@ int			ms_unset(int ac, char **av, t_env *env);
 int			ms_alias(int ac, char **av);
 int			ms_unalias(int ac, char **av);
 
-
 /*
 **----------------------**
 **						**
@@ -286,7 +285,6 @@ void		env_remove_first(t_env *env);
 void		env_remove_elm(t_env *env, t_env *elm);
 char		*append_backslash(char *mch);
 t_bool		is_valid_assignment(char *s);
-
 
 t_als		*als_get(void);
 int			als_push(t_als **als, char *raw);
