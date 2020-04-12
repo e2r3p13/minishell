@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/11 17:18:28 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/12 11:28:58 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,10 @@ SRCS_PATH = ./srcs/
 OBJS_PATH = ./objs/
 LBFT_PATH = ./libft/libft.a
 RSCS_PATH = /tmp/
+
+HDRS =	keys.h \
+		minishell.h \
+		tokens.h \
 
 SRCS =	main.c \
 		minishell.c \
@@ -55,6 +59,7 @@ OFLAGS = -g3 -fsanitize=address
 
 TMP = $(SRCS:.c=.o)
 OBJS = $(addprefix $(OBJS_PATH),$(TMP))
+INCS = $(addprefix $(INCS_PATH),$(HDRS))
 
 NAME = minishell
 
@@ -64,7 +69,7 @@ $(NAME): move_script $(OBJS)
 	make -C ./libft/
 	$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LBFT_PATH) -o $(NAME)
 
-$(OBJS_PATH)%.o: $(SRCS_PATH)%.c includes/minishell.h
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(INCS)
 	@mkdir -p $(OBJS_PATH)
 	@mkdir -p ./objs/input
 	@mkdir -p ./objs/lexer
