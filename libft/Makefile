@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/07 11:56:25 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/10 15:39:16 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/12 11:55:55 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,12 +102,17 @@ NAME = libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar rc $@ $(OBJS)
+$(NAME): start $(OBJS)
+	@ar rc $@ $(OBJS)
+	@printf "\033[032m[DONE]\033[0m\n"
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(INCS_PATH)/libft.h
 	@mkdir -p $(OBJS_PATH)
-	$(CC) $(CFLAGS) -I$(INCS_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INCS_PATH) -c $< -o $@
+	@printf "━"
+
+start:
+	@printf "\033[093mCompiling libft:\n\033[0;0m"
 
 clean:
 	@rm -rf $(OBJS_PATH)

@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/12 11:28:58 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/12 12:02:40 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ RSCS_PATH = /tmp/
 HDRS =	keys.h \
 		minishell.h \
 		tokens.h \
+		../libft/includes/libft.h \
 
 SRCS =	main.c \
 		minishell.c \
@@ -65,18 +66,23 @@ NAME = minishell
 
 all: $(NAME)
 
-$(NAME): move_script $(OBJS)
-	make -C ./libft/
-	$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LBFT_PATH) -o $(NAME)
+$(NAME): move_script start $(OBJS)
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LBFT_PATH) -o $(NAME)
+	@printf "\033[032m[DONE]\033[0m\n"
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(INCS)
+	@$(CC) $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
+	@printf "━"
+
+start:
+	@make -C ./libft/
 	@mkdir -p $(OBJS_PATH)
 	@mkdir -p ./objs/input
 	@mkdir -p ./objs/lexer
 	@mkdir -p ./objs/parser
 	@mkdir -p ./objs/execution
 	@mkdir -p ./objs/builtins
-	$(CC) $(CFLAGS) -I $(INCS_PATH) -c $< -o $@
+	@printf "\033[093mCompiling minishell:\033[0m\n"
 
 clean:
 	@rm -rf $(OBJS_PATH)
@@ -88,4 +94,4 @@ fclean: clean
 re: fclean all
 
 move_script:
-	cp $(SRCS_PATH)git_prompt.sh /tmp/git_prompt.sh
+	@cp $(SRCS_PATH)git_prompt.sh /tmp/git_prompt.sh
