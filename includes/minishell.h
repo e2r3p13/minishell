@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 11:21:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 12:52:47 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 
 # define SCRIPT_PATH "/tmp/git_prompt.sh"
 # define HISTORY_PATH "/tmp/minishell_history"
+# define ALIASES_PATH "/tmp/minishell_aliases"
 
 typedef struct s_env	t_env;
+typedef struct s_env	t_als;
 typedef struct s_hst	t_hst;
 typedef struct s_lxr	t_lxr;
 typedef struct s_psr	t_psr;
@@ -211,8 +213,8 @@ char		*expand_exitcode(char *raw);
 char		*expand_quoted_dollar(char *r, char *v, size_t l, t_env *e);
 char		*wildcard_to_str(char *str);
 char		*find_path(char **word);
-int		wd_mch(char *s1, char *s2);
-int		match_nb(DIR *dir, char *s, char *pth);
+int			wd_mch(char *s1, char *s2);
+int			match_nb(DIR *dir, char *s, char *pth);
 int			join_unspaced_words(t_lxr *lst);
 char		**lex_to_args(t_lxr *lst);
 
@@ -279,5 +281,11 @@ int			env_push_back(t_env *env, char *key, char *value);
 void		env_remove_first(t_env *env);
 void		env_remove_elm(t_env *env, t_env *elm);
 char		*append_backslash(char *mch);
+t_bool		is_valid_assignment(char *s);
+
+
+t_als		*als_get(void);
+int			als_push(t_als **als, char *raw);
+void		als_print(t_als *als);
 
 #endif

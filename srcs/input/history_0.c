@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 22:27:09 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 18:00:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 12:10:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ t_hst	*hst_get(void)
 		while (get_next_line(fd, &cmd))
 		{
 			if (hst_push(&hst, cmd) == EXIT_FAILURE)
-			{
-				free(cmd);
 				break ;
-			}
 		}
 		free(cmd);
 		close(fd);

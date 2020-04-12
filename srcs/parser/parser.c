@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:03:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:36:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 13:28:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ char			**lex_to_args(t_lxr *lst)
 		return (NULL);
 	while (lst && lst->token == WORD)
 	{
-		av[i++] = lst->raw;
+		av[i] = lst->raw;
 		lst = lst->next;
+		i++;
 	}
 	av[i] = NULL;
 	return (av);
