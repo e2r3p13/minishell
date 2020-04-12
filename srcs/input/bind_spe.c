@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:07:08 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 11:58:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 20:37:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	handle_return(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
 {
 	*cpos += (size_t)buf;
 	if ((*hst)->next)
-		hst_replace_last(hst);
+		hst_replace_last(hst, dstr);
 	if (dstr->len)
 		hst_save(dstr->str);
 	write(1, "\n", 1);

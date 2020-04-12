@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:03:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 10:48:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 20:38:25 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	hst_replace_last(t_hst **hst)
+void	hst_replace_last(t_hst **hst, t_dynstr *dstr)
 {
 	char	*cmd;
 
@@ -25,6 +25,7 @@ void	hst_replace_last(t_hst **hst)
 		*hst = (*hst)->next;
 	free((*hst)->cmd);
 	(*hst)->cmd = cmd;
+	dstr->str = cmd;
 }
 
 void	hst_save(char *cmd)

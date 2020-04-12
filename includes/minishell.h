@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 14:46:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 20:38:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int			hst_push(t_hst **hst, char *cmd);
 void		hst_free(t_hst *hst);
 void		hst_print(t_hst *hst);
 void		hst_pop(t_hst **hst);
-void		hst_replace_last(t_hst **hst);
+void		hst_replace_last(t_hst **hst, t_dynstr *dstr);
 void		hst_save(char *cmd);
 
 /*
