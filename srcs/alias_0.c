@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/12 12:05:06 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 12:43:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 14:14:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_als	*als_get(void)
 	{
 		while (get_next_line(fd, &raw))
 		{
-			if (!is_valid_assignment(raw) || als_push(&als, raw) == EXIT_FAILURE)
+			if (!is_valid_assignment(raw) ||
+				als_push(&als, raw) == EXIT_FAILURE)
 				break ;
 		}
 		free(raw);
@@ -38,29 +39,29 @@ t_als	*als_get(void)
 
 int		als_push(t_als **als, char *raw)
 {
-	t_als	*new;
+	t_als	*n;
 
-	if (!(new = malloc(sizeof(t_als))))
+	if (!(n = malloc(sizeof(t_als))))
 		return (EXIT_FAILURE);
-	if (!(new->value = ft_strdup(ft_strchr(raw, '=') + 1)))
+	if (!(n->value = ft_strdup(ft_strchr(raw, '=') + 1)))
 	{
-		free(new);
+		free(n);
 		return (EXIT_FAILURE);
 	}
-	if (!(new->key = ft_strndup(raw, ft_strlen(raw) - ft_strlen(new->value) - 1)))
+	if (!(n->key = ft_strndup(raw, ft_strlen(raw) - ft_strlen(n->value) - 1)))
 	{
-		free(new->value);
-		free(new);
+		free(n->value);
+		free(n);
 	}
-	new->next = *als;
-	*als = new;
+	n->next = *als;
+	*als = n;
 	free(raw);
 	return (EXIT_SUCCESS);
 }
 
 void	als_print(t_als *als)
 {
-	while(als)
+	while (als)
 	{
 		printf("key: |%s|, value: |%s|\n", als->key, als->value);
 		als = als->next;

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 12:52:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 14:06:36 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ int			lxr_redirect(char *str, t_lxr *cur);
 int			lxr_quote(char *str, t_lxr *cur);
 int			lxr_word(char *str, t_lxr *cur);
 int			lxr_variable(char *str, t_lxr *cur);
+void		replace_alias(t_lxr	*lxr);
 
 /*
 ** Expand variables / exit codes / quoted tokens etc...

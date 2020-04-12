@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 12:42:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 14:15:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-t_bool		is_valid_assignment(char *s)
+t_bool			is_valid_assignment(char *s)
 {
 	int i;
 

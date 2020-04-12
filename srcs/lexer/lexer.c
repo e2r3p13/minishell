@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 13:54:40 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/12 14:07:46 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "minishell.h"
 #include <unistd.h>
 #include <stdlib.h>
-
-extern t_als	*g_als;
 
 void	*g_ascii_tokens[256] =
 {
@@ -56,64 +54,6 @@ t_lxr		*lexer(char *str)
 	return (lxr_check_grammar(head));
 }
 
-static void		lxr_split_token(t_lxr *lxr)
-{
-	char	**arr;
-	t_lxr	*end;
-	t_lxr	*tmp;
-	int		i;
-
-	if (!(arr = ft_split(lxr->raw, ' ')))
-		return ;
-	end = lxr->next;
-	i = 0;
-	while (arr[i])
-	{
-		if (i == 0)
-		{
-			free(lxr->raw);
-			lxr->raw = arr[0];
-			lxr->space = true;
-			i++;
-			continue ;
-		}
-		if (!(tmp = lxr_lstnew()))
-		{
-			lxr->next = end;
-			break ;
-		}
-		lxr->next = tmp;
-		tmp->raw = arr[i];
-		tmp->space = true;
-		lxr = tmp;
-		i++;
-	}
-	lxr->next = end;
-	free(arr);
-}
-
-static void		replace_alias(t_lxr	*lxr)
-{
-	t_als	*als;
-	char	*rep;
-
-	als = g_als;
-	while (als)
-	{
-		if (ft_strcmp(lxr->raw, als->key) == 0)
-		{
-			if ((rep = ft_strdup(als->value)))
-			{
-				free(lxr->raw);
-				lxr->raw = rep;
-				lxr_split_token(lxr);
-				break ;
-			}
-		}
-		als = als->next;
-	}
-}
-
 t_lxr		*lxr_check_grammar(t_lxr *head)
 {
 	int			last_token;
@@ -128,7 +68,8 @@ t_lxr		*lxr_check_grammar(t_lxr *head)
 		if ((tmp->token == NEWLINE || tmp->token == REDIRECT) &&
 			(last_token == NEWLINE || last_token == REDIRECT))
 			is_cmd_valid = false;
-		if (last_token == NEWLINE && tmp->token == WORD)
+		if (last_token == NEWLINE && tmp->token == WORD &&
+			(tmp->space || !tmp->next))
 			replace_alias(tmp);
 		last_token = tmp->token;
 		tmp = tmp->next;
