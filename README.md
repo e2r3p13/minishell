@@ -18,11 +18,11 @@ As good students, we did a little bit more:
  - <kbd>Ctrl-U</kbd>: erase command
  - <kbd>Ctrl-K</kbd>: erase command after cursor
  - <kbd>Ctrl-H</kbd>: erase command before cursor
- - <kbd>Ctrl-P</kbd> / <kbd>⬆</kbd>: scroll up  history
- - <kbd>Ctrl-N</kbd> / <kbd>⬇</kbd>: scroll down history
- - ⬅ / <kbd>➡</kbd>: move cursor left / right
- - <kbd>Option</kbd> + <kbd>⬅</kbd> / <kbd>➡</kbd>: move cursor left / right word by word
- - <kbd>Fn</kbd> + <kbd>⬅</kbd> / <kbd>➡</kbd>: move cursor at the beginning / end of the line
+ - <kbd>Ctrl-P</kbd> / ⬆: scroll up  history
+ - <kbd>Ctrl-N</kbd> / ⬇: scroll down history
+ - ⬅ / ➡: move cursor left / right
+ - <kbd>Option</kbd> + ⬅ / ➡: move cursor left / right word by word
+ - <kbd>Fn</kbd> + ⬅ / ➡: move cursor at the beginning / end of the line
 
 # Installation & execution
 
