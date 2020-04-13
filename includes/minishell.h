@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 20:38:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/13 21:46:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head);
 t_lxr		*lxr_lstnew(void);
 void		*lxr_free(t_lxr *head);
 int			lstsize(t_lxr *lst);
+int			lxr_cmdsize(t_lxr *lst);
 void		lxr_append(t_lxr **end);
 
 /*

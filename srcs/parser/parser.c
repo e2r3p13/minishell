@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:03:46 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 13:28:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/13 21:45:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char			**lex_to_args(t_lxr *lst)
 	int		i;
 
 	i = 0;
-	if (!(av = malloc(sizeof(char *) * (lstsize(lst) + 1))))
+	if (!(av = malloc(sizeof(char *) * (lxr_cmdsize(lst) + 1))))
 		return (NULL);
 	while (lst && lst->token == WORD)
 	{

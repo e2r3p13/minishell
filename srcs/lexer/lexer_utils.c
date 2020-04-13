@@ -6,11 +6,12 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 17:46:10 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:34:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/13 21:45:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokens.h"
 #include <stdlib.h>
 
 /*
@@ -61,6 +62,19 @@ int		lstsize(t_lxr *lst)
 
 	i = 0;
 	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
+int		lxr_cmdsize(t_lxr *lst)
+{
+	int i;
+
+	i = 0;
+	while (lst && lst->token == WORD)
 	{
 		lst = lst->next;
 		i++;
