@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:25:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/13 17:10:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-char	*g_execve_av[2] = {SCRIPT_PATH, NULL};
+extern int	g_exitcode;
+char		*g_execve_av[2] = {SCRIPT_PATH, NULL};
 
 /*
 ** Print the current working directory path, followed by a colored '>>'
@@ -32,7 +33,7 @@ static void	prompt_path(t_env *env)
 
 	pwd = getcwd(NULL, 0);
 	hd = get_env_var("HOME", env);
-	write(1, "\033[36m", 5);
+	g_exitcode == 0 ? write(1, "\033[36m", 5) : write(1, "\033[91m", 5);
 	if (pwd && hd)
 	{
 		if (ft_strncmp(pwd, hd, ft_strlen(hd)) == 0)
