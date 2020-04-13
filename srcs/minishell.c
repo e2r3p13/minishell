@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 10:52:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/13 21:38:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 {
 	char	*cmd;
 	t_lxr	**lexlst;
+	t_ast	*ast;
 	int		i;
 
 	while (true)
@@ -44,7 +45,8 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 			i = 0;
 			while (lexlst[i] && expand(lexlst[i], env) == EXIT_SUCCESS)
 			{
-				tree_exec(parser(lexlst[i]), env);
+				if ((ast = ast_create(lexlst[i])))
+					ast_print(ast);
 				lxr_free(lexlst[i++]);
 			}
 			free(lexlst);
