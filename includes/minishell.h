@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 11:30:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/14 14:11:38 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head);
 t_lxr		*lxr_lstnew(void);
 void		*lxr_free(t_lxr *head);
 int			lstsize(t_lxr *lst);
+int			lxr_cmdsize(t_lxr *lxr);
 void		lxr_append(t_lxr **end);
 
 /*
@@ -232,7 +233,6 @@ t_ast		*ast_create(t_lxr *lxr);
 void		ast_print(t_ast *ast, int depth);
 t_ast		*ast_new(void);
 int			ast_get_token(t_lxr **lxr);
-int			lxr_cmdsize(t_lxr *lxr);
 
 /*
 **------------------------------------**
@@ -241,6 +241,13 @@ int			lxr_cmdsize(t_lxr *lxr);
 **								  	  **
 **------------------------------------**
 */
+
+int			exectute(t_ast *ast, t_env *env);
+int			execute_command(t_ast *ast, t_env *env);
+int			pipe_redirection(t_ast *ast, t_env *env);
+int			great_redirection(t_ast *ast, t_env *env);
+int			dgreat_redirection(t_ast *ast, t_env *env);
+int			less_redirection(t_ast *ast, t_env *env);
 
 /*
 **---------------**
