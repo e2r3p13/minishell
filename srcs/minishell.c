@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/13 21:38:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/14 11:15:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 			while (lexlst[i] && expand(lexlst[i], env) == EXIT_SUCCESS)
 			{
 				if ((ast = ast_create(lexlst[i])))
-					ast_print(ast);
+					ast_print(ast, 0);
 				lxr_free(lexlst[i++]);
 			}
 			free(lexlst);

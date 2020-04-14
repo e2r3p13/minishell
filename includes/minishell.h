@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/13 21:37:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/14 11:16:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ char		**lex_to_args(t_lxr *lst);
 */
 
 t_ast		*ast_create(t_lxr *lxr);
-void		ast_print(t_ast *ast);
+void		ast_print(t_ast *ast, int depth);
 
 /*
 **------------------------------------**
