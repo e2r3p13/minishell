@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/14 10:56:06 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/14 11:32:12 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ SRCS =	main.c \
 		lexer/expand_wcard_0.c \
 		lexer/expand_wcard_1.c \
 		parser/ast_create.c \
-		parser/ast_print.c \
+		parser/ast_utils.c \
 		builtins/cd.c \
 		builtins/echo.c \
 		builtins/unset.c \

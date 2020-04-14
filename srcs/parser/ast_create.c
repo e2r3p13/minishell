@@ -6,55 +6,13 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 19:56:33 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 11:12:56 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/14 11:32:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
 #include <stdlib.h>
-
-static t_ast	*ast_new(void)
-{
-	t_ast	*ast;
-
-	if (!(ast = malloc(sizeof(t_ast))))
-		return (NULL);
-	ast->token = 0;
-	ast->cmd = NULL;
-	ast->left = NULL;
-	ast->right = NULL;
-	return (ast);
-}
-
-static int	ast_get_token(t_lxr **lxr)
-{
-	t_lxr	*tmp;
-
-	tmp = *lxr;
-	*lxr = (*lxr)->next;
-	if (tmp->raw[0] == '|')
-		return (PIPE);
-	else if (tmp->raw[0] == '<')
-		return (LESS);
-	else if (tmp->raw[1] == '>')
-		return (DGREAT);
-	else
-		return (GREAT);
-}
-
-static int	lxr_cmdsize(t_lxr *lxr)
-{
-	int size;
-
-	size = 0;
-	while (lxr && lxr->token == WORD)
-	{
-		size++;
-		lxr = lxr->next;
-	}
-	return (size);
-}
 
 static t_ast	*ast_create_leaf_node(t_lxr **lxr)
 {
