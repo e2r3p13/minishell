@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 19:56:33 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/13 21:42:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/14 11:12:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static t_ast	*ast_new(void)
 
 	if (!(ast = malloc(sizeof(t_ast))))
 		return (NULL);
-	ast->next = NULL;
+	ast->token = 0;
+	ast->cmd = NULL;
 	ast->left = NULL;
 	ast->right = NULL;
 	return (ast);
@@ -55,47 +56,49 @@ static int	lxr_cmdsize(t_lxr *lxr)
 	return (size);
 }
 
-static t_ast	*ast_create_leaf_node(t_ast *ast, t_lxr **lxr)
+static t_ast	*ast_create_leaf_node(t_lxr **lxr)
 {
-	int	i;
+	int		i;
+	t_ast	*new;
 
-	if (!(ast->cmd = malloc(sizeof(char *) * (lxr_cmdsize(*lxr) + 1))))
+	if (!(new = malloc(sizeof(t_ast))))
 		return (NULL);
+	if (!(new->cmd = malloc(sizeof(char *) * (lxr_cmdsize(*lxr) + 1))))
+	{
+		free(new);
+		return (NULL);
+	}
 	i = 0;
 	while (*lxr && (*lxr)->token == WORD)
 	{
-		ast->cmd[i] = (*lxr)->raw;
+		new->cmd[i] = (*lxr)->raw;
 		*lxr = (*lxr)->next;
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	new->token = CMD;
+	return (new);
 }
 
-static t_ast	*ast_create_branch_node(t_ast **ast, t_lxr **lxr)
+static t_ast	*ast_create_branch_node(t_ast *ast, t_lxr **lxr)
 {
 	t_ast	*new;
 
 	if (!(new = ast_new()))
-		return (EXIT_FAILURE);
-	new->left = *ast;
+		return (NULL);
+	new->left = ast;
 	new->token = ast_get_token(lxr);
-	new->right = ast_create_leaf_node(*ast, lxr);
-	*ast = new;
-	return (EXIT_SUCCESS);
+	new->right = ast_create_leaf_node(lxr);
+	return (new);
 }
 
 t_ast		*ast_create(t_lxr *lxr)
 {
 	t_ast	*ast;
 
-	if (!(ast = ast_new()))
-		return (NULL);
-	while (lxr)
+	ast = ast_create_leaf_node(&lxr);
+	while (lxr && lxr->token == REDIRECT)
 	{
-		if (lxr->token == WORD)
-			ast_create_leaf_node(ast, &lxr);
-		else
-			ast_create_branch_node(&ast, &lxr);
+		ast = ast_create_branch_node(ast, &lxr);
 	}
 	return (ast);
 }
