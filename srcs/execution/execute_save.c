@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   execute_save.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 14:21:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/14 20:50:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		execute(char **av, t_env *env)
 {
 	int	pid;
 	int	(*f)(int ac, char **av, t_env *env);
+	int	status;
 
 	if (av[0] == NULL)
 		return ;
@@ -59,11 +60,8 @@ void		execute(char **av, t_env *env)
 			execute_binary(av, env);
 		}
 		else
-		{
-			waitpid(pid, &g_exitcode, 0);
-			if (WIFEXITED(g_exitcode))
-				g_exitcode = WEXITSTATUS(g_exitcode);
-		}
+			waitpid(pid, &status, 0);
+		g_exitcode = status ? EXIT_FAILURE : EXIT_SUCCESS;
 	}
 }
 

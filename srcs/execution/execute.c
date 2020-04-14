@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:55:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 14:09:36 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/14 20:17:19 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,9 @@ int	exectute(t_ast *ast, t_env *env)
 
 	exef = g_redirection_functions[ast->token];
 	return (exef(ast, env));
+}
+
+int execute_command(t_ast *ast, t_env *env)
+{
+	
 }
