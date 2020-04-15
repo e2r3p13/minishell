@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:12:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:30:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/15 17:50:08 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*find_match(DIR *dir, char *word, t_ent *ent)
 	occur = 0;
 	while ((ent = readdir(dir)))
 	{
-		if (!ft_strncmp(word, ent->d_name, ft_strlen(word)) &&
+		if (!ft_strncmp_wc(word, ent->d_name, ft_strlen(word)) &&
 			*ent->d_name != '.')
 		{
 			if (occur)
