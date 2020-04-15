@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/13 21:18:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/15 14:14:57 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ int	lxr_variable(char *str, t_lxr *cur)
 			return (0);
 		return (2);
 	}
-	if (str[1] && !ft_isalnum(str[1]) && str[1] != '_')
-		return (lxr_word(str, cur));
 	i = 1;
 	while (str[i] == '_' || ft_isalnum(str[i]))
 		i++;
