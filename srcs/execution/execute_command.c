@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/16 14:25:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/16 20:14:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ int			execute_command(t_ast *ast, t_env *env)
 		else
 			waitpid(pid, &status, 0);
 	}
-	return (status);
+	return (!!status);
 }
