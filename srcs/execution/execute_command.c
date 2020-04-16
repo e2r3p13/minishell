@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_save.c                                     :+:      :+:    :+:   */
+/*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/25 09:12:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 20:50:14 by lfalkau          ###   ########.fr       */
+/*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
+/*   Updated: 2020/04/16 14:25:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-extern int	g_exitcode;
 
 static void	*get_builtin_func(char *exename)
 {
@@ -41,30 +39,6 @@ static void	*get_builtin_func(char *exename)
 	return (NULL);
 }
 
-void		execute(char **av, t_env *env)
-{
-	int	pid;
-	int	(*f)(int ac, char **av, t_env *env);
-	int	status;
-
-	if (av[0] == NULL)
-		return ;
-	if ((f = get_builtin_func(av[0])))
-		g_exitcode = f(arglen(av), av, env);
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			execute_binary(av, env);
-		}
-		else
-			waitpid(pid, &status, 0);
-		g_exitcode = status ? EXIT_FAILURE : EXIT_SUCCESS;
-	}
-}
-
 static int	cmd_not_found(char *msg)
 {
 	write(1, "minishell: command not found: ", 30);
@@ -73,31 +47,74 @@ static int	cmd_not_found(char *msg)
 	return (127);
 }
 
-void		execute_binary(char **av, t_env *env)
+static int	try_each_path(char **pathes, char **av, char **env)
+{
+	int		i;
+	char	*exepath;
+
+	i = 0;
+	while (pathes[i])
+	{
+		if (!(exepath = ft_strcjoin(pathes[i], av[0], '/')))
+		{
+			ft_free_array(pathes);
+			ft_free_array(env);
+			return (EXIT_FAILURE);
+		}
+		execve(exepath, av, env);
+		free(exepath);
+		i++;
+	}
+	ft_free_array(pathes);
+	return (EXIT_SUCCESS);
+}
+
+static void	execute_binary(char **av, t_env *env)
 {
 	char	**pathes;
-	char	*relpath;
-	char	*exepath;
-	int		i;
+	char	*pathvar;
 	char	**e;
 
-	e = env_to_arr(env);
-	if ((exepath = get_env_var("PATH", env)) && *av[0] != '.')
+	if (!(e = env_to_arr(env)))
+		exit(EXIT_FAILURE);
+	if ((pathvar = get_env_var("PATH", env)) && ft_isalnum(*av[0]))
 	{
-		pathes = ft_split(exepath, ':');
-		relpath = ft_strjoin("/", av[0]);
-		i = 0;
-		while (pathes[i])
+		if (!(pathes = ft_split(pathvar, ':')))
 		{
-			exepath = ft_strjoin(pathes[i], relpath);
-			execve(exepath, av, e);
-			free(exepath);
-			i++;
+			ft_free_array(e);
+			exit(EXIT_FAILURE);
 		}
-		free(relpath);
-		ft_free_array(pathes);
+		if (!(try_each_path(pathes, av, e)))
+			exit(EXIT_FAILURE);
 	}
 	execve(*av, av, e);
 	ft_free_array(e);
 	exit(cmd_not_found(av[0]));
+}
+
+int			execute_command(t_ast *ast, t_env *env)
+{
+	int		pid;
+	int		status;
+	char	**av;
+	int		(*f)(int ac, char **av, t_env *env);
+
+	if (!(av = ast->cmd))
+		return (EXIT_FAILURE);
+	status = 0;
+	if ((f = get_builtin_func(av[0])))
+		status = f(arglen(av), av, env);
+	else
+	{
+		if ((pid = fork()) < 0)
+			return (EXIT_FAILURE);
+		else if (pid == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			execute_binary(av, env);
+		}
+		else
+			waitpid(pid, &status, 0);
+	}
+	return (status);
 }

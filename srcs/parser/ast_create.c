@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 19:56:33 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 11:32:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/16 12:35:13 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ static t_ast	*ast_create_leaf_node(t_lxr **lxr)
 
 	if (!(new = malloc(sizeof(t_ast))))
 		return (NULL);
-	if (!(new->cmd = malloc(sizeof(char *) * (lxr_cmdsize(*lxr) + 1))))
+	i = lxr_cmdsize(*lxr);
+	if (!(new->cmd = malloc(sizeof(char *) * (i + 1))))
 	{
 		free(new);
 		return (NULL);
 	}
+	new->cmd[i] = NULL;
 	i = 0;
 	while (*lxr && (*lxr)->token == WORD)
 	{

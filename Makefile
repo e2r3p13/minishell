@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/14 11:32:12 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/16 14:29:21 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,12 @@ SRCS =	main.c \
 		builtins/pwd.c \
 		builtins/alias.c \
 		builtins/unalias.c \
+		execution/execute.c \
+		execution/execute_command.c \
+		execution/dgreat_redirection.c \
+		execution/great_redirection.c \
+		execution/less_redirection.c \
+		execution/pipe_redirection.c \
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror

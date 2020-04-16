@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 14:11:38 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/16 13:49:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ int			ast_get_token(t_lxr **lxr);
 **------------------------------------**
 */
 
-int			exectute(t_ast *ast, t_env *env);
+int			execute(t_ast *ast, t_env *env);
 int			execute_command(t_ast *ast, t_env *env);
 int			pipe_redirection(t_ast *ast, t_env *env);
 int			great_redirection(t_ast *ast, t_env *env);

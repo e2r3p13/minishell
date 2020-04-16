@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 11:15:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/16 12:47:49 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 ** token list into an execution tree (parser job) and execute it.
 ** Runs until EOI is reached (ctrl-D).
 */
+
+int	g_exitcode = 0;
 
 int	minishell(t_env *env, t_hst **hst, t_bool it)
 {
@@ -46,7 +48,7 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 			while (lexlst[i] && expand(lexlst[i], env) == EXIT_SUCCESS)
 			{
 				if ((ast = ast_create(lexlst[i])))
-					ast_print(ast, 0);
+					g_exitcode = execute(ast, env);
 				lxr_free(lexlst[i++]);
 			}
 			free(lexlst);
