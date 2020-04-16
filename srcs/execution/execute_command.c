@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/16 20:14:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/16 21:14:44 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	execute_binary(char **av, t_env *env)
 			ft_free_array(e);
 			exit(EXIT_FAILURE);
 		}
-		if (!(try_each_path(pathes, av, e)))
+		if ((try_each_path(pathes, av, e)) == EXIT_FAILURE)
 			exit(EXIT_FAILURE);
 	}
 	execve(*av, av, e);
