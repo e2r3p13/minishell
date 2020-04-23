@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/20 12:24:53 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:54:17 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ void		*lxr_free(t_lxr *head);
 int			lstsize(t_lxr *lst);
 int			lxr_cmdsize(t_lxr *lxr);
 void		lxr_append(t_lxr **end);
-void		lxr_print(t_lxr **lxrlst);
 
 /*
 ** Helper functions to lex each part of cmd into tokens
@@ -246,8 +245,7 @@ int			ast_get_token(t_lxr **lxr);
 int			execute(t_ast *ast, t_env *env);
 int			execute_command(t_ast *ast, t_env *env);
 int			pipe_redirection(t_ast *ast, t_env *env);
-int 		make_redirections(t_ast *ast, t_env *env);
-
+int			make_redirections(t_ast *ast, t_env *env);
 
 /*
 **---------------**

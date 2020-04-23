@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/20 12:25:30 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,23 +157,4 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head)
 		free(nl_elm);
 	}
 	return (head_save);
-}
-
-void	lxr_print(t_lxr **lxrlst)
-{
-	t_lxr	*lxr;
-	int		i;
-
-	i = 0;
-	while (lxrlst[i])
-	{
-		printf("cmd n° %i\n", i + 1);
-		lxr = lxrlst[i];
-		while (lxr)
-		{
-			printf("token: %i, raw: %s\n", lxr->token, lxr->raw);
-			lxr = lxr->next;
-		}
-		i++;
-	}
 }

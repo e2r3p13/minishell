@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:55:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:46:14 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:53:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	reset_shell(int fd[2])
 	dup2(fd[1], 1);
 }
 
-int	execute(t_ast *ast, t_env *env)
+int			execute(t_ast *ast, t_env *env)
 {
 	int status;
 	int	fd[2];

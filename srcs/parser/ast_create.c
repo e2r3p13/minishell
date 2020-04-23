@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 19:56:33 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/20 12:39:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:55:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_ast	*ast_create_branch_node(t_ast *ast, t_lxr **lxr)
 	return (new);
 }
 
-t_ast		*ast_create(t_lxr *lxr)
+t_ast			*ast_create(t_lxr *lxr)
 {
 	t_ast	*ast;
 

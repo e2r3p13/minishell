@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 13:25:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:45:25 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:50 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-static void remove_rdr(char **cmd)
+static void	remove_rdr(char **cmd)
 {
 	int i;
 

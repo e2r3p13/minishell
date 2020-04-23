@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 21:37:36 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/17 13:48:09 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:55:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 
-t_ast		*ast_new(void)
+t_ast	*ast_new(void)
 {
 	t_ast	*ast;
 
