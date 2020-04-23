@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_redirection.c                                 :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 20:13:35 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:55:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:58:06 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	pipe_init(int *fd, int *pid, int *status)
 	pipe(fd);
 }
 
-int			pipe_redirection(t_ast *ast, t_env *env)
+int			pipeline(t_ast *ast, t_env *env)
 {
 	int		fd[2];
 	int		pid[2];

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 13:25:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:52:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 17:00:16 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ static int	less_redirection(char **cmd)
 	if ((fd = open_file(cmd[1], O_RDONLY, 0)) == -1)
 		return (EXIT_FAILURE);
 	remove_rdr(cmd);
+	dup2(fd, 0);
 	return (EXIT_SUCCESS);
 }
 
-int			make_redirections(t_ast *ast, t_env *env)
+int			make_redirections(t_ast *ast)
 {
 	int		i;
 	t_bool	drf;

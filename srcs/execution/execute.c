@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:55:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:53:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 17:00:21 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int			execute(t_ast *ast, t_env *env)
 
 	if (ast->token == PIPE)
 	{
-		return (pipe_redirection(ast, env));
+		return (pipeline(ast, env));
 	}
 	else
 	{
 		fd[0] = dup(0);
 		fd[1] = dup(1);
-		if (ast->token == CMD_R && make_redirections(ast, env) == EXIT_FAILURE)
+		if (ast->token == CMD_R && make_redirections(ast) == EXIT_FAILURE)
 		{
 			reset_shell(fd);
 			write(1, "minishell: Invalid redirection\n", 31);

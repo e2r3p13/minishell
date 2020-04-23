@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/23 16:47:42 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/23 16:59:26 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ SRCS =	main.c \
 		builtins/unalias.c \
 		execution/execute.c \
 		execution/execute_command.c \
-		execution/pipe_redirection.c \
+		execution/pipeline.c \
 		execution/redirections.c \
 
 CC = gcc
