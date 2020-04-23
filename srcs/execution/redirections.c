@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 13:25:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 17:00:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 20:31:55 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	great_redirection(char **cmd)
 {
 	int		fd;
 
-	if ((fd = open_file(cmd[1], O_WRONLY | O_CREAT, 0666)) == -1)
+	if ((fd = open_file(cmd[1], O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1)
 		return (EXIT_FAILURE);
 	remove_rdr(cmd);
 	dup2(fd, 1);
