@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/16 17:06:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/20 12:25:30 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ t_lxr		*lxr_check_grammar(t_lxr *head)
 	tmp = head;
 	while (tmp)
 	{
-		if ((tmp->token == NEWLINE || tmp->token == REDIRECT) &&
-			(last_token == NEWLINE || last_token == REDIRECT))
+		if ((tmp->token == NEWLINE || tmp->token == REDIRECT ||
+				tmp->token == PIPE) &&
+					(last_token == NEWLINE || last_token == REDIRECT ||
+						last_token == PIPE))
 			is_cmd_valid = false;
 		if (last_token == NEWLINE && tmp->token == WORD &&
 			(tmp->space || !tmp->next))
@@ -77,7 +79,7 @@ t_lxr		*lxr_check_grammar(t_lxr *head)
 	if (last_token != REDIRECT && is_cmd_valid)
 		return (head);
 	lxr_free(head);
-	write(1, "Invalid command\n", 16);
+	write(1, "minishell: Invalid command\n", 27);
 	return (NULL);
 }
 
@@ -155,4 +157,23 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head)
 		free(nl_elm);
 	}
 	return (head_save);
+}
+
+void	lxr_print(t_lxr **lxrlst)
+{
+	t_lxr	*lxr;
+	int		i;
+
+	i = 0;
+	while (lxrlst[i])
+	{
+		printf("cmd n° %i\n", i + 1);
+		lxr = lxrlst[i];
+		while (lxr)
+		{
+			printf("token: %i, raw: %s\n", lxr->token, lxr->raw);
+			lxr = lxr->next;
+		}
+		i++;
+	}
 }

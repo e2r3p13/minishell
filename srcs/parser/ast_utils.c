@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 21:37:36 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 11:32:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:48:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,12 @@ t_ast		*ast_new(void)
 	return (ast);
 }
 
-int		ast_get_token(t_lxr **lxr)
-{
-	t_lxr	*tmp;
-
-	tmp = *lxr;
-	*lxr = (*lxr)->next;
-	if (tmp->raw[0] == '|')
-		return (PIPE);
-	else if (tmp->raw[0] == '<')
-		return (LESS);
-	else if (tmp->raw[1] == '>')
-		return (DGREAT);
-	else
-		return (GREAT);
-}
-
 int		lxr_cmdsize(t_lxr *lxr)
 {
 	int size;
 
 	size = 0;
-	while (lxr && lxr->token == WORD)
+	while (lxr && lxr->token != PIPE)
 	{
 		size++;
 		lxr = lxr->next;

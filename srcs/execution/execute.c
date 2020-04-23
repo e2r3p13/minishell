@@ -6,28 +6,42 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:55:58 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/16 20:38:15 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:46:14 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokens.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-void	*g_redirection_functions[6] =
+static void	reset_shell(int fd[2])
 {
-	[0] = NULL,
-	[CMD] = &execute_command,
-	[PIPE] = &pipe_redirection,
-	[GREAT] = &great_redirection,
-	[DGREAT] = &dgreat_redirection,
-	[LESS] = &less_redirection,
-};
+	dup2(fd[0], 0);
+	dup2(fd[1], 1);
+}
 
 int	execute(t_ast *ast, t_env *env)
 {
-	int	(*exef)(t_ast *ast, t_env *env);
+	int status;
+	int	fd[2];
 
-	exef = g_redirection_functions[ast->token];
-	return (exef(ast, env));
+	if (ast->token == PIPE)
+	{
+		return (pipe_redirection(ast, env));
+	}
+	else
+	{
+		fd[0] = dup(0);
+		fd[1] = dup(1);
+		if (ast->token == CMD_R && make_redirections(ast, env) == EXIT_FAILURE)
+		{
+			reset_shell(fd);
+			write(1, "minishell: Invalid redirection\n", 31);
+			return (EXIT_FAILURE);
+		}
+		status = execute_command(ast, env);
+		reset_shell(fd);
+		return (status);
+	}
 }
