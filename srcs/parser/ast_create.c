@@ -65,3 +65,17 @@ t_ast			*ast_create(t_lxr *lxr)
 	}
 	return (ast);
 }
+
+void			ast_free(t_ast *ast)
+{
+	if (ast->token == PIPE)
+	{
+		ast_free(ast->left);
+		ast_free(ast->right);
+	}
+	else
+	{
+		free(ast->cmd);
+		free(ast);
+	}
+}

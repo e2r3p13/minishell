@@ -233,6 +233,7 @@ t_ast		*ast_create(t_lxr *lxr);
 void		ast_print(t_ast *ast, int depth);
 t_ast		*ast_new(void);
 int			ast_get_token(t_lxr **lxr);
+void		ast_free(t_ast *ast);
 
 /*
 **------------------------------------**

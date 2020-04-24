@@ -26,10 +26,21 @@
 
 int	g_exitcode = 0;
 
+static void free_cmd(t_lxr **lxrlst, t_ast *ast)
+{
+	int i;
+
+	i = 0;
+	while (lxrlst[i])
+		lxr_free(lxrlst[i++]);
+	free(lxrlst);
+	ast_free(ast);
+}
+
 int	minishell(t_env *env, t_hst **hst, t_bool it)
 {
 	char	*cmd;
-	t_lxr	**lexlst;
+	t_lxr	**lxrlst;
 	t_ast	*ast;
 	int		i;
 
@@ -42,17 +53,14 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 			break ;
 		if (ft_strlen(cmd) == 0)
 			hst_pop(hst);
-		else if ((lexlst = lxr_split(lexer(cmd))))
+		else if ((lxrlst = lxr_split(lexer(cmd))))
 		{
-			i = 0;
-			while (lexlst[i] && expand(lexlst[i], env) == EXIT_SUCCESS)
-			{
-				if ((ast = ast_create(lexlst[i])))
+			i = -1;
+			while (lxrlst[++i] && expand(lxrlst[i], env) == EXIT_SUCCESS)
+				if ((ast = ast_create(lxrlst[i])))
 					g_exitcode = execute(ast, env);
-				lxr_free(lexlst[i++]);
-			}
-			free(lexlst);
+			free_cmd(lxrlst, ast);
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
