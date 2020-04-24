@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/16 12:47:49 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/24 15:16:31 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 int	g_exitcode = 0;
 
-static void free_cmd(t_lxr **lxrlst, t_ast *ast)
+static void	free_cmd(t_lxr **lxrlst, t_ast *ast)
 {
 	int i;
 
@@ -37,7 +37,7 @@ static void free_cmd(t_lxr **lxrlst, t_ast *ast)
 	ast_free(ast);
 }
 
-int	minishell(t_env *env, t_hst **hst, t_bool it)
+int			minishell(t_env *env, t_hst **hst, t_bool it)
 {
 	char	*cmd;
 	t_lxr	**lxrlst;
