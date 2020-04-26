@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 21:37:36 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/26 15:33:48 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 15:42:04 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	ast_free(t_ast *ast)
 		free(ast);
 	}
 	else
-	{	ast_free(ast->left);
+	{
+		ast_free(ast->left);
 		ast_free(ast->right);
 		free(ast);
 	}
