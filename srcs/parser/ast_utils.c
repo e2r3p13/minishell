@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 21:37:36 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/26 15:13:50 by bccyv            ###   ########.fr       */
+/*   Updated: 2020/04/26 15:33:48 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ t_ast	*ast_new(void)
 	ast->left = NULL;
 	ast->right = NULL;
 	return (ast);
-}
-
-int		lxr_cmdsize(t_lxr *lxr)
-{
-	int size;
-
-	size = 0;
-	while (lxr && lxr->token != PIPE)
-	{
-		size++;
-		lxr = lxr->next;
-	}
-	return (size);
 }
 
 void	ast_print(t_ast *ast, int depth)
