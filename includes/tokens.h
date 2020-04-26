@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:22:40 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/17 13:40:47 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 13:39:49 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define PIPE 8
 # define WILDCARD 9
 
-# define CMD 1
-# define CMD_R 2
+# define CMD 10
+# define CMD_R 11
 
 #endif

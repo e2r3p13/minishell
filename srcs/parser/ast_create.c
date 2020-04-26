@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 19:56:33 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:55:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 15:12:54 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_ast	*ast_create_leaf_node(t_lxr **lxr)
 	int		i;
 	t_ast	*new;
 
-	if (!(new = malloc(sizeof(t_ast))))
+	if (!(new = ast_new()))
 		return (NULL);
 	i = lxr_cmdsize(*lxr);
 	if (!(new->cmd = malloc(sizeof(char *) * (i + 1))))
@@ -64,18 +64,4 @@ t_ast			*ast_create(t_lxr *lxr)
 		ast = ast_create_branch_node(ast, &lxr);
 	}
 	return (ast);
-}
-
-void			ast_free(t_ast *ast)
-{
-	if (ast->token == PIPE)
-	{
-		ast_free(ast->left);
-		ast_free(ast->right);
-	}
-	else
-	{
-		free(ast->cmd);
-		free(ast);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/13 21:37:36 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:55:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 15:13:50 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,18 @@ void	ast_print(t_ast *ast, int depth)
 	}
 	else
 		printf("depth: %d, cmd: %s\n", depth, *(ast->cmd));
+}
+
+void	ast_free(t_ast *ast)
+{
+	if (ast->token != PIPE)
+	{
+		free(ast->cmd);
+		free(ast);
+	}
+	else
+	{	ast_free(ast->left);
+		ast_free(ast->right);
+		free(ast);
+	}
 }

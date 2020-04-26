@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/24 15:16:31 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 15:08:46 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,6 @@
 
 int	g_exitcode = 0;
 
-static void	free_cmd(t_lxr **lxrlst, t_ast *ast)
-{
-	int i;
-
-	i = 0;
-	while (lxrlst[i])
-		lxr_free(lxrlst[i++]);
-	free(lxrlst);
-	ast_free(ast);
-}
-
 int			minishell(t_env *env, t_hst **hst, t_bool it)
 {
 	char	*cmd;
@@ -55,11 +44,18 @@ int			minishell(t_env *env, t_hst **hst, t_bool it)
 			hst_pop(hst);
 		else if ((lxrlst = lxr_split(lexer(cmd))))
 		{
-			i = -1;
-			while (lxrlst[++i] && expand(lxrlst[i], env) == EXIT_SUCCESS)
+			i = 0;
+			while (lxrlst[i] && expand(lxrlst[i], env) == EXIT_SUCCESS)
+			{
 				if ((ast = ast_create(lxrlst[i])))
+				{
 					g_exitcode = execute(ast, env);
-			free_cmd(lxrlst, ast);
+					ast_free(ast);
+				}
+				lxr_free(lxrlst[i]);
+				i++;
+			}
+			free(lxrlst);
 		}
 	}
 	return (EXIT_SUCCESS);
