@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/13 21:46:16 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 15:32:24 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_env	t_env;
 typedef struct s_env	t_als;
 typedef struct s_hst	t_hst;
 typedef struct s_lxr	t_lxr;
-typedef struct s_psr	t_psr;
+typedef struct s_ast	t_ast;
 typedef struct dirent	t_ent;
 typedef enum e_dir		t_dir;
 
@@ -76,11 +76,12 @@ struct		s_lxr
 ** tree from root to leafs
 */
 
-struct		s_psr
+struct		s_ast
 {
-	int		type;
-	void	*left;
-	void	*right;
+	int		token;
+	t_ast	*left;
+	t_ast	*right;
+	char	**cmd;
 };
 
 /*
@@ -187,7 +188,7 @@ t_lxr		*lxr_get_cmd_head(t_lxr **head);
 t_lxr		*lxr_lstnew(void);
 void		*lxr_free(t_lxr *head);
 int			lstsize(t_lxr *lst);
-int			lxr_cmdsize(t_lxr *lst);
+int			lxr_cmdsize(t_lxr *lxr);
 void		lxr_append(t_lxr **end);
 
 /*
@@ -228,7 +229,11 @@ char		**lex_to_args(t_lxr *lst);
 **-------------**
 */
 
-t_psr		*parser(t_lxr *lst);
+t_ast		*ast_create(t_lxr *lxr);
+void		ast_print(t_ast *ast, int depth);
+t_ast		*ast_new(void);
+int			ast_get_token(t_lxr **lxr);
+void		ast_free(t_ast *ast);
 
 /*
 **------------------------------------**
@@ -238,14 +243,10 @@ t_psr		*parser(t_lxr *lst);
 **------------------------------------**
 */
 
-void		tree_exec(t_psr *cur, t_env *env);
-void		redirect_less(t_psr *cur, t_env *env);
-void		redirect_pipe(t_psr *cur, t_env *env);
-void		redi_err(t_psr *head, int fd, int std, char *file);
-void		tree_free(t_psr *cur);
-void		tweak_tree_exec(t_psr *cur, t_env *env);
-void		execute(char **argv, t_env *env);
-void		execute_binary(char **av, t_env *env);
+int			execute(t_ast *ast, t_env *env);
+int			execute_command(t_ast *ast, t_env *env);
+int			pipeline(t_ast *ast, t_env *env);
+int			make_redirections(t_ast *ast);
 
 /*
 **---------------**

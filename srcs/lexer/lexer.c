@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 14:07:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:12 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ t_lxr		*lxr_check_grammar(t_lxr *head)
 	tmp = head;
 	while (tmp)
 	{
-		if ((tmp->token == NEWLINE || tmp->token == REDIRECT) &&
-			(last_token == NEWLINE || last_token == REDIRECT))
+		if ((tmp->token == NEWLINE || tmp->token == REDIRECT ||
+				tmp->token == PIPE) &&
+					(last_token == NEWLINE || last_token == REDIRECT ||
+						last_token == PIPE))
 			is_cmd_valid = false;
 		if (last_token == NEWLINE && tmp->token == WORD &&
 			(tmp->space || !tmp->next))
@@ -74,10 +76,10 @@ t_lxr		*lxr_check_grammar(t_lxr *head)
 		last_token = tmp->token;
 		tmp = tmp->next;
 	}
-	if (is_cmd_valid)
+	if (last_token != REDIRECT && is_cmd_valid)
 		return (head);
 	lxr_free(head);
-	write(1, "Invalid command\n", 16);
+	write(1, "minishell: Invalid command\n", 27);
 	return (NULL);
 }
 

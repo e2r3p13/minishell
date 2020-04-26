@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 16:22:40 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 16:22:41 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 13:39:49 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@
 # define DQUOTE 5
 # define VARIABLE 6
 # define REDIRECT 7
-# define WILDCARD 8
+# define PIPE 8
+# define WILDCARD 9
 
-# define PIPE 1
-# define GREAT 2
-# define DGREAT 3
-# define LESS 4
+# define CMD 10
+# define CMD_R 11
 
 #endif

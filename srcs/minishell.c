@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 10:52:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 15:08:46 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@
 ** Runs until EOI is reached (ctrl-D).
 */
 
-int	minishell(t_env *env, t_hst **hst, t_bool it)
+int	g_exitcode = 0;
+
+int			minishell(t_env *env, t_hst **hst, t_bool it)
 {
 	char	*cmd;
-	t_lxr	**lexlst;
+	t_lxr	**lxrlst;
+	t_ast	*ast;
 	int		i;
 
 	while (true)
@@ -39,16 +42,21 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 			break ;
 		if (ft_strlen(cmd) == 0)
 			hst_pop(hst);
-		else if ((lexlst = lxr_split(lexer(cmd))))
+		else if ((lxrlst = lxr_split(lexer(cmd))))
 		{
 			i = 0;
-			while (lexlst[i] && expand(lexlst[i], env) == EXIT_SUCCESS)
+			while (lxrlst[i] && expand(lxrlst[i], env) == EXIT_SUCCESS)
 			{
-				tree_exec(parser(lexlst[i]), env);
-				lxr_free(lexlst[i++]);
+				if ((ast = ast_create(lxrlst[i])))
+				{
+					g_exitcode = execute(ast, env);
+					ast_free(ast);
+				}
+				lxr_free(lxrlst[i]);
+				i++;
 			}
-			free(lexlst);
+			free(lxrlst);
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

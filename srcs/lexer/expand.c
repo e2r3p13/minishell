@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:35:13 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/20 12:37:23 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "tokens.h"
 #include <stdlib.h>
 
-int		g_exitcode = 0;
+extern int	g_exitcode;
 
 int		expand(t_lxr *lst, t_env *env)
 {
@@ -33,7 +33,8 @@ int		expand(t_lxr *lst, t_env *env)
 			lst->raw = expand_variable(lst->raw, env);
 		if (lst->token == EXITCODE)
 			lst->raw = expand_exitcode(lst->raw);
-		if (lst->token != REDIRECT && lst->token != NEWLINE)
+		if (lst->token != REDIRECT &&
+			lst->token != NEWLINE && lst->token != PIPE)
 			lst->token = WORD;
 		if (!lst->raw)
 			return (EXIT_FAILURE);

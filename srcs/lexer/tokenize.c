@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/14 20:56:40 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/26 15:32:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	lxr_redirect(char *str, t_lxr *cur)
 	int	len;
 
 	len = 1;
-	if ((*str == '<' || *str == '>') && *(str + 1) && *(str + 1) == *str)
+	if (*str == '>' && *(str + 1) == '>')
 		len = 2;
-	cur->token = REDIRECT;
+	cur->token = *str == '|' ? PIPE : REDIRECT;
 	if (!(cur->raw = ft_strndup(str, len)))
 		return (0);
 	return (len);
