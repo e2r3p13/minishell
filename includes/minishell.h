@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/26 15:32:24 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/27 12:26:13 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define SCRIPT_PATH "/tmp/git_prompt.sh"
 # define HISTORY_PATH "/tmp/minishell_history"
 # define ALIASES_PATH "/tmp/minishell_aliases"
+
+# define EXIT_RETURN_VALUE -42
 
 typedef struct s_env	t_env;
 typedef struct s_env	t_als;
@@ -264,6 +266,7 @@ int			ms_pwd(int ac, char **av);
 int			ms_unset(int ac, char **av, t_env *env);
 int			ms_alias(int ac, char **av);
 int			ms_unalias(int ac, char **av);
+int			ms_exit(void);
 
 /*
 **----------------------**

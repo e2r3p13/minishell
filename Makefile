@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/23 16:59:26 by lfalkau          ###   ########.fr        #
+#    Updated: 2020/04/27 12:22:52 by bccyv            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRCS =	main.c \
 		builtins/echo.c \
 		builtins/unset.c \
 		builtins/export.c \
+		builtins/exit.c \
 		builtins/env.c \
 		builtins/pwd.c \
 		builtins/alias.c \

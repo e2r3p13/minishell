@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/16 21:14:44 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/27 12:27:17 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	*get_builtin_func(char *exename)
 	int exelen;
 
 	exelen = ft_strlen(exename) + 1;
+	if (ft_strncmp("exit", exename, exelen) == 0)
+		return (&ms_exit);
 	if (ft_strncmp("cd", exename, exelen) == 0)
 		return (&ms_cd);
 	if (ft_strncmp("echo", exename, exelen) == 0)
@@ -116,5 +118,5 @@ int			execute_command(t_ast *ast, t_env *env)
 		else
 			waitpid(pid, &status, 0);
 	}
-	return (!!status);
+	return (status == EXIT_RETURN_VALUE ? EXIT_RETURN_VALUE : !!status);
 }
