@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_wcard.c                                     :+:      :+:    :+:   */
+/*   expand_wcard_0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 21:05:56 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 13:32:07 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/27 19:17:24 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ char		*wildcard_to_str(char *str)
 	s1 = NULL;
 	tab = match_wildcard(str);
 	if (!tab || !tab[i])
+	{
+		tab ? ft_free_array(tab) : 1;
 		return (ft_strdup(str));
+	}
 	s1 = ft_strdup(tab[i++]);
 	while (tab[i])
 	{
