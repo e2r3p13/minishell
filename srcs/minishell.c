@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/27 12:25:38 by bccyv            ###   ########.fr       */
+/*   Updated: 2020/04/27 12:39:23 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int			minishell(t_env *env, t_hst **hst, t_bool it)
 			}
 			free(lxrlst);
 		}
+		it ? 1 : free(cmd);
 	}
 	return (EXIT_SUCCESS);
 }
