@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 17:31:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/20 12:37:23 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/27 19:07:35 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,11 @@ int		join_unspaced_words(t_lxr *l)
 		{
 			tmp = l->raw;
 			if (!(l->raw = ft_strjoin(tmp, l->next->raw)))
-			{
-				free(tmp);
 				return (EXIT_FAILURE);
-			}
 			free(tmp);
 			if (l->next)
 				l->space = l->next->space;
+			free(l->next->raw);
 			tmp = l->next;
 			l->next = l->next->next;
 			free(tmp);
