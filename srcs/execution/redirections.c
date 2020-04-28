@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 13:25:38 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 20:31:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/28 12:37:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static void	remove_rdr(char **cmd)
 {
 	int i;
 
-	i = 0;
-	i += 2;
+	i = 2;
 	while (cmd[i])
 	{
 		cmd[i - 2] = cmd[i];

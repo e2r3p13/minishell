@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/29 17:46:10 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/13 21:45:27 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/28 12:40:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		lxr_cmdsize(t_lxr *lst)
 	int i;
 
 	i = 0;
-	while (lst && lst->token == WORD)
+	while (lst && (lst->token == WORD || lst->token == REDIRECT))
 	{
 		lst = lst->next;
 		i++;
