@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/27 12:26:13 by bccyv            ###   ########.fr       */
+/*   Updated: 2020/04/30 15:05:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int			minishell(t_env *env, t_hst **hst, t_bool it);
 ** Main input functions, including user input and prompt functions
 */
 
-void		prompt(t_env *env);
+void		prompt(void);
 char		*get_it_cmd(t_hst **hst);
 char		*get_cmd(void);
 
