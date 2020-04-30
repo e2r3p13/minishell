@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 16:46:55 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/30 17:01:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	prompt_path(t_env *env)
 		write(1, pwd, ft_strlen(pwd));
 }
 
-void prompt(t_env *env)
+void		prompt(t_env *env)
 {
 	g_exitcode ? write(1, "\033[91m", 5) : write(1, "\033[92m", 5);
 	prompt_path(env);

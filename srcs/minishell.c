@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 16:54:45 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/30 17:15:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,9 @@
 int		g_exitcode = 0;
 t_bool	g_should_run = true;
 
-int	minishell(t_env *env, t_hst **hst, t_bool it)
+int		minishell(t_env *env, t_hst **hst, t_bool it)
 {
 	char		*cmd;
-	t_lxr		**lxrlst;
-	t_ast		*ast;
-	int			i;
 
 	while (g_should_run)
 	{
@@ -43,22 +40,32 @@ int	minishell(t_env *env, t_hst **hst, t_bool it)
 			break ;
 		if (ft_strlen(cmd) == 0)
 			hst_pop(hst);
-		else if ((lxrlst = lxr_split(lexer(cmd))))
-		{
-			i = 0;
-			while (lxrlst[i] && expand(lxrlst[i], env) == EXIT_SUCCESS)
-			{
-				if ((ast = ast_create(lxrlst[i])))
-				{
-					g_exitcode = execute(ast, env);
-					ast_free(ast);
-				}
-				lxr_free(lxrlst[i]);
-				i++;
-			}
-			free(lxrlst);
-		}
+		else
+			minishell_core(cmd, env);
 		it ? 1 : free(cmd);
 	}
 	return (EXIT_SUCCESS);
+}
+
+void	minishell_core(char *cmd, t_env *env)
+{
+	t_lxr	**lxrlst;
+	t_ast	*ast;
+	int		i;
+
+	if ((lxrlst = lxr_split(lexer(cmd))))
+	{
+		i = 0;
+		while (lxrlst[i] && expand(lxrlst[i], env) == EXIT_SUCCESS)
+		{
+			if ((ast = ast_create(lxrlst[i])))
+			{
+				g_exitcode = execute(ast, env);
+				ast_free(ast);
+			}
+			lxr_free(lxrlst[i]);
+			i++;
+		}
+		free(lxrlst);
+	}
 }

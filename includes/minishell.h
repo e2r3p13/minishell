@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 16:38:04 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/30 17:15:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ enum		e_dir
 */
 
 int			minishell(t_env *env, t_hst **hst, t_bool it);
+void		minishell_core(char *cmd, t_env *env);
 
 /*
 **-------------------------------**
