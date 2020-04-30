@@ -6,7 +6,7 @@
 #    By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/12 15:15:55 by lfalkau           #+#    #+#              #
-#    Updated: 2020/04/27 12:22:52 by bccyv            ###   ########.fr        #
+#    Updated: 2020/04/30 15:08:34 by lfalkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ NAME = minishell
 
 all: $(NAME)
 
-$(NAME): move_script start $(OBJS)
+$(NAME): start $(OBJS)
 	@$(CC) $(CFLAGS) -I $(INCS_PATH) $(OBJS) $(LBFT_PATH) -o $(NAME) $(OFLAGS)
 	@printf "\033[032m[DONE]\033[0m\n"
 
@@ -99,6 +99,3 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
-move_script:
-	@cp $(SRCS_PATH)git_prompt.sh /tmp/git_prompt.sh
