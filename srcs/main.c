@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 12:50:20 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/04/30 17:47:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int			main(int ac, char **av, char **e)
 
 	av[ac] = NULL;
 	signal(SIGINT, sighandler);
+	signal(SIGQUIT, SIG_IGN);
 	if (!(env = env_get(e)))
 		return (EXIT_FAILURE);
 	g_als = als_get();

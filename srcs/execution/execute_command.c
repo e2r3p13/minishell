@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/27 12:27:17 by bccyv            ###   ########.fr       */
+/*   Updated: 2020/04/30 17:48:03 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int			execute_command(t_ast *ast, t_env *env)
 		else if (pid == 0)
 		{
 			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			execute_binary(av, env);
 		}
 		else
