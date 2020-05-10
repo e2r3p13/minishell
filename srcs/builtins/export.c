@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 14:15:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/10 21:45:51 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ int				ms_export(int ac, char **av, t_env *env)
 	int	i;
 	int	r_val;
 
-	av[ac] = NULL;
 	i = 0;
 	r_val = EXIT_SUCCESS;
+	if (ac == 1)
+		return (ms_env(ac, av, env));
 	while (av[++i])
 	{
 		if (ft_strncmp(av[i], "_=", 2))
