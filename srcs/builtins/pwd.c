@@ -23,7 +23,7 @@ int	ms_pwd(int ac, char **av)
 	{
 		write(1, cwd, ft_strlen(cwd));
 		write(1, "\n", 1);
-		free (cwd);
+		free(cwd);
 		return (EXIT_SUCCESS);
 	}
 	write(1, "cd: An error occured while getting cwd\n", 39);
