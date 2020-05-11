@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:54:24 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 15:15:46 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 13:21:23 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char		*get_it_cmd(t_hst **hst)
 		if (*buf < 0)
 			continue ;
 		if (!(bindf = g_bind_ascii[(int)*buf]))
-			bindf = &handle_printable_char;
+			bindf = &handle_printables;
 		if (bindf(dstr, &cpos, buf, hst) == 1 && ((*hst)->cmd = dstr->str))
 			break ;
 		(*hst)->cmd = dstr->str;

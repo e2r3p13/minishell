@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 15:07:08 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/12 20:37:43 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 13:16:27 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	handle_printable_char(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
+int	handle_printables(t_dynstr *dstr, size_t *cpos, char *buf, t_hst **hst)
 {
 	hst += 0;
 	while (ft_isprint(*buf) &&

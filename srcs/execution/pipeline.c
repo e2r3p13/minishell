@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 20:13:35 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:58:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 12:49:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-static void	pipe_init(int *fd, int *pid, int *status)
+static void		pipe_init(int *fd, int *pid, int *status)
 {
 	pid[0] = 0;
 	pid[1] = 0;
@@ -25,12 +25,12 @@ static void	pipe_init(int *fd, int *pid, int *status)
 	pipe(fd);
 }
 
-int			pipeline(t_ast *ast, t_env *env)
+unsigned char	pipeline(t_ast *ast, t_env *env)
 {
-	int		fd[2];
-	int		pid[2];
-	int		status[2];
-	int		fexit;
+	int				fd[2];
+	int				pid[2];
+	int				status[2];
+	int				fexit;
 
 	pipe_init(fd, pid, status);
 	if ((pid[0] = fork()) == 0)
@@ -50,5 +50,5 @@ int			pipeline(t_ast *ast, t_env *env)
 	fexit = waitpid(-1, &status[0], 0);
 	close(fexit == pid[1] ? fd[0] : fd[1]);
 	waitpid(fexit == pid[1] ? pid[0] : pid[1], &status[1], 0);
-	return (!!(fexit == pid[1] ? status[0] : status[1]));
+	return ((unsigned char)(fexit == pid[1] ? status[0] : status[1]));
 }

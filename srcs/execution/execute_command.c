@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 17:48:03 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 13:17:05 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/types.h>
 
-static void	*get_builtin_func(char *exename)
+static void		*get_builtin_func(char *exename)
 {
 	int exelen;
 
@@ -41,7 +42,7 @@ static void	*get_builtin_func(char *exename)
 	return (NULL);
 }
 
-static int	cmd_not_found(char *msg)
+static int		cmd_not_found(char *msg)
 {
 	write(1, "minishell: command not found: ", 30);
 	write(1, msg, ft_strlen(msg));
@@ -49,7 +50,7 @@ static int	cmd_not_found(char *msg)
 	return (127);
 }
 
-static int	try_each_path(char **pathes, char **av, char **env)
+static int		try_each_path(char **pathes, char **av, char **env)
 {
 	int		i;
 	char	*exepath;
@@ -71,7 +72,7 @@ static int	try_each_path(char **pathes, char **av, char **env)
 	return (EXIT_SUCCESS);
 }
 
-static void	execute_binary(char **av, t_env *env)
+static void		execute_binary(char **av, t_env *env)
 {
 	char	**pathes;
 	char	*pathvar;
@@ -94,7 +95,7 @@ static void	execute_binary(char **av, t_env *env)
 	exit(cmd_not_found(av[0]));
 }
 
-int			execute_command(t_ast *ast, t_env *env)
+unsigned char	execute_command(t_ast *ast, t_env *env)
 {
 	int		pid;
 	int		status;
@@ -116,8 +117,8 @@ int			execute_command(t_ast *ast, t_env *env)
 			signal(SIGQUIT, SIG_DFL);
 			execute_binary(av, env);
 		}
-		else
-			waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0);
+		status = status ? WEXITSTATUS(status) : EXIT_SUCCESS;
 	}
-	return (status == EXIT_RETURN_VALUE ? EXIT_RETURN_VALUE : !!status);
+	return ((unsigned char)status);
 }
