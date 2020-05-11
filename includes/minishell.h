@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 17:47:03 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 11:34:10 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,7 @@ int			ms_pwd(int ac, char **av);
 int			ms_unset(int ac, char **av, t_env *env);
 int			ms_alias(int ac, char **av);
 int			ms_unalias(int ac, char **av);
-int			ms_exit(void);
+int			ms_exit(int ac, char **av);
 
 /*
 **----------------------**

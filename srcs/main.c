@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 17:47:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 09:55:56 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 ** starts in intreractive mode.
 */
 
-t_als	*g_als = NULL;
+t_als		*g_als = NULL;
 
 static void	sighandler(int sig)
 {
@@ -35,6 +35,7 @@ int			main(int ac, char **av, char **e)
 	struct stat	stat;
 	t_env		*env;
 	t_hst		*hst;
+	int			ex;
 
 	av[ac] = NULL;
 	signal(SIGINT, sighandler);
@@ -46,12 +47,12 @@ int			main(int ac, char **av, char **e)
 	if (S_ISCHR(stat.st_mode))
 	{
 		hst = hst_get();
-		minishell(env, &hst, true);
+		ex = minishell(env, &hst, true);
 		hst_free(hst);
 	}
 	else
-		minishell(env, NULL, false);
+		ex = minishell(env, NULL, false);
 	env_free(g_als);
 	env_free(env);
-	return (EXIT_SUCCESS);
+	return (ex);
 }

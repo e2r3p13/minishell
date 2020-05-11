@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 17:15:02 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 09:54:11 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		minishell(t_env *env, t_hst **hst, t_bool it)
 			minishell_core(cmd, env);
 		it ? 1 : free(cmd);
 	}
-	return (EXIT_SUCCESS);
+	return (g_exitcode);
 }
 
 void	minishell_core(char *cmd, t_env *env)
