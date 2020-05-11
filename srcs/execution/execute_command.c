@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/11 13:33:18 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 15:09:32 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ static void		execute_binary(char **av, t_env *env)
 	write(1, "minishell: command not found: ", 30);
 	write(1, av[0], ft_strlen(av[0]));
 	write(1, "\n", 1);
-	exit (127);
+	exit(127);
 }
 
 static void		adjust_exit_status(int *status)
 {
 	if (WIFEXITED(*status))
 		*status = *status ? WEXITSTATUS(*status) : EXIT_SUCCESS;
-	if (WIFSIGNALED(*status))
+	else if (WIFSIGNALED(*status))
 		*status = 128 + WTERMSIG(*status);
 }
 
