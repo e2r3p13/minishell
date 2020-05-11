@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/11 13:17:05 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/11 13:33:18 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,6 @@ static void		*get_builtin_func(char *exename)
 	if (ft_strncmp("unalias", exename, exelen) == 0)
 		return (&ms_unalias);
 	return (NULL);
-}
-
-static int		cmd_not_found(char *msg)
-{
-	write(1, "minishell: command not found: ", 30);
-	write(1, msg, ft_strlen(msg));
-	write(1, "\n", 1);
-	return (127);
 }
 
 static int		try_each_path(char **pathes, char **av, char **env)
@@ -92,7 +84,18 @@ static void		execute_binary(char **av, t_env *env)
 	}
 	execve(*av, av, e);
 	ft_free_array(e);
-	exit(cmd_not_found(av[0]));
+	write(1, "minishell: command not found: ", 30);
+	write(1, av[0], ft_strlen(av[0]));
+	write(1, "\n", 1);
+	exit (127);
+}
+
+static void		adjust_exit_status(int *status)
+{
+	if (WIFEXITED(*status))
+		*status = *status ? WEXITSTATUS(*status) : EXIT_SUCCESS;
+	if (WIFSIGNALED(*status))
+		*status = 128 + WTERMSIG(*status);
 }
 
 unsigned char	execute_command(t_ast *ast, t_env *env)
@@ -118,7 +121,7 @@ unsigned char	execute_command(t_ast *ast, t_env *env)
 			execute_binary(av, env);
 		}
 		waitpid(pid, &status, 0);
-		status = status ? WEXITSTATUS(status) : EXIT_SUCCESS;
+		adjust_exit_status(&status);
 	}
 	return ((unsigned char)status);
 }
