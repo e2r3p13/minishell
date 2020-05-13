@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:44:15 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 17:41:06 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/13 14:50:59 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,32 @@ static char	*set_path_with_home(char *arg, t_env *env, t_bool *allocated)
 	}
 }
 
+static char	*set_path_with_oldpwd(t_env *env)
+{
+	char *oldpwd;
+
+	if (!(oldpwd = get_env_var("OLDPWD", env)))
+		return (NULL);
+	return (oldpwd);
+}
+
+static void	save_olpwd(t_env *env)
+{
+	char	*assignment;
+	char	*cwd;
+
+	if ((cwd = getcwd(NULL, 0)))
+	{
+		if ((assignment = ft_strcjoin("OLDPWD", cwd, '=')))
+		{
+			printf("%s\n", assignment);
+			make_assignment(env, assignment);
+			free(assignment);
+		}
+		free(cwd);
+	}
+}
+
 int			ms_cd(int ac, char **av, t_env *env)
 {
 	char	*path;
@@ -43,6 +69,9 @@ int			ms_cd(int ac, char **av, t_env *env)
 	allocated = false;
 	if (!(path = av[1]) || *path == '~')
 		path = set_path_with_home(av[1], env, &allocated);
+	if (path && ft_strcmp(path, "-") == 0)
+		path = set_path_with_oldpwd(env);
+	save_olpwd(env);
 	if (path && chdir(path) == -1)
 	{
 		write(1, "cd: no such file or directory: ", 31);

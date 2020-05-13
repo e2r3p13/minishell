@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/10 21:45:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/13 14:52:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-t_bool			is_valid_assignment(char *s)
+t_bool	is_valid_assignment(char *s)
 {
 	int i;
 
@@ -31,7 +31,7 @@ t_bool			is_valid_assignment(char *s)
 	return (true);
 }
 
-static int		make_assignment(t_env *env, char *a)
+int		make_assignment(t_env *env, char *a)
 {
 	t_env	*tmp;
 	char	*key;
@@ -59,7 +59,7 @@ static int		make_assignment(t_env *env, char *a)
 	return (EXIT_SUCCESS);
 }
 
-int				ms_export(int ac, char **av, t_env *env)
+int		ms_export(int ac, char **av, t_env *env)
 {
 	int	i;
 	int	r_val;
