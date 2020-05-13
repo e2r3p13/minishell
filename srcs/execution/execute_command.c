@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/11 15:09:32 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/13 14:19:58 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <errno.h>
 
 static void		*get_builtin_func(char *exename)
 {
@@ -66,9 +67,10 @@ static int		try_each_path(char **pathes, char **av, char **env)
 
 static void		execute_binary(char **av, t_env *env)
 {
-	char	**pathes;
-	char	*pathvar;
-	char	**e;
+	char		**pathes;
+	char		*pathvar;
+	char		**e;
+	extern int	errno;
 
 	if (!(e = env_to_arr(env)))
 		exit(EXIT_FAILURE);
@@ -84,10 +86,11 @@ static void		execute_binary(char **av, t_env *env)
 	}
 	execve(*av, av, e);
 	ft_free_array(e);
-	write(1, "minishell: command not found: ", 30);
+	errno == ENOENT ? write(1, "minishell: command not found: ", 30) :
+		write(1, "minishell: permission denied: ", 30);
 	write(1, av[0], ft_strlen(av[0]));
 	write(1, "\n", 1);
-	exit(127);
+	exit(errno == ENOENT ? 127 : 126);
 }
 
 static void		adjust_exit_status(int *status)
