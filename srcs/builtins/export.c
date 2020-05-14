@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:46:03 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/13 14:52:22 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 13:50:29 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		make_assignment(t_env *env, char *a)
 	}
 	else
 	{
-		if (!(env_push_back(env, key, val)))
+		if ((env_push_back(env, key, val)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

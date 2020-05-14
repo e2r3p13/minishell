@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/11 11:55:37 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 13:33:35 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int			main(int ac, char **av, char **e)
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN);
 	if (!(env = env_get(e)))
-		return (EXIT_FAILURE);
+		if (!(env = env_from_scratch(av)))
+			return (EXIT_FAILURE);
 	g_als = als_get();
 	fstat(0, &stat);
 	if (S_ISCHR(stat.st_mode))

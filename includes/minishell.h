@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/13 14:53:03 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 13:41:33 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,7 @@ int				env_size(t_env *env);
 int				env_push_back(t_env *env, char *key, char *value);
 void			env_remove_first(t_env *env);
 void			env_remove_elm(t_env *env, t_env *elm);
+t_env			*env_from_scratch(char **av);
 char			*append_backslash(char *mch);
 t_bool			is_valid_assignment(char *s);
 
