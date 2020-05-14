@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:38:04 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/30 17:01:01 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 14:36:01 by bccyv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	prompt_path(t_env *env)
 			tmp = pwd;
 			pwd = ft_strjoin("~", pwd + ft_strlen(hd));
 			write(1, pwd, ft_strlen(pwd));
-			free(pwd);
 			free(tmp);
 		}
 		else
@@ -47,6 +46,7 @@ static void	prompt_path(t_env *env)
 	}
 	if (pwd && !hd)
 		write(1, pwd, ft_strlen(pwd));
+	free(pwd);
 }
 
 void		prompt(t_env *env)
