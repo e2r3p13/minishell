@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bind_ctrl.c                                        :+:      :+:    :+:   */
+/*   bind_ctrl_0.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 14:57:55 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/10 20:47:50 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 15:12:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "keys.h"
 #include <stdlib.h>
 #include <unistd.h>
+
+extern int g_exitcode;
 
 int	handle_ctrld(t_dynstr *dstr, size_t *cpos)
 {
@@ -31,6 +33,7 @@ int	handle_ctrlc(t_dynstr *dstr)
 {
 	dynstr_clear(dstr);
 	write(1, "\n", 1);
+	g_exitcode = 130;
 	return (1);
 }
 
