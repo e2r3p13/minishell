@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:55:27 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/14 13:52:09 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 14:13:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ static int	set_underscore_var(t_env *env, char **av)
 	{
 		if ((tmp = ft_strcjoin(cwd, av[0], '/')))
 			env->value = tmp;
-		else
-		{
-			free(cwd);
-			return (EXIT_FAILURE);
-		}
 		free(cwd);
+		if (!tmp)
+			return (EXIT_FAILURE);
 	}
+	else
+		return (EXIT_FAILURE);
 	env->next = NULL;
 	return (EXIT_SUCCESS);
 }
