@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/03 15:16:22 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/11 15:10:17 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 12:46:40 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ t_env	*env_get(char **e)
 	int		i;
 	char	*l;
 
-	i = 0;
+	i = -1;
 	env = NULL;
-	while (e[i])
+	while (e[++i])
 	{
+		if (ft_strncmp("OLDPWD=", e[i], 7) == 0)
+			continue ;
 		if (!(t = malloc(sizeof(t_env))))
 			return (env_free(env));
 		t->next = env;
@@ -35,7 +37,6 @@ t_env	*env_get(char **e)
 			free(t->value);
 			t->value = l;
 		}
-		i++;
 	}
 	return (env);
 }

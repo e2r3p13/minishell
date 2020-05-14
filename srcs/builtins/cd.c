@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 16:44:15 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/13 14:50:59 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 12:15:26 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	save_olpwd(t_env *env)
 	{
 		if ((assignment = ft_strcjoin("OLDPWD", cwd, '=')))
 		{
-			printf("%s\n", assignment);
 			make_assignment(env, assignment);
 			free(assignment);
 		}
