@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 20:31:20 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/11 11:17:51 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 15:48:01 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	enable_raw_mode(void)
 	newterm.c_lflag &= ~(ICANON);
 	newterm.c_lflag &= ~(ECHO);
 	newterm.c_cc[VINTR] = 0;
+	newterm.c_cc[VQUIT] = 0;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &newterm);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:13:41 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/14 13:33:35 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 15:45:22 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_als		*g_als = NULL;
 static void	sighandler(int sig)
 {
 	sig == 2 ? write(1, "\n", 1) : 1;
+	sig == 3 ? write(1, "Quit: 3\n", 8) : 1;
 }
 
 int			main(int ac, char **av, char **e)
@@ -39,7 +40,7 @@ int			main(int ac, char **av, char **e)
 
 	av[ac] = NULL;
 	signal(SIGINT, sighandler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sighandler);
 	if (!(env = env_get(e)))
 		if (!(env = env_from_scratch(av)))
 			return (EXIT_FAILURE);
