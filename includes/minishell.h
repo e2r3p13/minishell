@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/12 15:11:13 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/14 13:41:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 15:25:09 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,7 @@ unsigned char	execute(t_ast *ast, t_env *env);
 unsigned char	execute_command(t_ast *ast, t_env *env);
 unsigned char	pipeline(t_ast *ast, t_env *env);
 int				make_redirections(t_ast *ast);
+void			adjust_exit_status(int *status);
 
 /*
 **---------------**

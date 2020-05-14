@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 20:13:35 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/11 12:49:33 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 15:27:43 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ unsigned char	pipeline(t_ast *ast, t_env *env)
 	fexit = waitpid(-1, &status[0], 0);
 	close(fexit == pid[1] ? fd[0] : fd[1]);
 	waitpid(fexit == pid[1] ? pid[0] : pid[1], &status[1], 0);
+	adjust_exit_status((fexit == pid[1] ? &status[0] : &status[1]));
 	return ((unsigned char)(fexit == pid[1] ? status[0] : status[1]));
 }

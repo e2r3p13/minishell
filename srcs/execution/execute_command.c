@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 12:25:01 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/13 14:19:58 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/14 15:24:54 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void		execute_binary(char **av, t_env *env)
 	exit(errno == ENOENT ? 127 : 126);
 }
 
-static void		adjust_exit_status(int *status)
+void			adjust_exit_status(int *status)
 {
 	if (WIFEXITED(*status))
 		*status = *status ? WEXITSTATUS(*status) : EXIT_SUCCESS;
