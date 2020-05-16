@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 13:49:00 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/04/23 16:52:12 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/05/16 16:48:02 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include <unistd.h>
 #include <stdlib.h>
+
+extern int g_exitcode;
 
 void	*g_ascii_tokens[256] =
 {
@@ -56,30 +58,28 @@ t_lxr		*lexer(char *str)
 
 t_lxr		*lxr_check_grammar(t_lxr *head)
 {
-	int			last_token;
+	int			lt;
 	t_bool		is_cmd_valid;
-	t_lxr		*tmp;
+	t_lxr		*t;
 
-	last_token = NEWLINE;
+	lt = NEWLINE;
 	is_cmd_valid = true;
-	tmp = head;
-	while (tmp)
+	t = head;
+	while (t)
 	{
-		if ((tmp->token == NEWLINE || tmp->token == REDIRECT ||
-				tmp->token == PIPE) &&
-					(last_token == NEWLINE || last_token == REDIRECT ||
-						last_token == PIPE))
+		if ((t->token == NEWLINE || t->token == REDIRECT || t->token == PIPE) &&
+			(lt == NEWLINE || lt == REDIRECT || lt == PIPE))
 			is_cmd_valid = false;
-		if (last_token == NEWLINE && tmp->token == WORD &&
-			(tmp->space || !tmp->next))
-			replace_alias(tmp);
-		last_token = tmp->token;
-		tmp = tmp->next;
+		if (lt == NEWLINE && t->token == WORD && (t->space || !t->next))
+			replace_alias(t);
+		lt = t->token;
+		t = t->next;
 	}
-	if (last_token != REDIRECT && is_cmd_valid)
+	if (lt != REDIRECT && lt != PIPE && is_cmd_valid)
 		return (head);
 	lxr_free(head);
 	write(1, "minishell: Invalid command\n", 27);
+	g_exitcode = 258;
 	return (NULL);
 }
 
