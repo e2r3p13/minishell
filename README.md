@@ -10,9 +10,7 @@ As good students, we did a little bit more:
 - Dynamic git prompt
 - Aliases (coming with alias / unalias builtins)
 - 'Assistant' builtin that brings you coffe (Ok, maybe not)
-## Demo
 
-![Alt Text](https://media.giphy.com/media/QyhN7QQVeSiYxVFI30/giphy.gif)
 ## Shortcuts
 
  - <kbd>Ctrl-U</kbd>: erase command
