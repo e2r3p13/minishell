@@ -6,7 +6,7 @@
 /*   By: lfalkau <lfalkau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:37:37 by lfalkau           #+#    #+#             */
-/*   Updated: 2020/05/11 12:47:11 by lfalkau          ###   ########.fr       */
+/*   Updated: 2020/09/04 18:49:41 by lfalkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 ** Runs until EOI is reached (ctrl-D).
 */
 
-unsigned char	g_exitcode = 0;
+int				g_exitcode = 0;
 t_bool			g_should_run = true;
 
 int		minishell(t_env *env, t_hst **hst, t_bool it)
