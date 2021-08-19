@@ -61,7 +61,7 @@ SRCS =	main.c \
 		execution/pipeline.c \
 		execution/redirections.c \
 
-CC = gcc
+CC = clang -m64
 CFLAGS = -Wall -Wextra -Werror
 
 TMP = $(SRCS:.c=.o)

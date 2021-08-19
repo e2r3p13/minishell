@@ -93,7 +93,7 @@ SRCS =			ft_atoi.c \
 				open_file.c \
 				open_reg_file.c \
 
-CC = gcc
+CC = clang -m64
 CFLAGS = -Wall -Wextra -Werror
 
 TMP = $(SRCS:.c=.o)
