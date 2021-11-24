@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <termios.h>
 
-struct termios	g_oldterm;
+extern struct termios	g_oldterm;
 
 void			*g_bind_ascii[128] =
 {
